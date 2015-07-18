@@ -1,11 +1,11 @@
 <ion-view view-title="Vaanoli">
     <div class="card has-header player">
         <div class="item item-assertive item-divider">
-            Currently Playing - {{vm.currentRadio.name?vm.currentRadio.name:'**select to play**'}}
+            Currently Selected - {{vm.currentRadio.name?vm.currentRadio.name:'**select to play**'}}
         </div>
         <div>
             <div class="row">
-                <button class="button button-outline button-assertive icon" data-ng-click="vm.pauseToggle()" data-ng-class="{'ion-play':vm.isPaused || !!!vm.currentRadio, 'ion-pause':!vm.isPaused && vm.currentRadio}"></button>
+                <button class="button button-outline button-assertive icon" data-ng-click="vm.stopToggle()" data-ng-class="{'ion-play':vm.isStopped || !!!vm.currentRadio, 'ion-stop':!vm.isStopped && vm.currentRadio}"></button>
                 <div class="range range-assertive">
                     <i class="icon ion-volume-low"></i>
                     <input type="range" name="volume" data-ng-model="vm.volume">

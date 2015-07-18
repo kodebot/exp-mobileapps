@@ -25,14 +25,16 @@
     <splash density="port-mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
     <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
     <name>Vaanoli</name>
-    <description>A blank project that uses Apache Cordova to help you build an app that targets multiple mobile platforms: Android, iOS, Windows, and Windows Phone.</description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">Apache Cordova Team </author>
+    <description>Simple, super fast tamil internet radio.</description>
+    <author email="qubitssolutionsltd@outlook.com" href="mvenkatraman.co.uk">Qubits Solutions Ltd.</author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-intent href="mailto:*" />
     <vs:features />
     <preference name="SplashScreen" value="screen" />
     <preference name="windows-target-version" value="8.1" />
     <preference name="windows-phone-target-version" value="8.1" />
+    <preference name="orientation" value="portrait" />
     <vs:plugin name="org.apache.cordova.media" version="0.2.16" />
     <vs:plugin name="com.google.cordova.admob" />
 </widget>

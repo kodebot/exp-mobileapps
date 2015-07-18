@@ -10,8 +10,25 @@
     top: 160px !important; /*this may cause problem in iphone*/
 }
 
-.item.active{
-    color:#ef473a;
-    font-weight:700;
-    background-color:whitesmoke;
+.item.active {
+    color: #ef473a;
+    font-weight: 700;
+    background-color: whitesmoke;
+}
+
+/*Popup's classes
+.popup-head
+.popup-title 
+.popup-body
+.popup-buttons 
+*/
+
+
+.popup-head {
+    background: #ef473a !important;
+    font-weight:700 !important;
+}
+
+.popup-title {
+    color: #fff !important;
 }
