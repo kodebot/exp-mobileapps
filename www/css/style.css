@@ -1,0 +1,17 @@
+.player {
+    position: absolute;
+    margin-top: 10px;
+    margin-bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.has-banner {
+    top: 160px !important; /*this may cause problem in iphone*/
+}
+
+.item.active{
+    color:#ef473a;
+    font-weight:700;
+    background-color:whitesmoke;
+}

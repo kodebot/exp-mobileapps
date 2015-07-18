@@ -1,0 +1,18 @@
+<!--
+Create tabs with an icon and label, using the tabs-stable style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+<ion-tabs class="tabs-icon-top tabs-assertive">
+
+  <!-- Radios Tab -->
+  <ion-tab title="Radios" icon-off="ion-radio-waves" icon-on="ion-radio-waves" href="#/tab/dash">
+    <ion-nav-view name="tab-radio"></ion-nav-view>
+  </ion-tab>
+
+  <!-- About Tab -->
+  <ion-tab title="About" icon-off="ion-ios-information-outline" icon-on="ion-ios-information" href="#/tab/about">
+    <ion-nav-view name="tab-about"></ion-nav-view>
+  </ion-tab>
+    
+</ion-tabs>
