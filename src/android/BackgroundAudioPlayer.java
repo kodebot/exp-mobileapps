@@ -15,40 +15,40 @@ import java.lang.String;
 
 public class BackgroundAudioPlayer extends CordovaPlugin{
 
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-    }
+    public static final String ACTION_PLAY = "action.play";
+    public static final String ACTION_STOP = "action.stop";
+    public static final String ACTION_SET_VOLUME = "action.set.volume";
+    public static final String ACTION_GET_VOLUME = "action.get.volume";
+    public static final String ACTION_GET_STATUS = "action.get.status";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Intent intent = new Intent(cordova.getActivity(), BackgroundAudioPlayerService.class);
         intent.putExtra("action", action);
-        if(action.equals(BackgroundAudioPlayerService.ACTION_PLAY)) {
+
+        if(action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
             intent.putExtra("audioUrl", args.getString(0));
+            cordova.getActivity().startService(intent);
+        }
+        else if(action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)){
+            intent.putExtra("volume", args.getString(0));
+            cordova.getActivity().startService(intent);
+        }
+        else if(action.equals(BackgroundAudioPlayer.ACTION_GET_STATUS)){
+            if(BackgroundAudioPlayerService.IsPlaying) {
+                callbackContext.success(1);
+            }
+            else {
+                callbackContext.success(0);
+            }
+        }
+        else if(action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)){
+            callbackContext.success(BackgroundAudioPlayerService.CurrentVolume);
         }
 
-        if(action.equals(BackgroundAudioPlayerService.ACTION_SET_VOLUME)){
-            intent.putExtra("volume", args.getString(0));
-        }
-        cordova.getActivity().startService(intent);
-        callbackContext.success(); // Todo : change this appropriately
         return true;
     }
 
 
-    @Override
-    public void onPause(boolean multitasking) {
-        super.onPause(multitasking);
-    }
 
-    @Override
-    public void onResume(boolean multitasking) {
-        super.onResume(multitasking);
-    }
-
-    @Override
-    public void onReset() {
-        super.onReset();
-    }
 }

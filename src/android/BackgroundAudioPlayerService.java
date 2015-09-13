@@ -9,7 +9,6 @@ import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.PowerManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.Exception;
@@ -22,16 +21,12 @@ public class BackgroundAudioPlayerService extends IntentService
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
     // todo : audio becomes noisy
     // todo : hardware button integration
-    private static MediaPlayer mediaPlayer;
-    private static WifiManager.WifiLock wifiLock;
-    private static String currentlyPlayingUrl;
+    private static MediaPlayer mMediaPlayer;
+    private static WifiManager.WifiLock mWifiLock;
+    private static String mCurrentlyPlayingUrl;
 
-    public static final String ACTION_PLAY = "action.play";
-    public static final String ACTION_STOP = "action.stop";
-    public static final String ACTION_SET_VOLUME = "action.set.volume";
-
-    public static boolean STATE_PLAYING = false;
-    public static float STATE_VOLUME = 0.5f;
+    public static boolean IsPlaying = false;
+    public static float CurrentVolume = 0.5f;
 
     public final String LOG_TAG = "BackgroundAudioPlayerService";
 
@@ -58,13 +53,13 @@ public class BackgroundAudioPlayerService extends IntentService
         String action = intent.getExtras().getString("action");
         try {
             Log.i(LOG_TAG, "passed in action " + action);
-            if (action.equals(ACTION_PLAY)) {
-                currentlyPlayingUrl = intent.getExtras().getString("audioUrl");
+            if (action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
+                mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
                 actionPlay();
-            } else if (action.equals(ACTION_STOP)) {
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
-            } else if (action.equals(ACTION_SET_VOLUME)) {
-                STATE_VOLUME = intent.getFloatExtra("volume", STATE_VOLUME);
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
+                STATE_CURRENT_VOLUME = intent.getFloatExtra("volume", STATE_CURRENT_VOLUME);
             }
         } catch (Exception ex) {
             // change the radio status
@@ -74,10 +69,10 @@ public class BackgroundAudioPlayerService extends IntentService
 
     private void setupPlayer() {
         Log.i(LOG_TAG, "setting up the player...");
-        if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
             acquireWifiLock();
             setupAudioFocus();
         }
@@ -85,9 +80,9 @@ public class BackgroundAudioPlayerService extends IntentService
 
     private void teardownPlayer() {
         Log.i(LOG_TAG, "tearing down the player...");
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
             releaseWifiLock();
         }
     }
@@ -107,16 +102,16 @@ public class BackgroundAudioPlayerService extends IntentService
 
     private void actionPlay() {
         try {
-            if (currentlyPlayingUrl != null) {
+            if (mCurrentlyPlayingUrl != null) {
                 actionStop(); // stop first if already playing
                 setupPlayer();
                 Log.i(LOG_TAG, "playing");
-                mediaPlayer.setDataSource(currentlyPlayingUrl);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-                if (mediaPlayer.isPlaying()) {
+                mMediaPlayer.setDataSource(mCurrentlyPlayingUrl);
+                mMediaPlayer.prepare();
+                mMediaPlayer.start();
+                if (mMediaPlayer.isPlaying()) {
                     actionSetVolume();
-                    STATE_PLAYING = true;
+                    STATE_IS_PLAYING = true;
                 }
             }
         }catch(IOException ex) {
@@ -128,44 +123,44 @@ public class BackgroundAudioPlayerService extends IntentService
 
     private void actionStop() {
         Log.i(LOG_TAG, "stopping music...");
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            if (!mediaPlayer.isPlaying()) {
-                STATE_PLAYING = false;
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.stop();
+            if (!mMediaPlayer.isPlaying()) {
+                STATE_IS_PLAYING = false;
             }
         }
         teardownPlayer();
     }
 
     private void actionSetVolume() {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             Log.i(LOG_TAG, "adjusting volume...");
-            mediaPlayer.setVolume(STATE_VOLUME, STATE_VOLUME);
+            mMediaPlayer.setVolume(CurrentVolume, CurrentVolume);
         }
     }
 
     private void streamDuck() {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             Log.i(LOG_TAG, "ducking audio...");
-            mediaPlayer.setVolume(0.1f, 0.1f);
+            mMediaPlayer.setVolume(0.1f, 0.1f);
         }
     }
 
     private void acquireWifiLock() {
         Log.i(LOG_TAG, "acquiring wifi lock...");
-        if (wifiLock == null) {
-            wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
+        if (mWifiLock == null) {
+            mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
                     .createWifiLock(WifiManager.WIFI_MODE_FULL, "qubits_wifi_lock");
-            wifiLock.acquire();
-        } else if (!wifiLock.isHeld()) {
-            wifiLock.acquire();
+            mWifiLock.acquire();
+        } else if (!mWifiLock.isHeld()) {
+            mWifiLock.acquire();
         }
     }
 
     private void releaseWifiLock() {
         Log.i(LOG_TAG, "releasing wifi lock...");
-        if (wifiLock != null && wifiLock.isHeld()) {
-            wifiLock.release();
+        if (mWifiLock != null && mWifiLock.isHeld()) {
+            mWifiLock.release();
         }
     }
 
