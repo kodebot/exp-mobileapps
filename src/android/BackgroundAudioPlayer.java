@@ -27,33 +27,33 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
         Intent intent = new Intent(cordova.getActivity(), BackgroundAudioPlayerService.class);
         intent.putExtra("action", action);
 
-        if(action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
-            intent.putExtra("audioUrl", args.getString(0));
-            intent.putExtra("radioId", args.getInt(1));
-            cordova.getActivity().startService(intent);
-        }
-        else if(action.equals(BackgroundAudioPlayer.ACTION_STOP)){
-            cordova.getActivity().startService(intent);
-        }
-        else if(action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)){
-            intent.putExtra("volume", args.getString(0));
-            cordova.getActivity().startService(intent);
-        }
-        else if(action.equals(BackgroundAudioPlayer.ACTION_GET_STATUS)){
-            if(BackgroundAudioPlayerService.IsPlaying) {
-                callbackContext.success(1);
+        try {
+            if (action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
+                intent.putExtra("audioUrl", args.getString(0));
+                intent.putExtra("radioId", args.getInt(1));
+                cordova.getActivity().startService(intent);
+                callbackContext.success();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
+                cordova.getActivity().startService(intent);
+                callbackContext.success();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
+                intent.putExtra("volume", args.getString(0));
+                cordova.getActivity().startService(intent);
+                callbackContext.success();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_STATUS)) {
+                if (BackgroundAudioPlayerService.IsPlaying) {
+                    callbackContext.success(1);
+                } else {
+                    callbackContext.success(0);
+                }
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_VOLUME)) {
+                callbackContext.success(Float.toString(BackgroundAudioPlayerService.CurrentVolume));
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_CURRENT_RADIO)) {
+                callbackContext.success(BackgroundAudioPlayerService.CurrentRadio);
             }
-            else {
-                callbackContext.success(0);
-            }
+        }catch(Exception ex){
+            callbackContext.error(ex.getMessage());
         }
-        else if(action.equals(BackgroundAudioPlayer.ACTION_GET_VOLUME)){
-            callbackContext.success(Float.toString(BackgroundAudioPlayerService.CurrentVolume));
-        }
-        else if(action.equals(BackgroundAudioPlayer.ACTION_GET_CURRENT_RADIO)){
-            callbackContext.success(BackgroundAudioPlayerService.CurrentRadio);
-        }
-
         return true;
     }
 
