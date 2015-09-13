@@ -60,7 +60,7 @@ public class BackgroundAudioPlayerService extends IntentService
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
-                CurrentVolume = intent.getFloatExtra("volume", CurrentVolume);
+                CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
             }
         } catch (Exception ex) {
             // change the radio status
