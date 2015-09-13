@@ -29,6 +29,7 @@ public class BackgroundAudioPlayerService extends IntentService
 
     public static boolean IsPlaying = false;
     public static float CurrentVolume = 0.5f;
+    public static int CurrentRadio = 0;
 
     public final String LOG_TAG = "BackgroundAudioPlayerService";
 
@@ -57,6 +58,7 @@ public class BackgroundAudioPlayerService extends IntentService
             Log.i(LOG_TAG, "passed in action " + action);
             if (action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
                 mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
+                CurrentRadio = intent.getIntExtra("radioId", 0);
                 actionPlay();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();

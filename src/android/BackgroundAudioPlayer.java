@@ -20,6 +20,7 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
     public static final String ACTION_SET_VOLUME = "action.set.volume";
     public static final String ACTION_GET_VOLUME = "action.get.volume";
     public static final String ACTION_GET_STATUS = "action.get.status";
+    public static final String ACTION_GET_CURRENT_RADIO = "action.get.current.radio";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -28,6 +29,7 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
 
         if(action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
             intent.putExtra("audioUrl", args.getString(0));
+            intent.putExtra("radioId", args.getInt(1));
             cordova.getActivity().startService(intent);
         }
         else if(action.equals(BackgroundAudioPlayer.ACTION_STOP)){
@@ -47,6 +49,9 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
         }
         else if(action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)){
             callbackContext.success(Float.toString(BackgroundAudioPlayerService.CurrentVolume));
+        }
+        else if(action.equals(BackgroundAudioPlayer.ACTION_GET_CURRENT_RADIO)){
+            callbackContext.success(BackgroundAudioPlayerService.CurrentRadio);
         }
 
         return true;

@@ -5,12 +5,13 @@ var actions = {
                 stop: 'action.stop',
                 setVolume:'action.set.volume',
                 getVolume: 'action.get.volume',
-                getStatus: 'action.get.status'
+                getStatus: 'action.get.status',
+                getCurrentRadio: 'action.get.current.radio'
               };
 var playerExport = {};
 
-playerExport.play = function(successCallback, failureCallback, url){
-    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.play, [url]);
+playerExport.play = function(successCallback, failureCallback, url, radioId){
+    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.play, [url, radioId]);
 }
 
 playerExport.stop = function(successCallback, failureCallback){
@@ -25,6 +26,10 @@ playerExport.getVolume = function(successCallback, failureCallback){
     cordova.exec(successCallback, failureCallback, pluginServiceName, actions.getVolume, []);
 }
 playerExport.getStatus = function(successCallback, failureCallback){
-    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.getStatus);
+    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.getStatus, []);
+}
+
+playerExport.getCurrentRadio = function(successCallback, failureCallback){
+    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.getCurrentRadio, []);
 }
 module.exports = playerExport;
