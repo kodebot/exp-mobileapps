@@ -25,6 +25,7 @@ public class BackgroundAudioPlayerService extends IntentService
     private static MediaPlayer mMediaPlayer;
     private static WifiManager.WifiLock mWifiLock;
     private static String mCurrentlyPlayingUrl;
+    private static boolean mHasSetupAudioFocus = false;
 
     public static boolean IsPlaying = false;
     public static float CurrentVolume = 0.5f;
@@ -61,10 +62,12 @@ public class BackgroundAudioPlayerService extends IntentService
                 actionStop();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
+                actionSetVolume();
             }
         } catch (Exception ex) {
             // change the radio status
             Log.e(LOG_TAG, "error when handling the intent...");
+            Log.e(LOG_TAG, ex.getMessage());
         }
     }
 
@@ -89,14 +92,17 @@ public class BackgroundAudioPlayerService extends IntentService
     }
 
     private void setupAudioFocus() {
-        Log.i(LOG_TAG, "trying to gain stream music audio focus.");
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        if(mHasSetupAudioFocus == false) {
+            Log.i(LOG_TAG, "trying to gain stream music audio focus.");
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
-        if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            Log.i(LOG_TAG, "Unable to gain audio focus");
-        } else {
-            Log.i(LOG_TAG, "Gained stream music audio focus successfully.");
+            if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                Log.i(LOG_TAG, "Unable to gain audio focus");
+            } else {
+                Log.i(LOG_TAG, "Gained stream music audio focus successfully.");
+                mHasSetupAudioFocus = true;
+            }
         }
 
     }
