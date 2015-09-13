@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.PowerManager;
+import android.text.style.ImageSpan;
 import android.util.Log;
 
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class BackgroundAudioPlayerService extends IntentService
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
-                STATE_CURRENT_VOLUME = intent.getFloatExtra("volume", STATE_CURRENT_VOLUME);
+                CurrentVolume = intent.getFloatExtra("volume", CurrentVolume);
             }
         } catch (Exception ex) {
             // change the radio status
@@ -111,7 +112,7 @@ public class BackgroundAudioPlayerService extends IntentService
                 mMediaPlayer.start();
                 if (mMediaPlayer.isPlaying()) {
                     actionSetVolume();
-                    STATE_IS_PLAYING = true;
+                    IsPlaying = true;
                 }
             }
         }catch(IOException ex) {
@@ -126,7 +127,7 @@ public class BackgroundAudioPlayerService extends IntentService
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             mMediaPlayer.stop();
             if (!mMediaPlayer.isPlaying()) {
-                STATE_IS_PLAYING = false;
+                IsPlaying = false;
             }
         }
         teardownPlayer();

@@ -43,7 +43,7 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
             }
         }
         else if(action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)){
-            callbackContext.success(BackgroundAudioPlayerService.CurrentVolume);
+            callbackContext.success(BackgroundAudioPlayerService.CurrentVolume.toString());
         }
 
         return true;
