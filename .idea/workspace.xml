@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" />
-    </list>
+    <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;" />
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BackgroundAudioPlayer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BackgroundAudioPlayer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/BackgroundAudioPlayer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="93" selection-start-line="32" selection-start-column="93" selection-end-line="32" selection-end-column="93" />
+            <state vertical-scroll-proportion="0.7258427">
+              <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -55,10 +53,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BackgroundAudioPlayer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BackgroundAudioPlayer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50898874">
+            <state vertical-scroll-proportion="0.0">
               <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -368,7 +366,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1591" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="1591" y="-9" width="1938" height="1048" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -603,11 +601,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/BackgroundAudioPlayer.js">
+    <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="93" selection-start-line="32" selection-start-column="93" selection-end-line="32" selection-end-column="93" />
-          <folding />
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -621,13 +621,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java">
+    <entry file="file://$PROJECT_DIR$/www/BackgroundAudioPlayer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50898874">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.7258427">
+          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
