@@ -30,6 +30,9 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
             intent.putExtra("audioUrl", args.getString(0));
             cordova.getActivity().startService(intent);
         }
+        else if(action.equals(BackgroundAudioPlayer.ACTION_STOP)){
+            cordova.getActivity().startService(intent);
+        }
         else if(action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)){
             intent.putExtra("volume", args.getString(0));
             cordova.getActivity().startService(intent);

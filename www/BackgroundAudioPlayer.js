@@ -21,7 +21,7 @@ playerExport.setVolume = function(successCallback, failureCallback, volume){
     cordova.exec(successCallback, failureCallback, pluginServiceName, actions.setVolume, [volume]);
 }
 
-playerExport.getVolume = function(successCallback, failureCallback, volume){
+playerExport.getVolume = function(successCallback, failureCallback){
     cordova.exec(successCallback, failureCallback, pluginServiceName, actions.getVolume, []);
 }
 playerExport.getStatus = function(successCallback, failureCallback){
