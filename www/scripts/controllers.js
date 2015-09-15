@@ -1,152 +1,180 @@
 angular.module('app.controllers', [])
-.controller('radioController', function ($scope, $ionicLoading, $ionicPopup, $timeout, radioDataService) {
-    var media;
+.controller('radioController', function ($scope, $ionicPlatform, $timeout, alertService, radioDataService, userDataService) {
+    var mediaStartingPromise;
     var vm = this;
+
+    // #region View Model
     vm.isStopped = false;
     vm.currentRadio = null;
     vm.volume = 50;
-    var mediaStartingPromise = null;
+    vm.play = play;
+    vm.stopToggle = stopToggle;
+    vm.updateRadio = updateRadio;
+    vm.toggleFav = toggleNav;
+    vm.toggleNavFav = toggleNavFav;
+    vm.gotoPrev = gotoPrev;
+    vm.gotoNext = gotoNext;
+    // #endregion
 
     activate();
 
-    $scope.$watch('vm.volume', function () {
-        if (media) {
-            media.setVolume(vm.volume / 100); // this works in android
-        }
-    });
+    // #region private functions
+    function activate() {
+        alertService.showLoading();
+        $ionicPlatform.ready(onDeviceReady);
 
-    vm.play = function (radio) {
-        vm.currentRadio = radio;
+    }
+
+    function play(radio) {
+        alertService.showLoading("Starting " + radio.name + "...");
+        vm.currentRadio = getAndSyncCurrentRadioById(radio.id);
         vm.isStopped = false;
-
-        if (media) {
-            media.release();
-        }
-
-        media = new Media(radio.streamUrl, null, mediaError, mediaStatus);
-
-        media.play();
-    }
-
-    function mediaError(error) {
-        showAlert("Error", "Unable to play this radio. Please try again later.");
-
-        //MediaError.MEDIA_ERR_ABORTED = 1
-        //MediaError.MEDIA_ERR_NETWORK = 2
-        //MediaError.MEDIA_ERR_DECODE = 3
-        //MediaError.MEDIA_ERR_NONE_SUPPORTED = 4
-    }
-
-    function mediaStatus(status) {
-        if (status === Media.MEDIA_STARTING) {
-            showLoading("Starting " + vm.currentRadio.name + "...");
-            mediaStartingPromise = $timeout(onStrukStarting, 15000); // wait 15 seconds
-        }
-
-        if (status === Media.MEDIA_RUNNING) {
+        mediaStartingPromise = $timeout(onStrukStarting, 15000); // wait 15 seconds
+        BackgroundAudioPlayer.play(function () {
             $timeout.cancel(mediaStartingPromise);
-            hideLoading(); // hide the status started when media is starting
-        }
-
-        function onStrukStarting() {
-            hideLoading();
-            showAlert("Error", "Unable to play this radio. Please try again later.");
-        }
-        //Media.MEDIA_NONE = 0;
-        //Media.MEDIA_STARTING = 1;
-        //Media.MEDIA_RUNNING = 2;
-        //Media.MEDIA_PAUSED = 3;
-        //Media.MEDIA_STOPPED = 4;
+            alertService.hideLoading();
+        }, onPlayError, radio.streamUrl, radio.id);
     }
 
-    vm.stopToggle = function () {
-
+    function stopToggle() {
         // when no radio is selected and play is pressed then select the first one in the list and play
         if (!vm.currentRadio) {
             vm.play(vm.radios[0]);
             return;
         }
 
-        showLoading();
-        if (media) {
-            if (vm.isStopped) {
-                vm.isStopped = false;
-                media.play();
+        if (vm.isStopped) {
+            vm.play(vm.currentRadio);
 
-            } else {
-                vm.isStopped = true;
-                media.stop();
-            }
+        } else {
+            vm.isStopped = true;
+            BackgroundAudioPlayer.stop(null, null);
         }
-
-        hideLoading();
     }
 
-    vm.updateRadio = function () {
+    function updateRadio() {
         vm.radios = getRadios(true);
         $scope.$broadcast('scroll.refreshComplete');
     }
 
-    function activate() {
-        showLoading();
-        document.addEventListener("deviceready", onDeviceReady, false);
+    function toggleNav(radio) {
+        radio.fav = !radio.fav;
+        userDataService.writeUserRadios(vm.radios);
     }
 
-    function showLoading(msg) {
-        $ionicLoading.show({
-            template: msg || 'Please wait...'
+    function gotoPrev() {
+        play(vm.radios.prev());
+    }
+
+    function gotoNext() {
+        play(vm.radios.next());
+    }
+
+    function toggleNavFav() {
+
+    }
+
+    function onStrukStarting() {
+        alertService.hideLoading();
+        alertService.showAlert("Error", "Unable to play this radio. Please try again later.");
+    }
+
+    function hookVolumeControl() {
+        $scope.$watch('vm.volume', function () {
+            if (BackgroundAudioPlayer) {
+                BackgroundAudioPlayer.setVolume(null, null, vm.volume / 100); // this works in android
+            }
         });
     }
 
-    function hideLoading() {
-        $ionicLoading.hide();
+    function onPlayError() {
+        $timeout.cancel(mediaStartingPromise);
+        alertService.hideLoading();
+        alertService.showAlert("Error", "Unable to play this radio. Please try again later.");
+
     }
 
     function onDeviceReady() {
-        hideLoading();
-        getRadios();
+        setupScreen();
+    }
+
+    function setupScreen() {
+        alertService.hideLoading();
+        getRadios()
+        .then(function () {
+            hookVolumeControl();
+            initialisePlayer();
+        });
+
+    }
+
+    function initialisePlayer() {
+        BackgroundAudioPlayer.getStatus(function (status) {
+            vm.isStopped = !(status == 1);
+        }, function () { a });
+
+        BackgroundAudioPlayer.getVolume(function (volume) {
+            vm.volume = Number.parseFloat(volume) * 100;
+        }, function () { });
+
+        BackgroundAudioPlayer.getCurrentRadio(function (radioId) {
+            if (radioId) {
+                vm.currentRadio = getAndSyncCurrentRadioById(radioId);
+            }
+        }, null);
     }
 
     function getRadios() {
-        showLoading();
-        radioDataService.all()
+        alertService.showLoading();
+        return radioDataService.all()
         .then(function (response) {
             vm.radios = response.data.radios;
+            userDataService.readUserRadios()
+            .then(function (result) {
+                if (result) { // file exist - update
+                    var favs = result.filter(function (item) {
+                        if (item.fav) return true;
+                    });
+
+                    favs.forEach(function (item) {
+                        vm.radios.forEach(function (radio) {
+                            if (radio.id === item.id) radio.fav = true;
+                        });
+                    });
+                }
+                userDataService.writeUserRadios(vm.radios);
+            });
+
         })
-        .catch(function () {
-            showInternetIssueAlert("Error", "Unable to retrieve radio list. Please make sure you have internet access. If the problem persist, try again later.", getRadios);
+        .catch(function (e) {
+            alertService.showInternetIssueAlert("Error", "Unable to retrieve radio list. Please make sure you have internet access. If the problem persist, try again later.", getRadios);
         })
         .finally(function () {
-            hideLoading();
+            alertService.hideLoading();
         });
     }
 
-    function showAlert(title, message) {
-        var alertPopup = $ionicPopup.alert({
-            title: title,
-            template: message
-        });
+    function getAndSyncCurrentRadioById(radioId) {
+        return vm.radios.filter(function (radio, index) {
+            if (radio.id == radioId) {
+                vm.radios.current = index;
+                return true;
+            }
+        })[0];
     }
+    Array.prototype.next = function () {
+        this.current++;
+        if (this.current === this.length) this.current = 0;
+        return this[this.current];
+    };
+    Array.prototype.prev = function () {
+        this.current--;
+        if (this.current === -1) this.current = (this.length - 1);
+        return this[this.current];
+    };
+    Array.prototype.current = 0;
+    // #endregion
 
-    function showInternetIssueAlert(title, message, onRetry) {
-        $ionicPopup.show({
-            template: message,
-            title: title,
-            buttons: [
-              {
-                  text: "Re-try",
-                  type: "button-assertive",
-                  onTap: function (e) {
-                      onRetry();
-                  }
-              },
-              {
-                  text: "Close",
-                  type: "button-positive"
-              }
-            ]
-        });
-    }
 })
 .controller('aboutController', function ($scope) { });
 

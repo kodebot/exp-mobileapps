@@ -36,46 +36,43 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleLightContent();
+
+            if (/(android)/i.test(navigator.userAgent)) {
+                StatusBar.backgroundColorByHexString("#FFF");
+            }
         }
     });
 })
-.config(['$ionicConfigProvider', function ($ionicConfigProvider) {
-
-    $ionicConfigProvider.tabs.position('bottom'); // other values: top
-
-}])
 .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
     // setup an abstract state for the tabs directive
-      .state('tab', {
-          url: "/tab",
+      .state('app', {
+          url: "/app",
           abstract: true,
-          templateUrl: "templates/tabs.html"
+          templateUrl: "templates/menu.html"
       })
 
     // Each tab has its own nav history stack:
 
-    .state('tab.radio', {
+    .state('app.radio', {
         url: '/radio',
         views: {
-            'tab-radio': {
-                templateUrl: 'templates/tab-radio.html',
+            'content': {
+                templateUrl: 'templates/radio.html',
                 controller: 'radioController as vm'
             }
         }
     })
 
-    .state('tab.about', {
+    .state('app.about', {
         url: '/about',
         views: {
-            'tab-about': {
-                templateUrl: 'templates/tab-about.html',
+            'content': {
+                templateUrl: 'templates/about.html',
                 controller: 'aboutController as vm'
             }
         }
     });
-
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/radio');
+    $urlRouterProvider.otherwise('/app/radio');
 
 });

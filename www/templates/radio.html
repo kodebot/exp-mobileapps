@@ -1,0 +1,45 @@
+<ion-view view-title="VAANOLI">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-heart" ng-click="vm.toggleNavFav()"></button>
+    </ion-nav-buttons>
+    <div class="has-header margin-top-5 card animated tada">
+        <div class="item item-assertive item-divider">
+            {{vm.currentRadio.name?vm.currentRadio.name:'No radio selected'}}
+        </div>
+        <div>
+            <div class="button-bar margin-top-5">
+                <button class="button button-assertive button-outline button-large" data-ng-click="vm.gotoPrev()">
+                    <i class="icon ion-ios-skipbackward"></i>
+                </button>
+                <button class="button button-assertive button-outline button-large" data-ng-click="vm.stopToggle()">
+                    <i class="icon" data-ng-class="{'ion-play':vm.isStopped || !!!vm.currentRadio, 'ion-stop':!vm.isStopped && vm.currentRadio}"></i>
+                </button>
+                <button class="button button-assertive button-outline button-large" data-ng-click="vm.gotoNext()">
+                    <i class="icon ion-ios-skipforward"></i>
+                </button>
+            </div>
+            <!--<div class="row">-->
+            <div class="range range-assertive">
+                <i class="icon ion-volume-low"></i>
+                <input type="range" name="volume" data-ng-model="vm.volume">
+                <i class="icon ion-volume-high"></i>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+    <ion-content class="has-banner">
+        <ion-refresher pulling-text="Pull to update" data-on-refresh="vm.updateRadio()">
+        </ion-refresher>
+        <ion-list class="list padding">
+            <ion-item href="#" class="item-button-right item-avatar radio-item" data-ng-repeat="radio in vm.radios" data-ng-click="vm.play(radio)" data-ng-class="{'active':radio.id === vm.currentRadio.id}">
+                <!--<i class="icon ion-radio-waves"></i>-->
+                <img ng-src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97150&w=150&h=150">
+                <h2>{{radio.name}}</h2>
+                <p>{{radio.subtext}}</p>
+                <button class="button" data-ng-click="vm.toggleFav(radio);$event.stopPropagation();" data-ng-class="{'button-assertive':radio.fav, 'button-stable':!radio.fav}">
+                    <i class="icon ion-ios-heart"></i>
+                </button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

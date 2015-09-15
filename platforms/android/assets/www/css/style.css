@@ -1,19 +1,26 @@
-.player {
-    position: absolute;
-    margin-top: 10px;
-    margin-bottom: 0;
-    left: 0;
-    right: 0;
+.button-play{
+  border-radius: 60% !important;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transition: 0.2s linear !important;
+  transition: 0.2s linear !important;
+  -webkit-transition-property: -webkit-transform, all !important;
+  transition-property: transform, all !important;
+
 }
 
 .has-banner {
-    top: 160px !important; /*this may cause problem in iphone*/
+    top: 200px !important; /*this may cause problem in iphone*/
 }
 
 .item.active {
     color: #ef473a;
     font-weight: 700;
     background-color: whitesmoke;
+}
+.margin-top-5 {
+    margin-top:5px !important;
 }
 
 /*Popup's classes
@@ -23,6 +30,13 @@
 .popup-buttons 
 */
 
+.ion-ios-skipforward{
+    font-size:48px !important;
+}
+
+.ion-ios-skipbackward{
+    font-size:36px !important;
+}
 
 .popup-head {
     background: #ef473a !important;
@@ -32,3 +46,19 @@
 .popup-title {
     color: #fff !important;
 }
+
+
+/*custom animations - start*/
+
+/*.radio-item.ng-enter {
+    -webkit-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}
+
+.radio-item.ng-enter-stagger {
+  -webkit-animation-delay:50ms;
+  animation-delay:50ms;
+  -webkit-animation-duration:0;
+  animation-duration:0;
+}*/
+/*custom animations -end*/

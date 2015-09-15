@@ -1,24 +1,24 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/org.apache.cordova.media/www/MediaError.js",
-        "id": "org.apache.cordova.media.MediaError",
-        "clobbers": [
-            "window.MediaError"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.media/www/Media.js",
-        "id": "org.apache.cordova.media.Media",
-        "clobbers": [
-            "window.Media"
-        ]
-    },
-    {
         "file": "plugins/com.google.cordova.admob/www/AdMob.js",
         "id": "com.google.cordova.admob.AdMob",
         "clobbers": [
             "window.AdMob"
+        ]
+    },
+    {
+        "file": "plugins/com.qubits.BackgroundAudioPlayer/www/BackgroundAudioPlayer.js",
+        "id": "com.qubits.BackgroundAudioPlayer.BackgroundAudioPlayer",
+        "clobbers": [
+            "BackgroundAudioPlayer"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
+        "id": "org.apache.cordova.statusbar.statusbar",
+        "clobbers": [
+            "window.StatusBar"
         ]
     },
     {
@@ -171,8 +171,9 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "org.apache.cordova.media": "0.2.16",
     "com.google.cordova.admob": "2.7.8",
+    "com.qubits.BackgroundAudioPlayer": "0.0.1",
+    "org.apache.cordova.statusbar": "0.1.10",
     "org.apache.cordova.file": "1.3.3",
     "com.rjfun.cordova.extension": "1.1.4",
     "com.google.playservices": "19.0.0"
