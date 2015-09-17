@@ -17,6 +17,9 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
 
     public static final String ACTION_PLAY = "action.play";
     public static final String ACTION_STOP = "action.stop";
+    public static final String ACTION_SCHEDULE_CLOSE="action.schedule.close";
+    public static final String ACTION_CANCEL_SCHEDULED_CLOSE="action.cancel.scheduled.close";
+    public static final String ACTION_GET_TIME_TO_SCHEDULED_CLOSE= "action.get.time.to.scheduled.close";
     public static final String ACTION_SET_VOLUME = "action.set.volume";
     public static final String ACTION_GET_VOLUME = "action.get.volume";
     public static final String ACTION_GET_STATUS = "action.get.status";
@@ -50,6 +53,15 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
                 callbackContext.success(Float.toString(BackgroundAudioPlayerService.CurrentVolume));
             } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_CURRENT_RADIO)) {
                 callbackContext.success(BackgroundAudioPlayerService.CurrentRadio);
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
+                intent.putExtra("closeTimeInMinutes", args.getInt(0));
+                cordova.getActivity().startService(intent);
+                callbackContext.success();
+            } else if(action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
+                cordova.getActivity().onActionModeStarted(intent);
+                callbackContext.success();
+            } else if(action.equals(BackgroundAudioPlayer.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
+                callbackContext.success(BackgroundAudioPlayerService.CloseTime.toString());
             }
         }catch(Exception ex){
             callbackContext.error(ex.getMessage());
