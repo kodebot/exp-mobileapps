@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.PowerManager;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
 import java.lang.Exception;
@@ -202,6 +203,15 @@ public class BackgroundAudioPlayerService extends IntentService
         if (mWifiLock != null && mWifiLock.isHeld()) {
             mWifiLock.release();
         }
+    }
+
+    private void fireActionCallback(){
+        PluginResult result = new PluginResult(PluginResult.Status.OK, "callback.offtimer.success");
+        result.setKeepCallback(true);
+        if(BackgroundAudioPlayer.OffTimerCallbackContext != null){
+            BackgroundAudioPlayer.OffTimerCallbackContext.sendPluginResult(result);
+        }
+
     }
 
     @Override

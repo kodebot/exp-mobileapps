@@ -25,6 +25,8 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
     public static final String ACTION_GET_STATUS = "action.get.status";
     public static final String ACTION_GET_CURRENT_RADIO = "action.get.current.radio";
 
+    public static CallbackContext OffTimerCallbackContext = null;
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Intent intent = new Intent(cordova.getActivity(), BackgroundAudioPlayerService.class);
@@ -55,10 +57,12 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
                 callbackContext.success(BackgroundAudioPlayerService.CurrentRadio);
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
                 intent.putExtra("closeTimeInMinutes", args.getInt(0));
+                OffTimerCallbackContext = callbackContext;
                 cordova.getActivity().startService(intent);
                 callbackContext.success();
             } else if(action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
                 cordova.getActivity().startService(intent);
+                OffTimerCallbackContext = null;
                 callbackContext.success();
             } else if(action.equals(BackgroundAudioPlayer.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
                 callbackContext.success(BackgroundAudioPlayerService.CloseTime.toString());
