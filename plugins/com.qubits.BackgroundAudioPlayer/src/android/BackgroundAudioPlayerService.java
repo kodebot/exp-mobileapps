@@ -13,8 +13,12 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.lang.Exception;
+import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BackgroundAudioPlayerService extends IntentService
         implements OnAudioFocusChangeListener {
@@ -26,10 +30,12 @@ public class BackgroundAudioPlayerService extends IntentService
     private static WifiManager.WifiLock mWifiLock;
     private static String mCurrentlyPlayingUrl;
     private static boolean mHasSetupAudioFocus = false;
+    private static Timer mStopTimer;
 
     public static boolean IsPlaying = false;
     public static float CurrentVolume = 0.5f;
     public static int CurrentRadio = 0;
+    public static Date CloseTime = null;
 
     public final String LOG_TAG = "BackgroundAudioPlayerService";
 
@@ -65,6 +71,11 @@ public class BackgroundAudioPlayerService extends IntentService
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
                 actionSetVolume();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
+                int closeTimeInMinutes = intent.getIntExtra("closeTimeInMinutes", 0);
+                actionScheduleClose(closeTimeInMinutes);
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
+                actionCancelScheduledClose();
             }
         } catch (Exception ex) {
             // change the radio status
@@ -148,6 +159,26 @@ public class BackgroundAudioPlayerService extends IntentService
         }
     }
 
+    private void actionScheduleClose(int minutes){
+       actionCancelScheduledClose(); // cancel any previously scheduled close
+        int durationInMillis = minutes * 60 * 1000;
+        mStopTimer = new Timer();
+        mStopTimer.schedule(new TimerTask(){
+           @Override
+            public void run(){
+               actionStop();
+           }
+        }, durationInMillis);
+
+        CloseTime = new Date(System.currentTimeMillis() + durationInMillis);
+    }
+
+    private void actionCancelScheduledClose(){
+        if(mStopTimer != null){
+            mStopTimer.cancel();
+            CloseTime = null;
+        }
+    }
     private void streamDuck() {
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             Log.i(LOG_TAG, "ducking audio...");

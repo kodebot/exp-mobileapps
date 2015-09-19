@@ -8,13 +8,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.qubits.BackgroundAudioPlayer/www/BackgroundAudioPlayer.js",
-        "id": "com.qubits.BackgroundAudioPlayer.BackgroundAudioPlayer",
-        "clobbers": [
-            "BackgroundAudioPlayer"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
         "id": "org.apache.cordova.statusbar.statusbar",
         "clobbers": [
@@ -166,15 +159,22 @@ module.exports = [
             "cordova"
         ],
         "runs": true
+    },
+    {
+        "file": "plugins/com.qubits.BackgroundAudioPlayer/www/BackgroundAudioPlayer.js",
+        "id": "com.qubits.BackgroundAudioPlayer.BackgroundAudioPlayer",
+        "clobbers": [
+            "BackgroundAudioPlayer"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "com.google.cordova.admob": "2.7.8",
-    "com.qubits.BackgroundAudioPlayer": "0.0.1",
     "org.apache.cordova.statusbar": "0.1.10",
     "org.apache.cordova.file": "1.3.3",
+    "com.qubits.BackgroundAudioPlayer": "0.0.1",
     "com.rjfun.cordova.extension": "1.1.4",
     "com.google.playservices": "19.0.0"
 }

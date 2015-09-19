@@ -1,19 +1,22 @@
 angular.module('app.controllers', [])
-.controller('radioController', function ($scope, $ionicPlatform, $timeout, alertService, radioDataService, userDataService) {
+.controller('radioController', function ($scope, $ionicPlatform, $ionicPopup, $timeout, alertService, radioDataService, userDataService) {
     var mediaStartingPromise;
     var vm = this;
 
     // #region View Model
     vm.isStopped = false;
     vm.currentRadio = null;
+    vm.showOnlyFav = false;
+    vm.timerSettings = { duration: 20};
     vm.volume = 50;
     vm.play = play;
     vm.stopToggle = stopToggle;
     vm.updateRadio = updateRadio;
-    vm.toggleFav = toggleNav;
+    vm.toggleFav = toggleFav;
     vm.toggleNavFav = toggleNavFav;
     vm.gotoPrev = gotoPrev;
     vm.gotoNext = gotoNext;
+    vm.showTimerPopup = showTimerPopup;
     // #endregion
 
     activate();
@@ -57,21 +60,43 @@ angular.module('app.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
     }
 
-    function toggleNav(radio) {
+    function toggleFav(radio) {
         radio.fav = !radio.fav;
         userDataService.writeUserRadios(vm.radios);
     }
 
     function gotoPrev() {
-        play(vm.radios.prev());
+        play(getFavContextRadios().prev());
     }
 
     function gotoNext() {
-        play(vm.radios.next());
+        play(getFavContextRadios().next());
     }
 
     function toggleNavFav() {
+        vm.showOnlyFav = !vm.showOnlyFav;
+    }
 
+    function getFavContextRadios() {
+        var radios = vm.radios;
+
+        if (vm.showOnlyFav) {
+            radios = vm.radios.filter(function (radio) { return radio.fav; });
+        }
+
+        if (vm.currentRadio) {
+            updateCurrentRadioById(vm.currentRadio.id);
+        }
+        return radios;
+
+        function updateCurrentRadioById(radioId) {
+            radios.forEach(function (radio, index) {
+                if (radio.id == radioId) {
+                    radios.current = index;
+                    return true;
+                }
+            });
+        }
     }
 
     function onStrukStarting() {
@@ -173,6 +198,56 @@ angular.module('app.controllers', [])
         return this[this.current];
     };
     Array.prototype.current = 0;
+    // #endregion
+
+
+
+    // #region Timerpopup
+    // Triggered on a button click, or some other target
+   function showTimerPopup() {
+
+        // An elaborate, custom popup
+        var myPopup = $ionicPopup.show({
+            template: '<div class="range clear-padding">' +
+                      '     <i class="icon ion-ios-timer-outline"></i>' +
+                      '     <input type="range" name="volume" ng-model="vm.timerSettings.duration">' +
+                      '     <i class="icon ion-ios-timer"></i>' +
+                      '</div>' +
+                      '<div class="margin-left-10">In {{vm.timerSettings.duration}} minutes.</div>',
+            title: 'Off Timer',
+            scope: $scope,
+            buttons: [
+              { text: 'Cancel' },
+              {
+                  text: 'Reset',
+                  onTap:function(e){
+                      BackgroundAudioPlayer.cancelScheduledClose(null, null);
+                      return;
+                  }
+              },
+              {
+                  text: 'OK',
+                  type: 'button button-assertive',
+                  onTap: function (e) {
+                      if (!vm.timerSettings.duration) {
+                          e.preventDefault();
+                      } else {
+                          if (vm.timerSettings.duration > 0) {
+                              BackgroundAudioPlayer.scheduleClose(null, null, vm.timerSettings.duration);
+                          } else {
+                              BackgroundAudioPlayer.cancelScheduledClose(null, null);
+                          }
+                          
+                          return vm.timerSettings.duration;
+                      }
+                  }
+              }
+            ]
+        });
+        myPopup.then(function (res) {
+            console.log('Tapped!', res);
+        });
+    };
     // #endregion
 
 })

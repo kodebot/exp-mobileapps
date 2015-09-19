@@ -1,13 +1,17 @@
-.button-play{
-  border-radius: 60% !important;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
-  -webkit-transform: translate3d(0, 0, 0) !important;
-  transform: translate3d(0, 0, 0) !important;
-  -webkit-transition: 0.2s linear !important;
-  transition: 0.2s linear !important;
-  -webkit-transition-property: -webkit-transform, all !important;
-  transition-property: transform, all !important;
-
+.button-player {
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -o-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
 }
 
 .has-banner {
@@ -19,8 +23,13 @@
     font-weight: 700;
     background-color: whitesmoke;
 }
+
 .margin-top-5 {
-    margin-top:5px !important;
+    margin-top: 5px !important;
+}
+
+.margin-left-10{
+    margin-left:10px !important;
 }
 
 /*Popup's classes
@@ -30,23 +39,26 @@
 .popup-buttons 
 */
 
-.ion-ios-skipforward{
-    font-size:48px !important;
+.ion-ios-skipforward {
+    font-size: 48px !important;
 }
 
-.ion-ios-skipbackward{
-    font-size:36px !important;
+.ion-ios-skipbackward {
+    font-size: 36px !important;
 }
 
 .popup-head {
     background: #ef473a !important;
-    font-weight:700 !important;
+    font-weight: 700 !important;
 }
 
 .popup-title {
     color: #fff !important;
 }
 
+.popup-body {
+    padding: 0 !important;
+}
 
 /*custom animations - start*/
 

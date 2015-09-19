@@ -5,10 +5,6 @@
         <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="BackgroundAudioPlayer">
-        <param name="android-package" value="com.qubits.cordova.plugin.BackgroundAudioPlayer" />
-        <param name="onload" value="false" />
-    </feature>
     <feature name="StatusBar">
         <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
         <param name="onload" value="true" />
@@ -16,6 +12,10 @@
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="BackgroundAudioPlayer">
+        <param name="android-package" value="com.qubits.cordova.plugin.BackgroundAudioPlayer" />
+        <param name="onload" value="false" />
     </feature>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
