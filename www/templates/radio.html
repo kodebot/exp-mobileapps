@@ -1,6 +1,6 @@
 <ion-view view-title="VAANOLI">
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon" ng-class="{'ion-ios-timer-outline':vm.showOnlyFav, 'ion-ios-timer':!vm.showOnlyFav}" ng-click="vm.showTimerPopup()"></button><button class="button button-icon icon" ng-class="{'ion-heart-outline':vm.showOnlyFav, 'ion-heart':!vm.showOnlyFav}" ng-click="vm.toggleNavFav()"></button>
+        <button class="button button-icon icon" ng-class="{'ion-ios-timer-outline':vm.timerSettings.duration, 'ion-ios-timer':!vm.timerSettings.duration}" ng-click="vm.showTimerPopup()"></button><button class="button button-icon icon" ng-class="{'ion-heart-outline':vm.showOnlyFav, 'ion-heart':!vm.showOnlyFav}" ng-click="vm.toggleNavFav()"></button>
     </ion-nav-buttons>
     <div class="has-header margin-top-5 card animated tada">
         <div class="item item-assertive item-divider">
@@ -32,7 +32,7 @@
         </ion-refresher>
         <ion-list class="list padding">
             <ion-item href="#" class="item-button-right item-avatar radio-item" data-ng-repeat="radio in vm.radios|filter:(vm.showOnlyFav ||'') && {fav:true}" data-ng-click="vm.play(radio)" data-ng-class="{'active':radio.id === vm.currentRadio.id}">
-                <img ng-src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97150&w=150&h=150">
+                <i class="icon ion-radio-waves"></i>
                 <h2>{{radio.name}}</h2>
                 <p>{{radio.subtext}}</p>
                 <button class="button button-assertive button-icon icon" data-ng-click="vm.toggleFav(radio);$event.stopPropagation();" data-ng-class="{'ion-heart':radio.fav, 'ion-heart-outline':!radio.fav}"></button>

@@ -38,7 +38,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             StatusBar.styleLightContent();
 
             if (/(android)/i.test(navigator.userAgent)) {
-                StatusBar.backgroundColorByHexString("#FFF");
+                StatusBar.backgroundColorByHexString("#D32F2F");
             }
         }
     });

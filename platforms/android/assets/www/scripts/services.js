@@ -7,80 +7,32 @@ angular.module('app.services', [])
         }
     };
 })
-.factory('userDataService', function ($q) {
-    var fileName = "userRadios.json";
-
+.factory('userDataService', function () {
+    
+    var KEY_FAV_RADIOS = 'com.qubits.vaanoli.fav.radios';
+    var KEY_FAV_PREF = 'com.qubits.vaanoli.fav.pref';
     return {
-        readUserRadios: readUserRadios,
-        writeUserRadios: writeUserRadios
+        setFavRadios: setFavRadios,
+        getFavRadios: getFavRadios,
+        setFavPref: setFavPref,
+        getFavPref:getFavPref
     };
 
 
-    function readUserRadios() {
-        var pathToFile = cordova.file.dataDirectory + "/" + fileName;
-
-        var deferred = $q.defer();
-
-        window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-
-                reader.onloadend = function (e) {
-                    deferred.resolve(JSON.parse(e.target.result));
-                };
-
-                reader.readAsText(file);
-            }, fileErrorHandler.bind(null, fileName));
-        }, fileErrorHandler.bind(null, fileName));
-
-        return deferred.promise;
+    function setFavRadios(commaSepRadioIds) {
+        window.localStorage.setItem(KEY_FAV_RADIOS, commaSepRadioIds);
     }
 
-    function writeUserRadios(data) {
-
-        data = JSON.stringify(data, null, '\t');
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (directoryEntry) {
-            directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
-                fileEntry.createWriter(function (fileWriter) {
-
-                    fileWriter.onerror = function (e) {
-                        // todo: show error message
-                        console.log('Write failed: ' + e.toString());
-                    };
-
-                    var blob = new Blob([data], { type: 'text/plain' });
-                    fileWriter.write(blob);
-                }, fileErrorHandler.bind(null, fileName));
-            }, fileErrorHandler.bind(null, fileName));
-        }, fileErrorHandler.bind(null, fileName));
+    function getFavRadios() {
+        return window.localStorage.getItem(KEY_FAV_RADIOS);
     }
 
-    function fileErrorHandler (fileName, e) {
-        var msg = '';
+    function setFavPref(favPref) {
+        window.localStorage.setItem(KEY_FAV_PREF, favPref);
+    }
 
-        switch (e.code) {
-            case FileError.QUOTA_EXCEEDED_ERR:
-                msg = 'Storage quota exceeded';
-                break;
-            case FileError.NOT_FOUND_ERR:
-                msg = 'File not found';
-                break;
-            case FileError.SECURITY_ERR:
-                msg = 'Security error';
-                break;
-            case FileError.INVALID_MODIFICATION_ERR:
-                msg = 'Invalid modification';
-                break;
-            case FileError.INVALID_STATE_ERR:
-                msg = 'Invalid state';
-                break;
-            default:
-                msg = 'Unknown error';
-                break;
-        };
-
-        // todo: show error
-        console.log('Error (' + fileName + '): ' + msg);
+    function getFavPref() {
+        return window.localStorage.getItem(KEY_FAV_PREF);
     }
 })
 .factory('alertService', function ($ionicLoading, $ionicPopup) {

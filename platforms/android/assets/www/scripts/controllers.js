@@ -1,5 +1,5 @@
 angular.module('app.controllers', [])
-.controller('radioController', function ($scope, $ionicPlatform, $ionicPopup, $timeout, alertService, radioDataService, userDataService) {
+.controller('radioController', function ($scope, $ionicPlatform, $ionicPopup, $ionicScrollDelegate, $timeout, alertService, radioDataService, userDataService) {
     var mediaStartingPromise;
     var vm = this;
 
@@ -7,7 +7,7 @@ angular.module('app.controllers', [])
     vm.isStopped = false;
     vm.currentRadio = null;
     vm.showOnlyFav = false;
-    vm.timerSettings = { duration: 20};
+    vm.timerSettings = { duration: 0 };
     vm.volume = 50;
     vm.play = play;
     vm.stopToggle = stopToggle;
@@ -17,6 +17,7 @@ angular.module('app.controllers', [])
     vm.gotoPrev = gotoPrev;
     vm.gotoNext = gotoNext;
     vm.showTimerPopup = showTimerPopup;
+    vm.scrollToTop = scrollToTop;
     // #endregion
 
     activate();
@@ -62,7 +63,10 @@ angular.module('app.controllers', [])
 
     function toggleFav(radio) {
         radio.fav = !radio.fav;
-        userDataService.writeUserRadios(vm.radios);
+
+        var favRadios = vm.radios.filter(function (item) { return item.fav; })
+            .map(function (item) { return item.id; }).valueOf();
+        userDataService.setFavRadios(favRadios);
     }
 
     function gotoPrev() {
@@ -75,6 +79,8 @@ angular.module('app.controllers', [])
 
     function toggleNavFav() {
         vm.showOnlyFav = !vm.showOnlyFav;
+        userDataService.setFavPref(vm.showOnlyFav || 0);
+        scrollToTop();
     }
 
     function getFavContextRadios() {
@@ -98,6 +104,10 @@ angular.module('app.controllers', [])
             });
         }
     }
+
+    function scrollToTop() {
+        $ionicScrollDelegate.scrollTop();
+    };
 
     function onStrukStarting() {
         alertService.hideLoading();
@@ -134,17 +144,21 @@ angular.module('app.controllers', [])
     }
 
     function initialisePlayer() {
+        vm.showOnlyFav = !!userDataService.getFavPref();
         BackgroundAudioPlayer.getStatus(function (status) {
             vm.isStopped = !(status == 1);
-        }, function () { a });
+            $scope.$apply();
+        }, function () { });
 
         BackgroundAudioPlayer.getVolume(function (volume) {
             vm.volume = Number.parseFloat(volume) * 100;
+            $scope.$apply();
         }, function () { });
 
         BackgroundAudioPlayer.getCurrentRadio(function (radioId) {
             if (radioId) {
                 vm.currentRadio = getAndSyncCurrentRadioById(radioId);
+                $scope.$apply();
             }
         }, null);
     }
@@ -154,29 +168,19 @@ angular.module('app.controllers', [])
         return radioDataService.all()
         .then(function (response) {
             vm.radios = response.data.radios;
-            userDataService.readUserRadios()
-            .then(function (result) {
-                if (result) { // file exist - update
-                    var favs = result.filter(function (item) {
-                        if (item.fav) return true;
-                    });
-
-                    favs.forEach(function (item) {
-                        vm.radios.forEach(function (radio) {
-                            if (radio.id === item.id) radio.fav = true;
-                        });
-                    });
-                }
-                userDataService.writeUserRadios(vm.radios);
+            var favRadios = (userDataService.getFavRadios() || '').split(',');
+            favRadios.forEach(function (item) {
+                vm.radios.forEach(function (radio) {
+                    if (radio.id == item) radio.fav = true;
+                });
             });
-
         })
-        .catch(function (e) {
-            alertService.showInternetIssueAlert("Error", "Unable to retrieve radio list. Please make sure you have internet access. If the problem persist, try again later.", getRadios);
-        })
-        .finally(function () {
-            alertService.hideLoading();
-        });
+    .catch(function (e) {
+        alertService.showInternetIssueAlert("Error", "Unable to retrieve radio list. Please make sure you have internet access. If the problem persist, try again later.", getRadios);
+    })
+    .finally(function () {
+        alertService.hideLoading();
+    });
     }
 
     function getAndSyncCurrentRadioById(radioId) {
@@ -204,7 +208,7 @@ angular.module('app.controllers', [])
 
     // #region Timerpopup
     // Triggered on a button click, or some other target
-   function showTimerPopup() {
+    function showTimerPopup() {
 
         // An elaborate, custom popup
         var myPopup = $ionicPopup.show({
@@ -220,8 +224,10 @@ angular.module('app.controllers', [])
               { text: 'Cancel' },
               {
                   text: 'Reset',
-                  onTap:function(e){
+                  onTap: function (e) {
                       BackgroundAudioPlayer.cancelScheduledClose(null, null);
+                      vm.timerSettings.duration = 0;
+                      $scope.$apply();
                       return;
                   }
               },
@@ -233,11 +239,15 @@ angular.module('app.controllers', [])
                           e.preventDefault();
                       } else {
                           if (vm.timerSettings.duration > 0) {
-                              BackgroundAudioPlayer.scheduleClose(null, null, vm.timerSettings.duration);
+                              BackgroundAudioPlayer.scheduleClose(function () {
+                                  vm.isStopped = true;
+                                  vm.timerSettings.duration = 0;
+                                  $scope.$apply();
+                              }, null, vm.timerSettings.duration);
                           } else {
                               BackgroundAudioPlayer.cancelScheduledClose(null, null);
                           }
-                          
+
                           return vm.timerSettings.duration;
                       }
                   }

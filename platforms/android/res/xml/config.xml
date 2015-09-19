@@ -5,17 +5,17 @@
         <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="StatusBar">
-        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
-        <param name="onload" value="true" />
+    <feature name="BackgroundAudioPlayer">
+        <param name="android-package" value="com.qubits.cordova.plugin.BackgroundAudioPlayer" />
+        <param name="onload" value="false" />
     </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="BackgroundAudioPlayer">
-        <param name="android-package" value="com.qubits.cordova.plugin.BackgroundAudioPlayer" />
-        <param name="onload" value="false" />
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
     </feature>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
@@ -37,16 +37,19 @@
     <allow-intent href="mailto:*" />
     <vs:features />
     <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
     <preference name="windows-target-version" value="8.1" />
     <preference name="windows-phone-target-version" value="8.1" />
     <preference name="orientation" value="portrait" />
     <vs:plugin name="com.google.cordova.admob" />
-    <preference name="Fullscreen" value="True" />
-    <vs:plugin name="org.apache.cordova.statusbar" version="0.1.10" />
+    <preference name="Fullscreen" value="False" />
     <vs:plugin name="org.apache.cordova.file" version="1.3.3" />
-    <preference name="KeepRunning" value="False" />
-    <preference name="ShowTitle" value="True" />
-    <preference name="InAppBrowserStorageEnabled" value="False" />
-    <preference name="SuppressesIncrementalRendering" value="True" />
+    <preference name="KeepRunning" value="True" />
+    <preference name="ShowTitle" value="False" />
+    <preference name="InAppBrowserStorageEnabled" value="True" />
+    <preference name="SuppressesIncrementalRendering" value="False" />
     <vs:plugin name="com.qubits.BackgroundAudioPlayer" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer" version="0.0.1" />
+    <preference name="StatusBarBackgroundColor" value="#D32F2F" />
+    <preference name="StatusBarStyle" value="blackopaque" />
+    <vs:plugin name="cordova-plugin-statusbar" src="https://github.com/apache/cordova-plugin-statusbar" version="2.0.0-dev" />
 </widget>
