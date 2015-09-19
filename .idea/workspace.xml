@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
@@ -37,14 +36,14 @@
       <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42359552">
-              <caret line="211" column="83" selection-start-line="211" selection-start-column="83" selection-end-line="211" selection-end-column="83" />
+            <state vertical-scroll-proportion="0.44494382">
+              <caret line="170" column="36" selection-start-line="170" selection-start-column="36" selection-end-line="170" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1469#1470#0" expanded="true" />
                 <element signature="e#1526#1527#0" expanded="true" />
-                <element signature="e#6032#6152#0" expanded="true" />
-                <element signature="e#6151#6152#0" expanded="true" />
+                <element signature="e#6032#6189#0" expanded="true" />
+                <element signature="e#6188#6189#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -444,8 +443,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -484,8 +483,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -524,8 +523,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -564,8 +563,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -604,8 +603,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -644,8 +643,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -684,8 +683,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -724,8 +723,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -746,8 +745,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -808,14 +807,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42359552">
-          <caret line="211" column="83" selection-start-line="211" selection-start-column="83" selection-end-line="211" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.44494382">
+          <caret line="170" column="36" selection-start-line="170" selection-start-column="36" selection-end-line="170" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1469#1470#0" expanded="true" />
             <element signature="e#1526#1527#0" expanded="true" />
-            <element signature="e#6032#6152#0" expanded="true" />
-            <element signature="e#6151#6152#0" expanded="true" />
+            <element signature="e#6032#6189#0" expanded="true" />
+            <element signature="e#6188#6189#0" expanded="true" />
           </folding>
         </state>
       </provider>

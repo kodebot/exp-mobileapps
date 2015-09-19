@@ -168,6 +168,7 @@ public class BackgroundAudioPlayerService extends IntentService
            @Override
             public void run(){
                actionStop();
+               fireActionCallback();
            }
         }, durationInMillis);
 
