@@ -7,6 +7,7 @@ import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -63,7 +64,9 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
             } else if(action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
                 cordova.getActivity().startService(intent);
                 OffTimerCallbackContext = null;
-                callbackContext.success();
+                PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+                result.setKeepCallback(true);
+                OffTimerCallbackContext.sendPluginResult(result);
             } else if(action.equals(BackgroundAudioPlayer.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
                 callbackContext.success(BackgroundAudioPlayerService.CloseTime.toString());
             }
