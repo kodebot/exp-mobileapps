@@ -209,8 +209,10 @@ public class BackgroundAudioPlayerService extends IntentService
     private void fireActionCallback(){
         PluginResult result = new PluginResult(PluginResult.Status.OK, "callback.offtimer.success");
         result.setKeepCallback(true);
+        Log.i(LOG_TAG, "about to call offtimer success callback...");
         if(BackgroundAudioPlayer.OffTimerCallbackContext != null){
             BackgroundAudioPlayer.OffTimerCallbackContext.sendPluginResult(result);
+            Log.i(LOG_TAG, "offtimer success callback called...");
         }
 
     }
