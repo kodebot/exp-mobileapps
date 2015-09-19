@@ -72,7 +72,7 @@ public class BackgroundAudioPlayerService extends IntentService
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
                 actionSetVolume();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
-                int closeTimeInMinutes = Integer.parseInt(intent.getIntExtra("closeTimeInMinutes", 0));
+                int closeTimeInMinutes = intent.getIntExtra("closeTimeInMinutes", 0);
                 actionScheduleClose(closeTimeInMinutes);
             } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
                 actionCancelScheduledClose();
@@ -165,7 +165,7 @@ public class BackgroundAudioPlayerService extends IntentService
         mStopTimer = new Timer();
         mStopTimer.schedule(new TimerTask(){
            @Override
-            public void stop(){
+            public void run(){
                actionStop();
            }
         }, durationInMillis);
