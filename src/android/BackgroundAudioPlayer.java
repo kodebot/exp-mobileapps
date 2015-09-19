@@ -58,7 +58,7 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
                 cordova.getActivity().startService(intent);
                 callbackContext.success();
             } else if(action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
-                cordova.getActivity().onActionModeStarted(intent);
+                cordova.getActivity().startService(intent);
                 callbackContext.success();
             } else if(action.equals(BackgroundAudioPlayer.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
                 callbackContext.success(BackgroundAudioPlayerService.CloseTime.toString());

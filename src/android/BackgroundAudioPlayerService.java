@@ -13,10 +13,12 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.lang.Exception;
+import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Date;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class BackgroundAudioPlayerService extends IntentService
         implements OnAudioFocusChangeListener {
@@ -70,9 +72,9 @@ public class BackgroundAudioPlayerService extends IntentService
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
                 actionSetVolume();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
-                int closeTimeInMinutes = Int.parseInt(intent.getIntExtra("closeTimeInMinutes", 0));
+                int closeTimeInMinutes = Integer.parseInt(intent.getIntExtra("closeTimeInMinutes", 0));
                 actionScheduleClose(closeTimeInMinutes);
-            } else if (action.equals(BackgroundPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
                 actionCancelScheduledClose();
             }
         } catch (Exception ex) {
@@ -161,7 +163,7 @@ public class BackgroundAudioPlayerService extends IntentService
        actionCancelScheduledClose(); // cancel any previously scheduled close
         int durationInMillis = minutes * 60 * 1000;
         mStopTimer = new Timer();
-        timer.schedule(new TimerTask(){
+        mStopTimer.schedule(new TimerTask(){
            @Override
             public void stop(){
                actionStop();
