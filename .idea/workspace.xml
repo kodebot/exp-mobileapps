@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" line="69" mnemonic="1" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,15 +36,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42359552">
-              <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="184" column="29" selection-start-line="184" selection-start-column="29" selection-end-line="184" selection-end-column="56" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1469#1470#0" expanded="true" />
-                <element signature="e#1526#1527#0" expanded="true" />
+                <element signature="e#6356#6519#0" expanded="false" />
+                <element signature="e#6518#6519#0" expanded="false" />
+                <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -58,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BackgroundAudioPlayer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BackgroundAudioPlayer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="65" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.80786514">
+              <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -91,8 +93,8 @@
         <option value="$PROJECT_DIR$/www/backgroundAudioPlayer.js" />
         <option value="$PROJECT_DIR$/plugin.xml" />
         <option value="$PROJECT_DIR$/www/BackgroundAudioPlayer.js" />
-        <option value="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" />
         <option value="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
+        <option value="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" />
       </list>
     </option>
   </component>
@@ -431,9 +433,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="224" column="46" selection-start-line="224" selection-start-column="46" selection-end-line="224" selection-end-column="46" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -469,9 +471,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -507,9 +509,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="72" column="45" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="45" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -545,9 +547,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="75" column="45" selection-start-line="75" selection-start-column="45" selection-end-line="75" selection-end-column="45" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -583,9 +585,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -621,9 +623,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -659,9 +661,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="64" selection-start-line="60" selection-start-column="64" selection-end-line="60" selection-end-column="64" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -697,9 +699,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -735,9 +737,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="41" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="41" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -773,9 +775,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -811,9 +813,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -831,9 +833,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -874,16 +876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="65" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/BackgroundAudioPlayer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -894,12 +886,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42359552">
-          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="184" column="29" selection-start-line="184" selection-start-column="29" selection-end-line="184" selection-end-column="56" />
+          <folding>
+            <element signature="e#6356#6519#0" expanded="false" />
+            <element signature="e#6518#6519#0" expanded="false" />
+            <marker date="1445717953649" expanded="true" signature="43:644" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.80786514">
+          <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
