@@ -143,7 +143,6 @@ public class BackgroundAudioPlayerService extends IntentService
     }
 
     private void actionPlayStoppedPlayer() {
-        try {
             if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
                 if (!mMediaPlayer.isPlaying()) {
                     mMediaPlayer.start();
@@ -151,11 +150,6 @@ public class BackgroundAudioPlayerService extends IntentService
                 }
             }
             actionSetVolume();
-        } catch (IOException ex) {
-            // to do add exception handling
-            Log.e(LOG_TAG, "unexpected error when playing audio...");
-            Log.e(LOG_TAG, ex.getMessage());
-        }
     }
 
     private void actionStop() {
