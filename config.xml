@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102" version="2.0.1" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
   <name>Vaanoli</name>
   <description>Simple, super fast tamil internet radio.</description>
   <author href="mvenkatraman.co.uk" email="qubitssolutionsltd@outlook.com">Qubits Solutions Ltd.</author>
@@ -100,8 +100,8 @@
   <preference name="ShowTitle" value="False" />
   <preference name="InAppBrowserStorageEnabled" value="True" />
   <preference name="SuppressesIncrementalRendering" value="False" />
-  <vs:plugin name="com.qubits.BackgroundAudioPlayer" version="0.0.1" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer" />
   <preference name="StatusBarBackgroundColor" value="#D32F2F" />
   <preference name="StatusBarStyle" value="blackopaque" />
   <vs:plugin name="cordova-plugin-statusbar" version="2.0.0-dev" src="https://github.com/apache/cordova-plugin-statusbar" />
+  <vs:plugin name="com.qubits.BackgroundAudioPlayer" version="0.0.1" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer" />
 </widget>

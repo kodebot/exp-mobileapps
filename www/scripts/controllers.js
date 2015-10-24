@@ -1,6 +1,7 @@
 angular.module('app.controllers', [])
-.controller('radioController', function ($scope, $ionicPlatform, $ionicPopup, $ionicScrollDelegate, $timeout, alertService, radioDataService, userDataService) {
+.controller('radioController', function ($scope, $ionicPlatform, $ionicPopup, $ionicScrollDelegate, $timeout, $interval, alertService, radioDataService, userDataService) {
     var mediaStartingPromise;
+    var mediaBufferingPromise;
     var vm = this;
 
     // #region View Model
@@ -36,9 +37,10 @@ angular.module('app.controllers', [])
         mediaStartingPromise = $timeout(onStrukStarting, 15000); // wait 15 seconds
         BackgroundAudioPlayer.play(function () {
             $timeout.cancel(mediaStartingPromise);
-            alertService.hideLoading();
+            waitOnBuffering();
         }, onPlayError, radio.streamUrl, radio.id);
     }
+
 
     function stopToggle() {
         // when no radio is selected and play is pressed then select the first one in the list and play
@@ -161,6 +163,23 @@ angular.module('app.controllers', [])
                 $scope.$apply();
             }
         }, null);
+
+        getTimeToClose();
+    }
+
+    function waitOnBuffering() {
+        mediaBufferingPromise = $interval(checkStatusOnBuffering, 1000);
+        function checkStatusOnBuffering() {
+            BackgroundAudioPlayer.getStatus(function (status) {
+                vm.isStopped = !(status == 1);
+                if (!vm.isStopped) {
+                    alertService.hideLoading();
+                    if (mediaBufferingPromise) {
+                        $interval.cancel(mediaBufferingPromise);
+                    }
+                }
+            }, function () { })
+        }
     }
 
     function getRadios() {
@@ -207,53 +226,71 @@ angular.module('app.controllers', [])
 
 
     // #region Timerpopup
+
+    function getTimeToClose() {
+        // get remaining time from any in-progress scheduled close
+        BackgroundAudioPlayer.getTimeToScheduledClose(function (closingAt) {
+            if (closingAt) {
+                var diffInMilli = parseInt(closingAt);
+                if (diffInMilli) {
+                    vm.timerSettings.duration = Math.ceil(diffInMilli / (1000 * 60));
+                    $scope.$apply();
+                }
+            }
+        }, function () { });
+    }
+
     // Triggered on a button click, or some other target
     function showTimerPopup() {
-
-        // An elaborate, custom popup
-        var myPopup = $ionicPopup.show({
-            template: '<div class="range clear-padding">' +
-                      '     <i class="icon ion-ios-timer-outline"></i>' +
-                      '     <input type="range" name="volume" ng-model="vm.timerSettings.duration">' +
-                      '     <i class="icon ion-ios-timer"></i>' +
-                      '</div>' +
-                      '<div class="margin-left-10">In {{vm.timerSettings.duration}} minutes.</div>',
-            title: 'Off Timer',
-            scope: $scope,
-            buttons: [
-              { text: 'Cancel' },
-              {
-                  text: 'Reset',
-                  onTap: function (e) {
-                      BackgroundAudioPlayer.cancelScheduledClose(null, null);
-                      vm.timerSettings.duration = 0;
-                      $scope.$apply();
-                      return;
-                  }
-              },
-              {
-                  text: 'OK',
-                  type: 'button button-assertive',
-                  onTap: function (e) {
-                      if (!vm.timerSettings.duration) {
-                          e.preventDefault();
-                      } else {
-                          if (vm.timerSettings.duration > 0) {
-                              BackgroundAudioPlayer.scheduleClose(function () {
-                                  vm.isStopped = true;
-                                  vm.timerSettings.duration = 0;
-                                  $scope.$apply();
-                              }, null, vm.timerSettings.duration);
+        getTimeToClose();
+        showPopupInternal();
+        function showPopupInternal() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div class="range clear-padding">' +
+                          '     <i class="icon ion-ios-timer-outline"></i>' +
+                          '     <input type="range" name="volume" ng-model="vm.timerSettings.duration">' +
+                          '     <i class="icon ion-ios-timer"></i>' +
+                          '</div>' +
+                          '<div class="margin-left-10">In {{vm.timerSettings.duration}} minutes.</div>',
+                title: 'Off Timer',
+                scope: $scope,
+                buttons: [
+                  { text: 'Cancel' },
+                  {
+                      text: 'Reset',
+                      onTap: function (e) {
+                          BackgroundAudioPlayer.cancelScheduledClose(null, null);
+                          vm.timerSettings.duration = 0;
+                          $scope.$apply();
+                          return;
+                      }
+                  },
+                  {
+                      text: 'OK',
+                      type: 'button button-assertive',
+                      onTap: function (e) {
+                          if (!vm.timerSettings.duration) {
+                              e.preventDefault();
                           } else {
-                              BackgroundAudioPlayer.cancelScheduledClose(null, null);
-                          }
+                              if (vm.timerSettings.duration > 0) {
+                                  BackgroundAudioPlayer.scheduleClose(function () {
+                                      vm.isStopped = true;
+                                      vm.timerSettings.duration = 0;
+                                      $scope.$apply();
+                                  }, null, vm.timerSettings.duration);
+                              } else {
+                                  BackgroundAudioPlayer.cancelScheduledClose(null, null);
+                              }
 
-                          return vm.timerSettings.duration;
+                              return vm.timerSettings.duration;
+                          }
                       }
                   }
-              }
-            ]
-        });
+                ]
+            });
+        }
+
     };
     // #endregion
 

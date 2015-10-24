@@ -47,7 +47,7 @@ public class BackgroundAudioPlayerService extends IntentService
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "destroying...");
-       // actionStop();
+        // actionStop();
     }
 
     @Override
@@ -72,10 +72,10 @@ public class BackgroundAudioPlayerService extends IntentService
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
                 actionSetVolume();
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)) {
                 int closeTimeInMinutes = intent.getIntExtra("closeTimeInMinutes", 0);
                 actionScheduleClose(closeTimeInMinutes);
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)) {
                 actionCancelScheduledClose();
             }
         } catch (Exception ex) {
@@ -106,7 +106,7 @@ public class BackgroundAudioPlayerService extends IntentService
     }
 
     private void setupAudioFocus() {
-        if(mHasSetupAudioFocus == false) {
+        if (mHasSetupAudioFocus == false) {
             Log.i(LOG_TAG, "trying to gain stream music audio focus.");
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
@@ -135,11 +135,21 @@ public class BackgroundAudioPlayerService extends IntentService
                     IsPlaying = true;
                 }
             }
-        }catch(IOException ex) {
+        } catch (IOException ex) {
             // to do add exception handling
             Log.e(LOG_TAG, "unexpected error when playing audio...");
             Log.e(LOG_TAG, ex.getMessage());
         }
+    }
+
+    private void actionPlayStoppedPlayer() {
+            if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
+                if (!mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.start();
+                    IsPlaying = true;
+                }
+            }
+            actionSetVolume();
     }
 
     private void actionStop() {
@@ -160,27 +170,28 @@ public class BackgroundAudioPlayerService extends IntentService
         }
     }
 
-    private void actionScheduleClose(int minutes){
-       actionCancelScheduledClose(); // cancel any previously scheduled close
+    private void actionScheduleClose(int minutes) {
+        actionCancelScheduledClose(); // cancel any previously scheduled close
         int durationInMillis = minutes * 60 * 1000;
         mStopTimer = new Timer();
-        mStopTimer.schedule(new TimerTask(){
-           @Override
-            public void run(){
-               actionStop();
-               fireActionCallback();
-           }
+        mStopTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                actionStop();
+                fireActionCallback();
+            }
         }, durationInMillis);
 
         CloseTime = new Date(System.currentTimeMillis() + durationInMillis);
     }
 
-    private void actionCancelScheduledClose(){
-        if(mStopTimer != null){
+    private void actionCancelScheduledClose() {
+        if (mStopTimer != null) {
             mStopTimer.cancel();
             CloseTime = null;
         }
     }
+
     private void streamDuck() {
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             Log.i(LOG_TAG, "ducking audio...");
@@ -206,11 +217,11 @@ public class BackgroundAudioPlayerService extends IntentService
         }
     }
 
-    private void fireActionCallback(){
+    private void fireActionCallback() {
         PluginResult result = new PluginResult(PluginResult.Status.OK, "callback.offtimer.success");
         result.setKeepCallback(true);
         Log.i(LOG_TAG, "about to call offtimer success callback...");
-        if(BackgroundAudioPlayer.OffTimerCallbackContext != null){
+        if (BackgroundAudioPlayer.OffTimerCallbackContext != null) {
             BackgroundAudioPlayer.OffTimerCallbackContext.sendPluginResult(result);
             Log.i(LOG_TAG, "offtimer success callback called...");
         }
@@ -221,8 +232,7 @@ public class BackgroundAudioPlayerService extends IntentService
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
-                setupPlayer();
-                actionPlay();
+                actionPlayStoppedPlayer(); // play only on transient losses
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS:
