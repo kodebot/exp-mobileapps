@@ -90,6 +90,7 @@ public class BackgroundAudioPlayerService extends IntentService
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mMediaPlayer.setLooping(true);
             mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
             acquireWifiLock();
             setupAudioFocus();
@@ -222,8 +223,6 @@ public class BackgroundAudioPlayerService extends IntentService
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
-//                setupPlayer();
-//                actionPlay();
                 actionSetVolume(); // only handle ducking
                 break;
 
