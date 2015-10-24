@@ -90,7 +90,6 @@ public class BackgroundAudioPlayerService extends IntentService
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setLooping(true);
             mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
             acquireWifiLock();
             setupAudioFocus();
@@ -136,6 +135,22 @@ public class BackgroundAudioPlayerService extends IntentService
                     IsPlaying = true;
                 }
             }
+        } catch (IOException ex) {
+            // to do add exception handling
+            Log.e(LOG_TAG, "unexpected error when playing audio...");
+            Log.e(LOG_TAG, ex.getMessage());
+        }
+    }
+
+    private void actionPlayStoppedPlayer() {
+        try {
+            if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
+                if (!mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.start();
+                    IsPlaying = true;
+                }
+            }
+            actionSetVolume();
         } catch (IOException ex) {
             // to do add exception handling
             Log.e(LOG_TAG, "unexpected error when playing audio...");
@@ -223,7 +238,7 @@ public class BackgroundAudioPlayerService extends IntentService
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
-                actionSetVolume(); // only handle ducking
+                actionPlayStoppedPlayer(); // play only on transient losses
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS:
