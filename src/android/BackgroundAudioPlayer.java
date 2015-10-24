@@ -68,7 +68,7 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
                 callbackContext.success();
             } else if(action.equals(BackgroundAudioPlayer.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
                 if(BackgroundAudioPlayerService.CloseTime != null){
-                    int diff = BackgroundAudioPlayerService.CloseTime.getTime() - System.currentTimeMillis();
+                    long diff = BackgroundAudioPlayerService.CloseTime.getTime() - System.currentTimeMillis();
                     callbackContext.success(diff.toString());
                 }else {
                     callbackContext.success("0");
