@@ -58,7 +58,7 @@ public class BackgroundAudioPlayerService extends IntentService
         Log.i(LOG_TAG, "on handle intent");
         handleIntent(intent);
 
-        startForeground(1338,
+        startForeground(28373,
                 buildForegroundNotification("Lankasri FM"));
 
     }
@@ -67,7 +67,8 @@ public class BackgroundAudioPlayerService extends IntentService
         NotificationCompat.Builder builder =new NotificationCompat.Builder(this);
         builder.setOngoing(true);
         builder.setContentTitle("Vaanoli Playing")
-                .setContentText(currentRadio);
+                .setContentText(currentRadio)
+                .setSmallIcon(R.drawable.icon);
 
         return(builder.build());
     }
