@@ -66,9 +66,10 @@ public class BackgroundAudioPlayerService extends IntentService
     private Notification buildForegroundNotification(String currentRadio) {
         NotificationCompat.Builder builder =new NotificationCompat.Builder(this);
         builder.setOngoing(true);
+        int iconId = getResources().getIdentifier("icon", "drawable", getPackageName());
         builder.setContentTitle("Vaanoli Playing")
                 .setContentText(currentRadio)
-                .setSmallIcon(R.drawable.icon);
+                .setSmallIcon(iconId);
 
         return(builder.build());
     }
