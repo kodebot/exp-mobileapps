@@ -51,15 +51,15 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"BackgroundAudioPlayer\"><param name=\"android-package\" value=\"com.qubits.cordova.plugin.BackgroundAudioPlayer\" /><param name=\"onload\" value=\"false\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BackgroundAudioPlayer\"><param name=\"android-package\" value=\"com.qubits.cordova.plugin.BackgroundAudioPlayer\" /><param name=\"onload\" value=\"false\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -71,13 +71,13 @@
         "com.google.cordova.admob": {
             "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
         },
-        "com.qubits.BackgroundAudioPlayer": {
-            "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
-        },
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
         },
         "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
+        },
+        "com.qubits.BackgroundAudioPlayer": {
             "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
         }
     },

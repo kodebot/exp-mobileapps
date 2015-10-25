@@ -103,5 +103,5 @@
   <preference name="StatusBarBackgroundColor" value="#D32F2F" />
   <preference name="StatusBarStyle" value="blackopaque" />
   <vs:plugin name="cordova-plugin-statusbar" version="2.0.0-dev" src="https://github.com/apache/cordova-plugin-statusbar" />
-  <vs:plugin name="com.qubits.BackgroundAudioPlayer" version="0.0.1" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer" />
+  <vs:plugin name="com.qubits.BackgroundAudioPlayer" version="0.0.1" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git" />
 </widget>

@@ -10,6 +10,8 @@ import android.net.wifi.WifiManager;
 import android.os.PowerManager;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.app.Notification;
+import android.support.v4.app.NotificationCompat;
 import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
@@ -143,13 +145,13 @@ public class BackgroundAudioPlayerService extends IntentService
     }
 
     private void actionPlayStoppedPlayer() {
-            if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
-                if (!mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.start();
-                    IsPlaying = true;
-                }
+        if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
+            if (!mMediaPlayer.isPlaying()) {
+                mMediaPlayer.start();
+                IsPlaying = true;
             }
-            actionSetVolume();
+        }
+        actionSetVolume();
     }
 
     private void actionStop() {

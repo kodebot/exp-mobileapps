@@ -45,7 +45,12 @@ angular.module('app.controllers', [])
     function stopToggle() {
         // when no radio is selected and play is pressed then select the first one in the list and play
         if (!vm.currentRadio) {
-            vm.play(vm.radios[0]);
+            var radiosInContext = getFavContextRadios(); // get fav radios only when show fav only is on
+            if (radiosInContext.length) {
+                vm.play(radiosInContext[0]);
+            } else {
+                vm.play(vm.radios[0]); // play the first from all list when none is available in filtered list
+            }
             return;
         }
 

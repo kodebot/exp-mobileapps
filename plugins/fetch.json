@@ -47,7 +47,7 @@
     "com.qubits.BackgroundAudioPlayer": {
         "source": {
             "type": "git",
-            "url": "https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer",
+            "url": "https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git",
             "subdir": "."
         }
     },
