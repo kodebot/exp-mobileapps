@@ -26,5 +26,6 @@
 
         <source-file src="src/android/BackgroundAudioPlayerService.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="src/android/BackgroundAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/android-support-v4.jar" target-dir="src/com/qubits/cordova/plugin/libs"/>
     </platform>
 </plugin>

@@ -58,7 +58,7 @@ public class BackgroundAudioPlayerService extends IntentService
         Log.i(LOG_TAG, "on handle intent");
         handleIntent(intent);
 
-        startForeground("1338",
+        startForeground(1338,
                 buildForegroundNotification("Lankasri FM"));
 
     }
