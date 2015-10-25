@@ -10,6 +10,8 @@ import android.net.wifi.WifiManager;
 import android.os.PowerManager;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.app.Notification;
+import android.support.v4.app.NotificationCompat;
 import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
@@ -57,7 +59,7 @@ public class BackgroundAudioPlayerService extends IntentService
         handleIntent(intent);
 
         startForeground("1338",
-                buildForegroundNotification(filename));
+                buildForegroundNotification("Lankasri FM"));
 
     }
 
