@@ -56,22 +56,19 @@ public class BackgroundAudioPlayerService extends IntentService
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.i(LOG_TAG, "on handle intent");
+        startForeground(28373, buildForegroundNotification("Lankasri FM"));
         handleIntent(intent);
-
-        startForeground(28373,
-                buildForegroundNotification("Lankasri FM"));
-
     }
 
     private Notification buildForegroundNotification(String currentRadio) {
-        NotificationCompat.Builder builder =new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setOngoing(true);
         int iconId = getResources().getIdentifier("icon", "drawable", getPackageName());
         builder.setContentTitle("Vaanoli Playing")
                 .setContentText(currentRadio)
                 .setSmallIcon(iconId);
 
-        return(builder.build());
+        return (builder.build());
     }
 
     private void handleIntent(Intent intent) {
@@ -161,13 +158,13 @@ public class BackgroundAudioPlayerService extends IntentService
     }
 
     private void actionPlayStoppedPlayer() {
-            if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
-                if (!mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.start();
-                    IsPlaying = true;
-                }
+        if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
+            if (!mMediaPlayer.isPlaying()) {
+                mMediaPlayer.start();
+                IsPlaying = true;
             }
-            actionSetVolume();
+        }
+        actionSetVolume();
     }
 
     private void actionStop() {
