@@ -1,20 +1,27 @@
 package src.android;
 
+import android.app.IntentService;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
+import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.support.v4.app.NotificationCompat;
+import android.text.style.ImageSpan;
 import android.util.Log;
+import android.app.Notification;
+import android.app.Service;
+import android.support.v4.app.NotificationCompat;
 import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Integer;
+import java.lang.Override;
+import java.lang.String;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,7 +68,7 @@ public class BackgroundAudioPlayerService extends Service
         return START_STICKY;
     }
 
-    private Runnable createIntentTask(final Intent intent) {
+    private Runnable createIntentTask(final Intent intent){
         return new Runnable() {
             @Override
             public void run() {
@@ -77,26 +84,20 @@ public class BackgroundAudioPlayerService extends Service
         String action = intent.getExtras().getString("action");
         try {
             Log.i(LOG_TAG, "passed in action " + action);
-            switch (action) {
-                case BackgroundAudioPlayer.ACTION_PLAY:
-                    mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
-                    CurrentRadio = intent.getIntExtra("radioId", 0);
-                    actionPlay();
-                    break;
-                case BackgroundAudioPlayer.ACTION_STOP:
-                    actionStop();
-                    break;
-                case BackgroundAudioPlayer.ACTION_SET_VOLUME:
-                    CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
-                    actionSetVolume();
-                    break;
-                case BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE:
-                    int closeTimeInMinutes = intent.getIntExtra("closeTimeInMinutes", 0);
-                    actionScheduleClose(closeTimeInMinutes);
-                    break;
-                case BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE:
-                    actionCancelScheduledClose();
-                    break;
+            if (action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
+                mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
+                CurrentRadio = intent.getIntExtra("radioId", 0);
+                actionPlay();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
+                actionStop();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
+                CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
+                actionSetVolume();
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)) {
+                int closeTimeInMinutes = intent.getIntExtra("closeTimeInMinutes", 0);
+                actionScheduleClose(closeTimeInMinutes);
+            } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)) {
+                actionCancelScheduledClose();
             }
         } catch (Exception ex) {
             // change the radio status
@@ -251,7 +252,7 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     private void setupAsForeground() {
-        String radioName = "Vaanoli is running now.";
+        String radioName = "Tap to open";
         // assign the song name to songName
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), BackgroundAudioPlayer.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
