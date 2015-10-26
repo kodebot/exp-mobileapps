@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BackgroundAudioPlayerService extends IntentService
+public class BackgroundAudioPlayerService extends Service
         implements OnAudioFocusChangeListener {
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
@@ -53,9 +53,10 @@ public class BackgroundAudioPlayerService extends IntentService
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onStartCommand(Intent intent, int flags, int startId)
         Log.i(LOG_TAG, "on handle intent");
         handleIntent(intent);
+        return STICKY_START;
     }
 
     private void handleIntent(Intent intent) {
@@ -69,6 +70,7 @@ public class BackgroundAudioPlayerService extends IntentService
                 mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
                 CurrentRadio = intent.getIntExtra("radioId", 0);
                 actionPlay();
+                setupAsForeground();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
@@ -228,6 +230,22 @@ public class BackgroundAudioPlayerService extends IntentService
             Log.i(LOG_TAG, "offtimer success callback called...");
         }
 
+    }
+
+    private void setupAsForeground(){
+        String radioName = "Lanka Sri from puthu Vaanoli";
+        // assign the song name to songName
+        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
+                new Intent(getApplicationContext(), MainActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        builder.setSmallIcon(getApplicatgionContext().getResources().getIdentifier("icon","drawable", context.getPackageName()))
+                .setContentTitle("Vaanoli")
+                .setContentText(radioName)
+                .setContentIntent(pi);
+
+        startForeground(12345, builder.build());
     }
 
     @Override
