@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin.xml" afterPath="$PROJECT_DIR$/plugin.xml" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,21 +36,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45126355">
+            <state vertical-scroll-proportion="-144.70589">
               <caret line="246" column="97" selection-start-line="246" selection-start-column="97" selection-end-line="246" selection-end-column="97" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="74" selection-start-line="28" selection-start-column="74" selection-end-line="28" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.23121387">
+              <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -86,11 +86,11 @@
       <list>
         <option value="$PROJECT_DIR$/www/backgroundAudioPlayer.js" />
         <option value="$PROJECT_DIR$/www/BackgroundAudioPlayer.js" />
-        <option value="$PROJECT_DIR$/plugin.xml" />
         <option value="$PROJECT_DIR$/src/android/BackgroundAudioPlayer.java" />
         <option value="$PROJECT_DIR$/src/android/com/qubits/cordova/plugin/BackgroundAudioPlayer.java" />
         <option value="$PROJECT_DIR$/src/android/com/qubits/cordova/plugin/BackgroundAudioPlayerService.java" />
         <option value="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
+        <option value="$PROJECT_DIR$/plugin.xml" />
       </list>
     </option>
   </component>
@@ -841,22 +841,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/BackgroundAudioPlayer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="74" selection-start-line="28" selection-start-column="74" selection-end-line="28" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Android/android-sdk/extras/android/support/v4/android-support-v4.jar!/android/support/v4/app/NotificationCompat.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34498835">
@@ -874,8 +858,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45126355">
+        <state vertical-scroll-proportion="-144.70589">
           <caret line="246" column="97" selection-start-line="246" selection-start-column="97" selection-end-line="246" selection-end-column="97" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/BackgroundAudioPlayer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23121387">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
           <folding />
         </state>
       </provider>

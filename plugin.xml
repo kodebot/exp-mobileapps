@@ -12,14 +12,14 @@
 
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:name="src.android.src.android.BackgroundAudioPlayerService"/>
+            <service android:name="src.android.BackgroundAudioPlayerService"/>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK"/>
         </config-file>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="BackgroundAudioPlayer">
-                <param name="android-package" value="src.android.src.android.BackgroundAudioPlayer"/>
+                <param name="android-package" value="src.android.BackgroundAudioPlayer"/>
                 <param name="onload" value="false"/>
             </feature>
         </config-file>
