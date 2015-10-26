@@ -7,10 +7,12 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
+import android.os.IBinder;
 import android.os.PowerManager;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.app.Notification;
+import android.app.Service;
 import android.support.v4.app.NotificationCompat;
 import org.apache.cordova.PluginResult;
 
@@ -50,6 +52,11 @@ public class BackgroundAudioPlayerService extends Service
     public void onDestroy() {
         Log.i(LOG_TAG, "destroying...");
         // actionStop();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override
