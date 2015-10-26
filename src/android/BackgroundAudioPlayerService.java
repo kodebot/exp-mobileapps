@@ -53,7 +53,7 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     @Override
-    protected void onStartCommand(Intent intent, int flags, int startId)
+    protected void onStartCommand(Intent intent, int flags, int startId){
         Log.i(LOG_TAG, "on handle intent");
         handleIntent(intent);
         return STICKY_START;
