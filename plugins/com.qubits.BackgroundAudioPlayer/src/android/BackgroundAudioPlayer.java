@@ -1,12 +1,10 @@
-package com.qubits.cordova.plugin;
+package src.android;
 
+import android.app.Activity;
 import android.content.Intent;
 import org.apache.cordova.*;
 import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaArgs;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -27,8 +25,11 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
 
     public static CallbackContext OffTimerCallbackContext = null;
 
+    public static Activity MainActivity = null;
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        MainActivity = cordova.getActivity();
         Intent intent = new Intent(cordova.getActivity(), BackgroundAudioPlayerService.class);
         intent.putExtra("action", action);
 

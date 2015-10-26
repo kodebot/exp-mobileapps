@@ -17,7 +17,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<service android:name=\"com.qubits.cordova.plugin.BackgroundAudioPlayerService\" />",
+                            "xml": "<service android:name=\"src.android.BackgroundAudioPlayerService\" />",
                             "count": 1
                         }
                     ],
@@ -59,7 +59,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"BackgroundAudioPlayer\"><param name=\"android-package\" value=\"com.qubits.cordova.plugin.BackgroundAudioPlayer\" /><param name=\"onload\" value=\"false\" /></feature>",
+                            "xml": "<feature name=\"BackgroundAudioPlayer\"><param name=\"android-package\" value=\"src.android.BackgroundAudioPlayer\" /><param name=\"onload\" value=\"false\" /></feature>",
                             "count": 1
                         }
                     ]

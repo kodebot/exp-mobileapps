@@ -1,16 +1,19 @@
-package com.qubits.cordova.plugin;
+package src.android;
 
 import android.app.IntentService;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
+import android.os.IBinder;
 import android.os.PowerManager;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.app.Notification;
+import android.app.Service;
 import android.support.v4.app.NotificationCompat;
 import org.apache.cordova.PluginResult;
 
@@ -23,7 +26,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BackgroundAudioPlayerService extends IntentService
+public class BackgroundAudioPlayerService extends Service
         implements OnAudioFocusChangeListener {
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
@@ -43,19 +46,36 @@ public class BackgroundAudioPlayerService extends IntentService
     public final String LOG_TAG = "BackgroundAudioPlayerService";
 
     public BackgroundAudioPlayerService() {
-        super("com.qubits.backgroundaudioplayer");
+        super();
     }
 
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "destroying...");
-        // actionStop();
+        stopForeground(true);
+        actionStop();
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "on handle intent");
-        handleIntent(intent);
+        Runnable task = createIntentTask(intent);
+        new Thread(task).start();
+        return START_STICKY;
+    }
+
+    private Runnable createIntentTask(final Intent intent){
+        return new Runnable() {
+            @Override
+            public void run() {
+                handleIntent(intent);
+            }
+        };
     }
 
     private void handleIntent(Intent intent) {
@@ -69,6 +89,7 @@ public class BackgroundAudioPlayerService extends IntentService
                 mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
                 CurrentRadio = intent.getIntExtra("radioId", 0);
                 actionPlay();
+                setupAsForeground();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
@@ -156,6 +177,7 @@ public class BackgroundAudioPlayerService extends IntentService
 
     private void actionStop() {
         Log.i(LOG_TAG, "stopping music...");
+        stopForeground(true);
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             mMediaPlayer.stop();
             if (!mMediaPlayer.isPlaying()) {
@@ -230,6 +252,21 @@ public class BackgroundAudioPlayerService extends IntentService
 
     }
 
+    private void setupAsForeground() {
+        String radioName = "Tap to open";
+        // assign the song name to songName
+        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
+                new Intent(getApplicationContext(), BackgroundAudioPlayer.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName()))
+                .setContentTitle("Vaanoli")
+                .setContentText(radioName)
+                .setContentIntent(pi);
+
+        startForeground(12345, builder.build());
+    }
+
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
@@ -240,6 +277,7 @@ public class BackgroundAudioPlayerService extends IntentService
             case AudioManager.AUDIOFOCUS_LOSS:
                 actionStop();
                 teardownPlayer();
+                stopForeground(true);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
