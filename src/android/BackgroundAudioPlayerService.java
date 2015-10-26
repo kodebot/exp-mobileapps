@@ -52,7 +52,8 @@ public class BackgroundAudioPlayerService extends Service
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "destroying...");
-        // actionStop();
+        stopForeground(true);
+        actionStop();
     }
 
     @Override
@@ -276,6 +277,7 @@ public class BackgroundAudioPlayerService extends Service
             case AudioManager.AUDIOFOCUS_LOSS:
                 actionStop();
                 teardownPlayer();
+                stopForeground(true);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
