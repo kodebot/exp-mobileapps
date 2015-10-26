@@ -88,6 +88,7 @@ public class BackgroundAudioPlayerService extends Service
                 mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
                 CurrentRadio = intent.getIntExtra("radioId", 0);
                 actionPlay();
+                setupAsForeground();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
@@ -144,7 +145,6 @@ public class BackgroundAudioPlayerService extends Service
 
     private void actionPlay() {
         try {
-            setupAsForeground();
             if (mCurrentlyPlayingUrl != null) {
                 actionStop(); // stop first if already playing
                 setupPlayer();
