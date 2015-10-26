@@ -244,7 +244,7 @@ public class BackgroundAudioPlayerService extends Service
         String radioName = "Lanka Sri from puthu Vaanoli";
         // assign the song name to songName
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), BackgroundAudioPlayer.MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(getApplicationContext(), BackgroundAudioPlayer.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon","drawable", getApplicationContext().getPackageName()))
