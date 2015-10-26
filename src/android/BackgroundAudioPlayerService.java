@@ -1,6 +1,7 @@
-package com.qubits.cordova.plugin;
+package src.android;
 
 import android.app.IntentService;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager.OnAudioFocusChangeListener;
@@ -45,7 +46,7 @@ public class BackgroundAudioPlayerService extends Service
     public final String LOG_TAG = "BackgroundAudioPlayerService";
 
     public BackgroundAudioPlayerService() {
-        super("com.qubits.backgroundaudioplayer");
+        super();
     }
 
     @Override
@@ -60,10 +61,10 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     @Override
-    protected void onStartCommand(Intent intent, int flags, int startId){
+    public int onStartCommand(Intent intent, int flags, int startId){
         Log.i(LOG_TAG, "on handle intent");
         handleIntent(intent);
-        return STICKY_START;
+        return START_STICKY;
     }
 
     private void handleIntent(Intent intent) {
@@ -243,11 +244,10 @@ public class BackgroundAudioPlayerService extends Service
         String radioName = "Lanka Sri from puthu Vaanoli";
         // assign the song name to songName
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), MainActivity.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(getApplicationContext(), BackgroundAudioPlayer.MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        builder.setSmallIcon(getApplicatgionContext().getResources().getIdentifier("icon","drawable", context.getPackageName()))
+        builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon","drawable", getApplicationContext().getPackageName()))
                 .setContentTitle("Vaanoli")
                 .setContentText(radioName)
                 .setContentIntent(pi);
