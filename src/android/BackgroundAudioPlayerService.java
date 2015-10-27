@@ -112,6 +112,11 @@ public class BackgroundAudioPlayerService extends Service
         Log.i(LOG_TAG, "setting up the player...");
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setOnBufferingUpdateListener(BackgroundAudioPlayerService.this);
+            mMediaPlayer.setOnCompletionListener(BackgroundAudioPlayerService.this);
+            mMediaPlayer.setOnErrorListener(BackgroundAudioPlayerService.this);
+            mMediaPlayer.setOnInfoListener(BackgroundAudioPlayerService.this);
+
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
             acquireWifiLock();
