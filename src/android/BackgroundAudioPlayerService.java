@@ -1,33 +1,33 @@
 package src.android;
 
-import android.app.IntentService;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+
+import android.drm.DrmManagerClient;
+import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
-import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.text.style.ImageSpan;
-import android.util.Log;
-import android.app.Notification;
-import android.app.Service;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Integer;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class BackgroundAudioPlayerService extends Service
-        implements OnAudioFocusChangeListener {
+        implements OnAudioFocusChangeListener,
+        MediaPlayer.OnBufferingUpdateListener,
+        MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnErrorListener,
+        MediaPlayer.OnInfoListener{
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
     // todo : audio becomes noisy
@@ -167,6 +167,7 @@ public class BackgroundAudioPlayerService extends Service
 
     private void actionPlayStoppedPlayer() {
         if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
+            Log.v(LOG_TAG, "playing stopped player");
             if (!mMediaPlayer.isPlaying()) {
                 mMediaPlayer.start();
                 IsPlaying = true;
@@ -267,26 +268,69 @@ public class BackgroundAudioPlayerService extends Service
         startForeground(12345, builder.build());
     }
 
+    /*********************************************************************
+     ******************AudioFocusChangeListener methods*******************
+     *********************************************************************/
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
+                Log.v(LOG_TAG, "audio focus gain");
                 actionPlayStoppedPlayer(); // play only on transient losses
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS:
+                Log.v(LOG_TAG, "audio focus loss");
                 actionStop();
                 teardownPlayer();
                 stopForeground(true);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                Log.v(LOG_TAG, "audio focus loss transient");
                 actionStop();
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                Log.v(LOG_TAG, "audio focus loss transient can duck");
                 streamDuck();
                 break;
         }
+    }
+
+    /*********************************************************************
+     ******************OnBufferingUpdateListener methods******************
+     *********************************************************************/
+    @Override
+    public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+        Log.v(LOG_TAG, "Buffer status : " + String.valueOf(i));
+    }
+
+    /*********************************************************************
+     ******************OnCompletionListener methods*******************
+     *********************************************************************/
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        Log.v(LOG_TAG, "MediaPlayer completion");
+        actionPlayStoppedPlayer();
+    }
+
+    /*********************************************************************
+     ******************OnErrorListener methods****************************
+     *********************************************************************/
+    @Override
+    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+        Log.v(LOG_TAG, "Error: what: " + i + " extra: " + i1);
+        return false;
+    }
+
+    /*********************************************************************
+     ******************OnInfoListener methods****************************
+     *********************************************************************/
+
+    @Override
+    public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
+        Log.v(LOG_TAG, "Info: what: " + i + " extra: " + i1);
+        return false;
     }
 }
