@@ -318,7 +318,7 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.v(LOG_TAG, "MediaPlayer completion");
-        actionPlayStoppedPlayer();
+        actionPlay();
     }
 
     /*********************************************************************
