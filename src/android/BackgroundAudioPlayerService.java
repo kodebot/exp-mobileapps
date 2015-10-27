@@ -27,7 +27,8 @@ public class BackgroundAudioPlayerService extends Service
         MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnCompletionListener,
         MediaPlayer.OnErrorListener,
-        MediaPlayer.OnInfoListener{
+        MediaPlayer.OnInfoListener,
+        MediaPlayer.OnPreparedListener{
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
     // todo : audio becomes noisy
@@ -156,12 +157,12 @@ public class BackgroundAudioPlayerService extends Service
                 setupPlayer();
                 Log.i(LOG_TAG, "playing");
                 mMediaPlayer.setDataSource(mCurrentlyPlayingUrl);
-                mMediaPlayer.prepare();
-                mMediaPlayer.start();
-                if (mMediaPlayer.isPlaying()) {
-                    actionSetVolume();
-                    IsPlaying = true;
-                }
+                mMediaPlayer.prepareAsync();
+               // mMediaPlayer.start();
+//                if (mMediaPlayer.isPlaying()) {
+//                    actionSetVolume();
+//                    IsPlaying = true;
+//                }
             }
         } catch (IOException ex) {
             // to do add exception handling
@@ -337,5 +338,10 @@ public class BackgroundAudioPlayerService extends Service
     public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
         Log.v(LOG_TAG, "Info: what: " + i + " extra: " + i1);
         return false;
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer) {
+        mediaPlayer.start();
     }
 }
