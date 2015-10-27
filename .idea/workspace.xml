@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,8 +39,8 @@
       <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8150289">
-              <caret line="164" column="19" selection-start-line="161" selection-start-column="18" selection-end-line="164" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.39884394">
+              <caret line="119" column="68" selection-start-line="119" selection-start-column="68" selection-end-line="119" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -886,8 +885,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8150289">
-          <caret line="164" column="19" selection-start-line="161" selection-start-column="18" selection-end-line="164" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.39884394">
+          <caret line="119" column="68" selection-start-line="119" selection-start-column="68" selection-end-line="119" selection-end-column="68" />
           <folding />
         </state>
       </provider>
