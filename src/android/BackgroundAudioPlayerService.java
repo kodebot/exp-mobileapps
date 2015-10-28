@@ -318,7 +318,14 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.v(LOG_TAG, "MediaPlayer completion");
-        actionPlay();
+       teardownPlayer();
+        setupPlayer();
+        try {
+            mMediaPlayer.setDataSource(this.mCurrentlyPlayingUrl);
+        }catch(IOException e){
+            Log.e(LOG_TAG, "Error", e);
+        }
+        mMediaPlayer.prepareAsync();
     }
 
     /*********************************************************************
@@ -343,5 +350,7 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
+        actionSetVolume();
+        IsPlaying = true;
     }
 }
