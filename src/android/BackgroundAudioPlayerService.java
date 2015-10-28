@@ -4,8 +4,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-
-import android.drm.DrmManagerClient;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
@@ -14,7 +12,6 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
@@ -45,6 +42,7 @@ public class BackgroundAudioPlayerService extends Service
     public static Date CloseTime = null;
 
     public final String LOG_TAG = "BackgroundAudioPlayerService";
+    public final int NOTIFICATION_ID = 12745;
 
     public BackgroundAudioPlayerService() {
         super();
@@ -93,6 +91,7 @@ public class BackgroundAudioPlayerService extends Service
                 setupAsForeground();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
+                stopForeground(true);
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
                 actionSetVolume();
@@ -158,11 +157,6 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
                 Log.i(LOG_TAG, "playing");
                 mMediaPlayer.setDataSource(mCurrentlyPlayingUrl);
                 mMediaPlayer.prepareAsync();
-               // mMediaPlayer.start();
-//                if (mMediaPlayer.isPlaying()) {
-//                    actionSetVolume();
-//                    IsPlaying = true;
-//                }
             }
         } catch (IOException ex) {
             // to do add exception handling
@@ -175,8 +169,7 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
         if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
             Log.v(LOG_TAG, "playing stopped player");
             if (!mMediaPlayer.isPlaying()) {
-                mMediaPlayer.start();
-                IsPlaying = true;
+               mMediaPlayer.prepareAsync();
             }
         }
         actionSetVolume();
@@ -209,6 +202,8 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
             @Override
             public void run() {
                 actionStop();
+                stopForeground(true);
+                teardownPlayer();
                 fireActionCallback();
             }
         }, durationInMillis);
@@ -271,7 +266,7 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
                 .setContentText(radioName)
                 .setContentIntent(pi);
 
-        startForeground(12345, builder.build());
+        startForeground(NOTIFICATION_ID, builder.build());
     }
 
     /*********************************************************************
@@ -334,7 +329,10 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
         Log.v(LOG_TAG, "Error: what: " + i + " extra: " + i1);
-        return false;
+        actionStop();
+        teardownPlayer();
+        stopForeground(true);
+        return true;
     }
 
     /*********************************************************************
@@ -344,7 +342,7 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
         Log.v(LOG_TAG, "Info: what: " + i + " extra: " + i1);
-        return false;
+        return true;
     }
 
     @Override
