@@ -1,33 +1,31 @@
 package src.android;
 
-import android.app.IntentService;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
-import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.text.style.ImageSpan;
-import android.util.Log;
-import android.app.Notification;
-import android.app.Service;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import org.apache.cordova.PluginResult;
 
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Integer;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class BackgroundAudioPlayerService extends Service
-        implements OnAudioFocusChangeListener {
+        implements OnAudioFocusChangeListener,
+        MediaPlayer.OnBufferingUpdateListener,
+        MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnErrorListener,
+        MediaPlayer.OnInfoListener,
+        MediaPlayer.OnPreparedListener{
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
     // todo : audio becomes noisy
@@ -44,6 +42,7 @@ public class BackgroundAudioPlayerService extends Service
     public static Date CloseTime = null;
 
     public final String LOG_TAG = "BackgroundAudioPlayerService";
+    public final int NOTIFICATION_ID = 12745;
 
     public BackgroundAudioPlayerService() {
         super();
@@ -92,6 +91,7 @@ public class BackgroundAudioPlayerService extends Service
                 setupAsForeground();
             } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
                 actionStop();
+                stopForeground(true);
             } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
                 CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
                 actionSetVolume();
@@ -112,6 +112,11 @@ public class BackgroundAudioPlayerService extends Service
         Log.i(LOG_TAG, "setting up the player...");
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setOnBufferingUpdateListener(BackgroundAudioPlayerService.this);
+            mMediaPlayer.setOnCompletionListener(BackgroundAudioPlayerService.this);
+            mMediaPlayer.setOnErrorListener(BackgroundAudioPlayerService.this);
+            mMediaPlayer.setOnInfoListener(BackgroundAudioPlayerService.this);
+mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
             acquireWifiLock();
@@ -151,12 +156,7 @@ public class BackgroundAudioPlayerService extends Service
                 setupPlayer();
                 Log.i(LOG_TAG, "playing");
                 mMediaPlayer.setDataSource(mCurrentlyPlayingUrl);
-                mMediaPlayer.prepare();
-                mMediaPlayer.start();
-                if (mMediaPlayer.isPlaying()) {
-                    actionSetVolume();
-                    IsPlaying = true;
-                }
+                mMediaPlayer.prepareAsync();
             }
         } catch (IOException ex) {
             // to do add exception handling
@@ -167,9 +167,9 @@ public class BackgroundAudioPlayerService extends Service
 
     private void actionPlayStoppedPlayer() {
         if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
+            Log.v(LOG_TAG, "playing stopped player");
             if (!mMediaPlayer.isPlaying()) {
-                mMediaPlayer.start();
-                IsPlaying = true;
+               mMediaPlayer.prepareAsync();
             }
         }
         actionSetVolume();
@@ -202,6 +202,8 @@ public class BackgroundAudioPlayerService extends Service
             @Override
             public void run() {
                 actionStop();
+                stopForeground(true);
+                teardownPlayer();
                 fireActionCallback();
             }
         }, durationInMillis);
@@ -260,33 +262,93 @@ public class BackgroundAudioPlayerService extends Service
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName()))
-                .setContentTitle("Vaanoli")
+                .setContentTitle("Vaanoli - Currently Playing")
                 .setContentText(radioName)
                 .setContentIntent(pi);
 
-        startForeground(12345, builder.build());
+        startForeground(NOTIFICATION_ID, builder.build());
     }
 
+    /*********************************************************************
+     ******************AudioFocusChangeListener methods*******************
+     *********************************************************************/
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
+                Log.v(LOG_TAG, "audio focus gain");
                 actionPlayStoppedPlayer(); // play only on transient losses
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS:
+                Log.v(LOG_TAG, "audio focus loss");
                 actionStop();
                 teardownPlayer();
                 stopForeground(true);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                Log.v(LOG_TAG, "audio focus loss transient");
                 actionStop();
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                Log.v(LOG_TAG, "audio focus loss transient can duck");
                 streamDuck();
                 break;
         }
+    }
+
+    /*********************************************************************
+     ******************OnBufferingUpdateListener methods******************
+     *********************************************************************/
+    @Override
+    public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+        Log.v(LOG_TAG, "Buffer status : " + String.valueOf(i));
+    }
+
+    /*********************************************************************
+     ******************OnCompletionListener methods*******************
+     *********************************************************************/
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        Log.v(LOG_TAG, "MediaPlayer completion");
+       teardownPlayer();
+        setupPlayer();
+        try {
+            mMediaPlayer.setDataSource(this.mCurrentlyPlayingUrl);
+        }catch(IOException e){
+            Log.e(LOG_TAG, "Error", e);
+        }
+        mMediaPlayer.prepareAsync();
+    }
+
+    /*********************************************************************
+     ******************OnErrorListener methods****************************
+     *********************************************************************/
+    @Override
+    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+        Log.v(LOG_TAG, "Error: what: " + i + " extra: " + i1);
+        actionStop();
+        teardownPlayer();
+        stopForeground(true);
+        return true;
+    }
+
+    /*********************************************************************
+     ******************OnInfoListener methods****************************
+     *********************************************************************/
+
+    @Override
+    public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
+        Log.v(LOG_TAG, "Info: what: " + i + " extra: " + i1);
+        return true;
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer) {
+        mediaPlayer.start();
+        actionSetVolume();
+        IsPlaying = true;
     }
 }
