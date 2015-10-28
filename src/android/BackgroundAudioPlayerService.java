@@ -262,7 +262,7 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName()))
-                .setContentTitle("Vaanoli")
+                .setContentTitle("Vaanoli - Currently Playing")
                 .setContentText(radioName)
                 .setContentIntent(pi);
 
