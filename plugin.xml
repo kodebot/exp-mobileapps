@@ -31,6 +31,7 @@
 
         <source-file src="src/android/BackgroundAudioPlayerService.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="src/android/BackgroundAudioPlayerPlugin.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/AudioNoiseManager.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="src/android/AudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="src/android/FroyoAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="src/android/JellyBeanAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
