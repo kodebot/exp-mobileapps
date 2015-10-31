@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/BackgroundAudioPlayer.js" afterPath="$PROJECT_DIR$/www/BackgroundAudioPlayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerPlugin.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerPlugin.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
@@ -101,8 +99,8 @@
       <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8323699">
-              <caret line="273" column="38" selection-start-line="273" selection-start-column="38" selection-end-line="273" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.5086705">
+              <caret line="271" column="35" selection-start-line="271" selection-start-column="35" selection-end-line="271" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -947,8 +945,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8323699">
-          <caret line="273" column="38" selection-start-line="273" selection-start-column="38" selection-end-line="273" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.5086705">
+          <caret line="271" column="35" selection-start-line="271" selection-start-column="35" selection-end-line="271" selection-end-column="35" />
           <folding />
         </state>
       </provider>

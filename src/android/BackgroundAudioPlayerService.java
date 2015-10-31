@@ -269,7 +269,7 @@ public class BackgroundAudioPlayerService extends Service
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(android.R.drawable.ic_media_play)
                 .setLargeIcon(largeIcon)
-                .setContentTitle("Vaanoli playing " + currentRadioName)
+                .setContentTitle("Playing " + currentRadioName)
                 .setContentText(contentText)
                 .setContentIntent(pi);
 
