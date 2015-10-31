@@ -86,6 +86,7 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
     @Override
     public void setVolume(float volume) {
         if (exoPlayer == null) throw new IllegalStateException("Player must be initialised to set volume.");
+        if(audioTrackRenderer == null) return; // quietly return when audio track renderer is not initialised.
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Setting volume to " + volume);
         exoPlayer.sendMessage(audioTrackRenderer, MediaCodecAudioTrackRenderer.MSG_SET_VOLUME, volume);
     }

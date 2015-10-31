@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="com.qubits.BackgroundAudioPlayer" version="0.0.1">
+        id="com.qubits.BackgroundAudioPlayerPlugin" version="0.1.1">
     <name>Background Audio Player</name>
     <description>The background audio player to play audio outside the lifecycle of the application.</description>
     <license>Apache 2.0</license>
@@ -25,7 +25,10 @@
         </config-file>
 
         <source-file src="src/android/BackgroundAudioPlayerService.java" target-dir="src/com/qubits/cordova/plugin"/>
-        <source-file src="src/android/BackgroundAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/BackgroundAudioPlayerPlugin.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/AudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/FroyoAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/JellyBeanAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="libs/android-support-v4.jar" target-dir="libs"/>
         <source-file src="libs/com.google.android.exoplayer.jar" target-dir="libs" />
     </platform>
