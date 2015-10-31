@@ -13,6 +13,11 @@
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <service android:name="src.android.BackgroundAudioPlayerService"/>
+            <receiver android:name="src.android.AudioNoiseManager">
+                <intent-filter>
+                    <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                </intent-filter>
+            </receiver>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK"/>

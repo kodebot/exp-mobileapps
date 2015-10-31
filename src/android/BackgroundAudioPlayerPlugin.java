@@ -34,11 +34,11 @@ public class BackgroundAudioPlayerPlugin extends CordovaPlugin{
 
     public static CallbackContext OffTimerCallbackContext = null;
 
-    public static Activity MainActivity = null;
+    public static Activity mainActivity = null;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        MainActivity = cordova.getActivity();
+        mainActivity = cordova.getActivity();
         Intent intent = new Intent(cordova.getActivity(), BackgroundAudioPlayerService.class);
         intent.putExtra(EXTRA_ACTION, action);
 

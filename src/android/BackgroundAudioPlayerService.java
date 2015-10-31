@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.net.wifi.WifiManager;
@@ -263,7 +262,7 @@ public class BackgroundAudioPlayerService extends Service
     private void setupAsForeground() {
         String contentText = "Tap to open";
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.mainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
         int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());

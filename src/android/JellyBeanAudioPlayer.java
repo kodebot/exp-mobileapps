@@ -19,8 +19,8 @@ import com.google.android.exoplayer.upstream.DefaultUriDataSource;
  */
 public class JellyBeanAudioPlayer extends AudioPlayer {
     private static final int SEGMENT_SIZE = 1024;
-    private static final int SEGMENT_COUNT = 10;
-    private static final int RENDERER_COUNT = 1;
+    private static final int SEGMENT_COUNT = 32;
+    private static final int RENDERER_COUNT = 2;
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
     private static final int BUFFERING_TIME_IN_MS = 1000;
     private static final int REBUFFERING_TIME_IN_MS = 2000;
