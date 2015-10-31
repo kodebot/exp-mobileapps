@@ -1,5 +1,5 @@
 
-var pluginServiceName = 'BackgroundAudioPlayer';
+var pluginServiceName = 'BackgroundAudioPlayerPlugin';
 var actions = {
                 play: 'action.play',
                 stop: 'action.stop',

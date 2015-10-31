@@ -19,13 +19,14 @@
         </config-file>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="BackgroundAudioPlayer">
-                <param name="android-package" value="src.android.BackgroundAudioPlayer"/>
+                <param name="android-package" value="src.android.BackgroundAudioPlayerPlugin"/>
                 <param name="onload" value="false"/>
             </feature>
         </config-file>
 
         <source-file src="src/android/BackgroundAudioPlayerService.java" target-dir="src/com/qubits/cordova/plugin"/>
         <source-file src="src/android/BackgroundAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
-        <source-file src="src/android/android-support-v4.jar" target-dir="libs"/>
+        <source-file src="libs/android-support-v4.jar" target-dir="libs"/>
+        <source-file src="libs/com.google.android.exoplayer.jar" target-dir="libs" />
     </platform>
 </plugin>

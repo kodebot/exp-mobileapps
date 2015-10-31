@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
-import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -14,34 +13,31 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import org.apache.cordova.PluginResult;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class BackgroundAudioPlayerService extends Service
         implements OnAudioFocusChangeListener,
-        MediaPlayer.OnBufferingUpdateListener,
-        MediaPlayer.OnCompletionListener,
-        MediaPlayer.OnErrorListener,
-        MediaPlayer.OnInfoListener,
-        MediaPlayer.OnPreparedListener{
+        AudioPlayer.StateChangeListener {
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
     // todo : audio becomes noisy
     // todo : hardware button integration
-    private static MediaPlayer mMediaPlayer;
-    private static WifiManager.WifiLock mWifiLock;
-    private static String mCurrentlyPlayingUrl;
-    private static boolean mHasSetupAudioFocus = false;
-    private static Timer mStopTimer;
+    private static WifiManager.WifiLock wifiLock;
+    private static PowerManager.WakeLock wakeLock;
+    private static String currentlyPlayingUrl;
+    private static Timer stopTimer;
+    private static AudioPlayer audioPlayer;
+    private static final float DUCKING_VOLUME = 0.1f;
+    private static boolean isTransientAudioFocusLoss = false;
+    private static boolean isDucked = false;
 
-    public static boolean IsPlaying = false;
-    public static float CurrentVolume = 0.5f;
-    public static int CurrentRadio = 0;
-    public static Date CloseTime = null;
+    public static boolean isPlaying = false;
+    public static float currentVolume = 0.5f;
+    public static int currentRadio = 0;
+    public static Date closeTime = null;
 
-    public final String LOG_TAG = "BackgroundAudioPlayerService";
     public final int NOTIFICATION_ID = 12745;
 
     public BackgroundAudioPlayerService() {
@@ -50,9 +46,19 @@ public class BackgroundAudioPlayerService extends Service
 
     @Override
     public void onDestroy() {
-        Log.i(LOG_TAG, "destroying...");
+        super.onDestroy();
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Destroying the background service");
         stopForeground(true);
         actionStop();
+        teardownPlayer();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Creating the background service");
+        audioPlayer = AudioPlayer.getInstance(getApplicationContext(), this);
+        setupPlayer();
     }
 
     @Override
@@ -62,13 +68,14 @@ public class BackgroundAudioPlayerService extends Service
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(LOG_TAG, "on handle intent");
+        if (intent == null) return super.onStartCommand(null, flags, startId); // just call super when intent is null
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Starting command");
         Runnable task = createIntentTask(intent);
         new Thread(task).start();
         return START_STICKY;
     }
 
-    private Runnable createIntentTask(final Intent intent){
+    private Runnable createIntentTask(final Intent intent) {
         return new Runnable() {
             @Override
             public void run() {
@@ -79,126 +86,64 @@ public class BackgroundAudioPlayerService extends Service
 
     private void handleIntent(Intent intent) {
 
-        Log.i(LOG_TAG, "handling intent");
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Handling intent");
 
-        String action = intent.getExtras().getString("action");
+        String action = intent.getExtras().getString(BackgroundAudioPlayerPlugin.EXTRA_ACTION);
         try {
-            Log.i(LOG_TAG, "passed in action " + action);
-            if (action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
-                mCurrentlyPlayingUrl = intent.getExtras().getString("audioUrl");
-                CurrentRadio = intent.getIntExtra("radioId", 0);
+            Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Processing action: " + action);
+            if (action.equals(BackgroundAudioPlayerPlugin.ACTION_PLAY)) {
+                currentlyPlayingUrl = intent.getExtras().getString(BackgroundAudioPlayerPlugin.EXTRA_AUDIO_URL);
+                currentRadio = intent.getIntExtra(BackgroundAudioPlayerPlugin.EXTRA_RADIO_ID, 0);
                 actionPlay();
                 setupAsForeground();
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_STOP)) {
                 actionStop();
                 stopForeground(true);
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
-                CurrentVolume = Float.parseFloat(intent.getStringExtra("volume"));
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_SET_VOLUME)) {
+                currentVolume = Float.parseFloat(intent.getStringExtra(BackgroundAudioPlayerPlugin.EXTRA_VOLUME));
                 actionSetVolume();
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)) {
-                int closeTimeInMinutes = intent.getIntExtra("closeTimeInMinutes", 0);
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_SCHEDULE_CLOSE)) {
+                int closeTimeInMinutes = intent.getIntExtra(BackgroundAudioPlayerPlugin.EXTRA_CLOSE_TIME_MINS, 0);
                 actionScheduleClose(closeTimeInMinutes);
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)) {
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_CANCEL_SCHEDULED_CLOSE)) {
                 actionCancelScheduledClose();
             }
         } catch (Exception ex) {
-            // change the radio status
-            Log.e(LOG_TAG, "error when handling the intent...");
-            Log.e(LOG_TAG, ex.getMessage());
+            // todo: change the radio status
+            Log.e(BackgroundAudioPlayerPlugin.LOG_TAG, "Error when handling the intent...", ex);
         }
     }
 
-    private void setupPlayer() {
-        Log.i(LOG_TAG, "setting up the player...");
-        if (mMediaPlayer == null) {
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setOnBufferingUpdateListener(BackgroundAudioPlayerService.this);
-            mMediaPlayer.setOnCompletionListener(BackgroundAudioPlayerService.this);
-            mMediaPlayer.setOnErrorListener(BackgroundAudioPlayerService.this);
-            mMediaPlayer.setOnInfoListener(BackgroundAudioPlayerService.this);
-mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // to keep cpu running
-            acquireWifiLock();
-            setupAudioFocus();
-        }
-    }
-
-    private void teardownPlayer() {
-        Log.i(LOG_TAG, "tearing down the player...");
-        if (mMediaPlayer != null) {
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-            releaseWifiLock();
-        }
-    }
-
-    private void setupAudioFocus() {
-        if (mHasSetupAudioFocus == false) {
-            Log.i(LOG_TAG, "trying to gain stream music audio focus.");
-            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-
-            if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                Log.i(LOG_TAG, "Unable to gain audio focus");
-            } else {
-                Log.i(LOG_TAG, "Gained stream music audio focus successfully.");
-                mHasSetupAudioFocus = true;
-            }
-        }
-
-    }
-
+    /*******************************************************************************************************************
+     *************************************Intent action methods ********************************************************
+     ******************************************************************************************************************/
     private void actionPlay() {
-        try {
-            if (mCurrentlyPlayingUrl != null) {
-                actionStop(); // stop first if already playing
-                setupPlayer();
-                Log.i(LOG_TAG, "playing");
-                mMediaPlayer.setDataSource(mCurrentlyPlayingUrl);
-                mMediaPlayer.prepareAsync();
-            }
-        } catch (IOException ex) {
-            // to do add exception handling
-            Log.e(LOG_TAG, "unexpected error when playing audio...");
-            Log.e(LOG_TAG, ex.getMessage());
+        if (currentlyPlayingUrl != null) {
+            Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Playing beginning");
+            audioPlayer.play(currentlyPlayingUrl);
+            isPlaying = true;
+            Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Playing begun successfully");
         }
-    }
-
-    private void actionPlayStoppedPlayer() {
-        if (mCurrentlyPlayingUrl != null && mMediaPlayer != null) {
-            Log.v(LOG_TAG, "playing stopped player");
-            if (!mMediaPlayer.isPlaying()) {
-               mMediaPlayer.prepareAsync();
-            }
-        }
-        actionSetVolume();
     }
 
     private void actionStop() {
-        Log.i(LOG_TAG, "stopping music...");
-        stopForeground(true);
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            mMediaPlayer.stop();
-            if (!mMediaPlayer.isPlaying()) {
-                IsPlaying = false;
-            }
-        }
-        teardownPlayer();
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Stopping...");
+        audioPlayer.stop();
+        isPlaying = false;
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Stopped successfully");
     }
 
     private void actionSetVolume() {
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            Log.i(LOG_TAG, "adjusting volume...");
-            mMediaPlayer.setVolume(CurrentVolume, CurrentVolume);
-        }
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Adjusting volume...");
+        audioPlayer.setVolume(currentVolume);
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Volume adjusted successfully");
     }
 
     private void actionScheduleClose(int minutes) {
         actionCancelScheduledClose(); // cancel any previously scheduled close
         int durationInMillis = minutes * 60 * 1000;
-        mStopTimer = new Timer();
-        mStopTimer.schedule(new TimerTask() {
+        stopTimer = new Timer();
+        stopTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 actionStop();
@@ -208,57 +153,113 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
             }
         }, durationInMillis);
 
-        CloseTime = new Date(System.currentTimeMillis() + durationInMillis);
+        closeTime = new Date(System.currentTimeMillis() + durationInMillis);
     }
 
     private void actionCancelScheduledClose() {
-        if (mStopTimer != null) {
-            mStopTimer.cancel();
-            CloseTime = null;
+        if (stopTimer != null) {
+            stopTimer.cancel();
+            closeTime = null;
         }
     }
 
-    private void streamDuck() {
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            Log.i(LOG_TAG, "ducking audio...");
-            mMediaPlayer.setVolume(0.1f, 0.1f);
+    /*******************************************************************************************************************
+     ****************************************Internal private methods***************************************************
+     ******************************************************************************************************************/
+    private void setupPlayer() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Setting up the player...");
+        audioPlayer.initPlayer();
+        acquireWakeLock();
+        acquireWifiLock();
+        setupAudioFocus();
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player setup successfully");
+
+    }
+
+    private void teardownPlayer() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Tearing down the player");
+        if (audioPlayer == null) return;
+        audioPlayer.releasePlayer();
+        audioPlayer = null;
+        releaseWakeLock();
+        releaseWifiLock();
+    }
+
+    private void setupAudioFocus() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Trying to gain stream music audio focus.");
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+
+        if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Unable to gain audio focus");
+        } else {
+            Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Gained stream music audio focus successfully.");
         }
+    }
+
+
+    private void streamDuck() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Ducking audio...");
+        audioPlayer.setVolume(DUCKING_VOLUME);
+        isDucked = true;
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Ducking completed successfully");
+    }
+
+    private void acquireWakeLock() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Acquiring partial wake lock");
+        if (wakeLock == null) {
+            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, BackgroundAudioPlayerPlugin.LOG_TAG);
+            wakeLock.acquire();
+        } else if (!wakeLock.isHeld()) {
+            wakeLock.acquire();
+        }
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Partial wake lock acquired");
+    }
+
+    private void releaseWakeLock() {
+        if (wakeLock == null) return;
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Releasing partial wake lock");
+        wakeLock.release();
+
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Partial wake lock released successfully");
     }
 
     private void acquireWifiLock() {
-        Log.i(LOG_TAG, "acquiring wifi lock...");
-        if (mWifiLock == null) {
-            mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
-                    .createWifiLock(WifiManager.WIFI_MODE_FULL, "qubits_wifi_lock");
-            mWifiLock.acquire();
-        } else if (!mWifiLock.isHeld()) {
-            mWifiLock.acquire();
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Acquiring wifi lock");
+        if (wifiLock == null) {
+            wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
+                    .createWifiLock(WifiManager.WIFI_MODE_FULL, BackgroundAudioPlayerPlugin.LOG_TAG);
+            wifiLock.acquire();
+        } else if (!wifiLock.isHeld()) {
+            wifiLock.acquire();
         }
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Wifi lock acquired");
     }
 
     private void releaseWifiLock() {
-        Log.i(LOG_TAG, "releasing wifi lock...");
-        if (mWifiLock != null && mWifiLock.isHeld()) {
-            mWifiLock.release();
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Releasing wifi lock");
+        if (wifiLock != null && wifiLock.isHeld()) {
+            wifiLock.release();
         }
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Wifi lock released");
     }
 
     private void fireActionCallback() {
         PluginResult result = new PluginResult(PluginResult.Status.OK, "callback.offtimer.success");
         result.setKeepCallback(true);
-        Log.i(LOG_TAG, "about to call offtimer success callback...");
-        if (BackgroundAudioPlayer.OffTimerCallbackContext != null) {
-            BackgroundAudioPlayer.OffTimerCallbackContext.sendPluginResult(result);
-            Log.i(LOG_TAG, "offtimer success callback called...");
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "About to call off timer success callback.");
+        if (BackgroundAudioPlayerPlugin.OffTimerCallbackContext != null) {
+            BackgroundAudioPlayerPlugin.OffTimerCallbackContext.sendPluginResult(result);
+            Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Off timer success callback called.");
         }
-
     }
 
     private void setupAsForeground() {
         String radioName = "Tap to open";
         // assign the song name to songName
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), BackgroundAudioPlayer.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName()))
@@ -270,85 +271,73 @@ mMediaPlayer.setOnPreparedListener(BackgroundAudioPlayerService.this);
     }
 
     /*********************************************************************
-     ******************AudioFocusChangeListener methods*******************
+     * *****************AudioFocusChangeListener methods*******************
      *********************************************************************/
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
-                Log.v(LOG_TAG, "audio focus gain");
-                actionPlayStoppedPlayer(); // play only on transient losses
+                Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus gained");
+                if (isTransientAudioFocusLoss) {
+                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovering from transient audio focus loss");
+                    actionPlay();
+                    isTransientAudioFocusLoss = false;
+                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovered from transient audio focus loss");
+                }
+
+                if (isDucked) {
+                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovering from duckabke transient audio focus loss");
+                    actionSetVolume();
+                    isDucked = false;
+                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovered from duckable transient audio focus loss");
+                }
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS:
-                Log.v(LOG_TAG, "audio focus loss");
+                Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus lost");
                 actionStop();
                 teardownPlayer();
                 stopForeground(true);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                Log.v(LOG_TAG, "audio focus loss transient");
+                Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus transient lost");
                 actionStop();
+                isTransientAudioFocusLoss = true;
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                Log.v(LOG_TAG, "audio focus loss transient can duck");
+                Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus loss transient can duck");
                 streamDuck();
                 break;
         }
     }
 
     /*********************************************************************
-     ******************OnBufferingUpdateListener methods******************
+     * *****************StageChangeListener methods*******************
      *********************************************************************/
     @Override
-    public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-        Log.v(LOG_TAG, "Buffer status : " + String.valueOf(i));
-    }
-
-    /*********************************************************************
-     ******************OnCompletionListener methods*******************
-     *********************************************************************/
-    @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
-        Log.v(LOG_TAG, "MediaPlayer completion");
-       teardownPlayer();
-        setupPlayer();
-        try {
-            mMediaPlayer.setDataSource(this.mCurrentlyPlayingUrl);
-        }catch(IOException e){
-            Log.e(LOG_TAG, "Error", e);
-        }
-        mMediaPlayer.prepareAsync();
-    }
-
-    /*********************************************************************
-     ******************OnErrorListener methods****************************
-     *********************************************************************/
-    @Override
-    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-        Log.v(LOG_TAG, "Error: what: " + i + " extra: " + i1);
-        actionStop();
-        teardownPlayer();
-        stopForeground(true);
-        return true;
-    }
-
-    /*********************************************************************
-     ******************OnInfoListener methods****************************
-     *********************************************************************/
-
-    @Override
-    public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
-        Log.v(LOG_TAG, "Info: what: " + i + " extra: " + i1);
-        return true;
+    public void onPlaying() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Playing event fired");
     }
 
     @Override
-    public void onPrepared(MediaPlayer mediaPlayer) {
-        mediaPlayer.start();
-        actionSetVolume();
-        IsPlaying = true;
+    public void onStopped() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Stopped event fired");
+    }
+
+    @Override
+    public void onBuffering(int percent) {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Buffering event fired " + percent);
+    }
+
+    @Override
+    public void onComplete() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Completed event fired");
+    }
+
+    @Override
+    public void onError(Exception ex) {
+        Log.e(BackgroundAudioPlayerPlugin.LOG_TAG, "Error reported", ex);
     }
 }

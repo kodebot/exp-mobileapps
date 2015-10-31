@@ -11,7 +11,7 @@ import org.json.JSONException;
 import java.lang.Override;
 import java.lang.String;
 
-public class BackgroundAudioPlayer extends CordovaPlugin{
+public class BackgroundAudioPlayerPlugin extends CordovaPlugin{
 
     public static final String ACTION_PLAY = "action.play";
     public static final String ACTION_STOP = "action.stop";
@@ -23,6 +23,15 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
     public static final String ACTION_GET_STATUS = "action.get.status";
     public static final String ACTION_GET_CURRENT_RADIO = "action.get.current.radio";
 
+    public static final String EXTRA_ACTION = "action";
+    public static final String EXTRA_AUDIO_URL = "audio.url";
+    public static final String EXTRA_RADIO_ID = "radio.id";
+    public static final String EXTRA_RADIO_NAME = "radio.name";
+    public static final String EXTRA_VOLUME = "volume";
+    public static final String EXTRA_CLOSE_TIME_MINS = "close.time.in.minutes";
+
+    public static final String LOG_TAG = "BackgroundAudioPlayerPlugin";
+
     public static CallbackContext OffTimerCallbackContext = null;
 
     public static Activity MainActivity = null;
@@ -31,45 +40,45 @@ public class BackgroundAudioPlayer extends CordovaPlugin{
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         MainActivity = cordova.getActivity();
         Intent intent = new Intent(cordova.getActivity(), BackgroundAudioPlayerService.class);
-        intent.putExtra("action", action);
+        intent.putExtra(EXTRA_ACTION, action);
 
         try {
-            if (action.equals(BackgroundAudioPlayer.ACTION_PLAY)) {
-                intent.putExtra("audioUrl", args.getString(0));
-                intent.putExtra("radioId", args.getInt(1));
+            if (action.equals(BackgroundAudioPlayerPlugin.ACTION_PLAY)) {
+                intent.putExtra(EXTRA_AUDIO_URL, args.getString(0));
+                intent.putExtra(EXTRA_RADIO_ID, args.getInt(1));
                 cordova.getActivity().startService(intent);
                 callbackContext.success();
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_STOP)) {
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_STOP)) {
                 cordova.getActivity().startService(intent);
                 callbackContext.success();
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_SET_VOLUME)) {
-                intent.putExtra("volume", args.getString(0));
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_SET_VOLUME)) {
+                intent.putExtra(EXTRA_VOLUME, args.getString(0));
                 cordova.getActivity().startService(intent);
                 callbackContext.success();
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_STATUS)) {
-                if (BackgroundAudioPlayerService.IsPlaying) {
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_GET_STATUS)) {
+                if (BackgroundAudioPlayerService.isPlaying) {
                     callbackContext.success(1);
                 } else {
                     callbackContext.success(0);
                 }
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_VOLUME)) {
-                callbackContext.success(Float.toString(BackgroundAudioPlayerService.CurrentVolume));
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_GET_CURRENT_RADIO)) {
-                callbackContext.success(BackgroundAudioPlayerService.CurrentRadio);
-            } else if (action.equals(BackgroundAudioPlayer.ACTION_SCHEDULE_CLOSE)){
-                intent.putExtra("closeTimeInMinutes", args.getInt(0));
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_GET_VOLUME)) {
+                callbackContext.success(Float.toString(BackgroundAudioPlayerService.currentVolume));
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_GET_CURRENT_RADIO)) {
+                callbackContext.success(BackgroundAudioPlayerService.currentRadio);
+            } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_SCHEDULE_CLOSE)){
+                intent.putExtra(EXTRA_CLOSE_TIME_MINS, args.getInt(0));
                 OffTimerCallbackContext = callbackContext;
                 cordova.getActivity().startService(intent);
                 PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
                 result.setKeepCallback(true);
                 OffTimerCallbackContext.sendPluginResult(result);
-            } else if(action.equals(BackgroundAudioPlayer.ACTION_CANCEL_SCHEDULED_CLOSE)){
+            } else if(action.equals(BackgroundAudioPlayerPlugin.ACTION_CANCEL_SCHEDULED_CLOSE)){
                 cordova.getActivity().startService(intent);
                 OffTimerCallbackContext = null;
                 callbackContext.success();
-            } else if(action.equals(BackgroundAudioPlayer.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
-                if(BackgroundAudioPlayerService.CloseTime != null){
-                    long diff = BackgroundAudioPlayerService.CloseTime.getTime() - System.currentTimeMillis();
+            } else if(action.equals(BackgroundAudioPlayerPlugin.ACTION_GET_TIME_TO_SCHEDULED_CLOSE)){
+                if(BackgroundAudioPlayerService.closeTime != null){
+                    long diff = BackgroundAudioPlayerService.closeTime.getTime() - System.currentTimeMillis();
                     callbackContext.success(String.valueOf(diff));
                 }else {
                     callbackContext.success("0");
