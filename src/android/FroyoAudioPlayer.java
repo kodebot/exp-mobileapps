@@ -53,6 +53,7 @@ public class FroyoAudioPlayer extends AudioPlayer
         if (mediaPlayer == null) throw new IllegalStateException("Player must be initialised to play");
         if (url == null || url.length() == 0) throw new IllegalStateException("Invalid url is specified");
         try {
+            stop();
             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Setting data source to play");
             mediaPlayer.setDataSource(url);
             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Data source set successfully");
