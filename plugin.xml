@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="com.qubits.BackgroundAudioPlayer" version="0.0.1">
+        id="com.qubits.BackgroundAudioPlayerPlugin" version="0.1.1">
     <name>Background Audio Player</name>
     <description>The background audio player to play audio outside the lifecycle of the application.</description>
     <license>Apache 2.0</license>
     <keywords>cordova,background,audio,player</keywords>
-    <js-module src="www/BackgroundAudioPlayer.js" name="BackgroundAudioPlayer">
-        <clobbers target="BackgroundAudioPlayer"/>
+    <js-module src="www/BackgroundAudioPlayer.js" name="BackgroundAudioPlayerPlugin">
+        <clobbers target="BackgroundAudioPlayerPlugin"/>
     </js-module>
 
     <platform name="android">
