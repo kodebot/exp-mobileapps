@@ -68,7 +68,7 @@ public class BackgroundAudioPlayerService extends Service
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-       // if (intent == null) return super.onStartCommand(null, flags, startId); // just call super when intent is null
+        if (intent == null) return super.onStartCommand(null, flags, startId); // just call super when intent is null
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Starting command");
         Runnable task = createIntentTask(intent);
         new Thread(task).start();
