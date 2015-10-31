@@ -161,8 +161,8 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.qubits.BackgroundAudioPlayer/www/BackgroundAudioPlayer.js",
-        "id": "com.qubits.BackgroundAudioPlayer.BackgroundAudioPlayer",
+        "file": "plugins/com.qubits.BackgroundAudioPlayerPlugin/www/BackgroundAudioPlayer.js",
+        "id": "com.qubits.BackgroundAudioPlayerPlugin.BackgroundAudioPlayer",
         "clobbers": [
             "BackgroundAudioPlayer"
         ]
@@ -174,7 +174,7 @@ module.exports.metadata =
     "com.google.cordova.admob": "2.7.8",
     "org.apache.cordova.file": "1.3.3",
     "cordova-plugin-statusbar": "2.0.0-dev",
-    "com.qubits.BackgroundAudioPlayer": "0.0.1",
+    "com.qubits.BackgroundAudioPlayerPlugin": "0.1.1",
     "com.rjfun.cordova.extension": "1.1.4",
     "com.google.playservices": "19.0.0"
 }

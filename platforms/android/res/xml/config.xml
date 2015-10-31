@@ -14,7 +14,7 @@
         <param name="onload" value="true" />
     </feature>
     <feature name="BackgroundAudioPlayer">
-        <param name="android-package" value="src.android.BackgroundAudioPlayer" />
+        <param name="android-package" value="src.android.BackgroundAudioPlayerPlugin" />
         <param name="onload" value="false" />
     </feature>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
@@ -37,7 +37,7 @@
     <allow-intent href="mailto:*" />
     <vs:features />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="1000" />
     <preference name="windows-target-version" value="8.1" />
     <preference name="windows-phone-target-version" value="8.1" />
     <preference name="orientation" value="portrait" />
@@ -45,11 +45,11 @@
     <preference name="Fullscreen" value="False" />
     <vs:plugin name="org.apache.cordova.file" version="1.3.3" />
     <preference name="KeepRunning" value="True" />
-    <preference name="ShowTitle" value="False" />
+    <preference name="ShowTitle" value="True" />
     <preference name="InAppBrowserStorageEnabled" value="True" />
-    <preference name="SuppressesIncrementalRendering" value="False" />
+    <preference name="SuppressesIncrementalRendering" value="True" />
     <preference name="StatusBarBackgroundColor" value="#D32F2F" />
     <preference name="StatusBarStyle" value="blackopaque" />
     <vs:plugin name="cordova-plugin-statusbar" src="https://github.com/apache/cordova-plugin-statusbar" version="2.0.0-dev" />
-    <vs:plugin name="com.qubits.BackgroundAudioPlayer" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git" version="0.0.1" />
+    <vs:plugin name="com.qubits.BackgroundAudioPlayerPlugin" src="https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git" version="0.1.1" />
 </widget>

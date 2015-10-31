@@ -7,6 +7,7 @@ angular.module('app.controllers', [])
     // #region View Model
     vm.isStopped = false;
     vm.currentRadio = null;
+    vm.currentStatus = null;
     vm.showOnlyFav = false;
     vm.timerSettings = { duration: 0 };
     vm.volume = 50;
@@ -19,26 +20,27 @@ angular.module('app.controllers', [])
     vm.gotoNext = gotoNext;
     vm.showTimerPopup = showTimerPopup;
     vm.scrollToTop = scrollToTop;
+    vm.getRandomThumpIconColor = getRandomThumpIconColor;
     // #endregion
 
     activate();
 
     // #region private functions
     function activate() {
+        augmentArrayPrototype();
         alertService.showLoading();
         $ionicPlatform.ready(onDeviceReady);
-
     }
 
     function play(radio) {
-        alertService.showLoading("Starting " + radio.name + "...");
+        updateStatus("Starting " + radio.name + "...");
         vm.currentRadio = getAndSyncCurrentRadioById(radio.id);
         vm.isStopped = false;
         mediaStartingPromise = $timeout(onStrukStarting, 15000); // wait 15 seconds
         BackgroundAudioPlayer.play(function () {
             $timeout.cancel(mediaStartingPromise);
             waitOnBuffering();
-        }, onPlayError, radio.streamUrl, radio.id);
+        }, onPlayError, radio.streamUrl, radio.id, radio.name);
     }
 
 
@@ -95,6 +97,11 @@ angular.module('app.controllers', [])
 
         if (vm.showOnlyFav) {
             radios = vm.radios.filter(function (radio) { return radio.fav; });
+
+            if(radios.length === 0){
+                vm.showOnlyFav = false;
+                return vm.radios;
+            }
         }
 
         if (vm.currentRadio) {
@@ -117,7 +124,7 @@ angular.module('app.controllers', [])
     };
 
     function onStrukStarting() {
-        alertService.hideLoading();
+        clearStatus();
         alertService.showAlert("Error", "Unable to play this radio. Please try again later.");
     }
 
@@ -131,7 +138,7 @@ angular.module('app.controllers', [])
 
     function onPlayError() {
         $timeout.cancel(mediaStartingPromise);
-        alertService.hideLoading();
+        clearStatus();
         alertService.showAlert("Error", "Unable to play this radio. Please try again later.");
 
     }
@@ -152,6 +159,11 @@ angular.module('app.controllers', [])
 
     function initialisePlayer() {
         vm.showOnlyFav = !!userDataService.getFavPref();
+        if (vm.showOnlyFav === true && getFavContextRadios().length === 0) {
+            // when fav is selcted but not radios on fav on start up - switch to main list
+            toggleNavFav();
+        }
+        
         BackgroundAudioPlayer.getStatus(function (status) {
             vm.isStopped = !(status == 1);
             $scope.$apply();
@@ -178,7 +190,7 @@ angular.module('app.controllers', [])
             BackgroundAudioPlayer.getStatus(function (status) {
                 vm.isStopped = !(status == 1);
                 if (!vm.isStopped) {
-                    alertService.hideLoading();
+                    clearStatus();
                     if (mediaBufferingPromise) {
                         $interval.cancel(mediaBufferingPromise);
                     }
@@ -192,6 +204,11 @@ angular.module('app.controllers', [])
         return radioDataService.all()
         .then(function (response) {
             vm.radios = response.data.radios;
+            vm.radios.forEach(function (item) {
+                item.initial = getThumpInitials(item.name);
+                item.color = getRandomThumpIconColor();
+            });
+
             var favRadios = (userDataService.getFavRadios() || '').split(',');
             favRadios.forEach(function (item) {
                 vm.radios.forEach(function (radio) {
@@ -199,12 +216,12 @@ angular.module('app.controllers', [])
                 });
             });
         })
-    .catch(function (e) {
-        alertService.showInternetIssueAlert("Error", "Unable to retrieve radio list. Please make sure you have internet access. If the problem persist, try again later.", getRadios);
-    })
-    .finally(function () {
-        alertService.hideLoading();
-    });
+        .catch(function (e) {
+            alertService.showInternetIssueAlert("Error", "Unable to retrieve radio list. Please make sure you have internet access. If the problem persist, try again later.", getRadios);
+        })
+        .finally(function () {
+            alertService.hideLoading();
+        });
     }
 
     function getAndSyncCurrentRadioById(radioId) {
@@ -215,17 +232,44 @@ angular.module('app.controllers', [])
             }
         })[0];
     }
-    Array.prototype.next = function () {
-        this.current++;
-        if (this.current === this.length) this.current = 0;
-        return this[this.current];
-    };
-    Array.prototype.prev = function () {
-        this.current--;
-        if (this.current === -1) this.current = (this.length - 1);
-        return this[this.current];
-    };
-    Array.prototype.current = 0;
+    function augmentArrayPrototype() {
+        Array.prototype.next = function () {
+            this.current++;
+            if (this.current === this.length) this.current = 0;
+            return this[this.current];
+        };
+        Array.prototype.prev = function () {
+            this.current--;
+            if (this.current === -1) this.current = (this.length - 1);
+            return this[this.current];
+        };
+        Array.prototype.current = 0;
+    }
+
+    function updateStatus(status) {
+        vm.currentStatus = status;
+    }
+
+    function clearStatus() {
+        vm.currentStatus = null;
+    }
+
+    function getRandomThumpIconColor() {
+        var colors = ["#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#009688", "#FF5722", "#795548", "#607D8B", "#43A047"];
+        var colorIndex = Math.floor(Math.random() * 10);
+        return colors[colorIndex];
+    }
+
+    function getThumpInitials(radioName) {
+        var result = "";
+        var parts = radioName.split(" ");
+        result = result + parts[0].charAt(0);
+
+        if (parts.length > 1) {
+            result = result + parts[1].charAt(0);
+        }
+        return result;
+    }
     // #endregion
 
 

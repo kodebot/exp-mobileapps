@@ -57,5 +57,12 @@
             "url": "https://github.com/apache/cordova-plugin-statusbar",
             "subdir": "."
         }
+    },
+    "com.qubits.BackgroundAudioPlayerPlugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git",
+            "subdir": "."
+        }
     }
 }

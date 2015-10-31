@@ -70,17 +70,13 @@
     padding: 0 !important;
 }
 
-/*custom animations - start*/
-
-/*.radio-item.ng-enter {
-    -webkit-animation: fadeInLeft 1s;
-    animation: fadeInLeft 1s;
+.spinner svg {
+  width: 15px;
+  height: 15px;
 }
-
-.radio-item.ng-enter-stagger {
-  -webkit-animation-delay:50ms;
-  animation-delay:50ms;
-  -webkit-animation-duration:0;
-  animation-duration:0;
-}*/
-/*custom animations -end*/
+.item-avatar-dynamic-image{
+    color:white;
+    font-size:x-large !important; 
+    text-align:center !important; 
+    padding-top:15px !important;
+}
