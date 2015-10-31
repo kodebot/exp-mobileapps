@@ -69,7 +69,7 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
                 dataSource,
                 allocator,
                 SEGMENT_COUNT * SEGMENT_SIZE);
-        audioTrackRenderer = new MediaCodecAudioTrackRenderer(sampleSource, null, true, null, null, null, AudioManager.STREAM_MUSIC);
+        audioTrackRenderer = new MediaCodecAudioTrackRenderer(sampleSource, null, false, null, null, null, AudioManager.STREAM_MUSIC);
         exoPlayer.prepare(audioTrackRenderer);
         exoPlayer.setPlayWhenReady(true);
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player playing " + url);
