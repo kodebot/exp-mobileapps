@@ -31,6 +31,7 @@ public abstract class AudioPlayer {
     }
 
     public static AudioPlayer getInstance(Context context, StateChangeListener stateChangeListener) {
+       // return new FroyoAudioPlayer(context, stateChangeListener); // for testing
         final int sdkVersion = Build.VERSION.SDK_INT;
         if (sdkVersion >= Build.VERSION_CODES.FROYO && sdkVersion < Build.VERSION_CODES.JELLY_BEAN) {
             return new FroyoAudioPlayer(context, stateChangeListener);

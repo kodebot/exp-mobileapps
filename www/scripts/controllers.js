@@ -188,8 +188,8 @@ angular.module('app.controllers', [])
         mediaBufferingPromise = $interval(checkStatusOnBuffering, 1000);
         function checkStatusOnBuffering() {
             BackgroundAudioPlayer.getStatus(function (status) {
-                vm.isStopped = !(status == 1);
-                if (!vm.isStopped) {
+                if (status === 1) {
+                    vm.isStopped = false;
                     clearStatus();
                     if (mediaBufferingPromise) {
                         $interval.cancel(mediaBufferingPromise);

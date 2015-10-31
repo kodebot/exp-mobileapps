@@ -125,7 +125,6 @@ public class BackgroundAudioPlayerService extends Service
         if (currentlyPlayingUrl != null) {
             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Playing beginning");
             audioPlayer.play(currentlyPlayingUrl);
-            isPlaying = true;
             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Playing begun successfully");
         }
     }
@@ -133,7 +132,6 @@ public class BackgroundAudioPlayerService extends Service
     private void actionStop() {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Stopping...");
         audioPlayer.stop();
-        isPlaying = false;
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Stopped successfully");
     }
 
@@ -324,11 +322,13 @@ public class BackgroundAudioPlayerService extends Service
     @Override
     public void onPlaying() {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Playing event fired");
+        isPlaying = true;
     }
 
     @Override
     public void onStopped() {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Stopped event fired");
+        isPlaying = false;
     }
 
     @Override
