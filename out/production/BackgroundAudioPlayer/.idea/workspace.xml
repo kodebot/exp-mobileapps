@@ -4,9 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerPlugin.java" line="80" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/FroyoAudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/FroyoAudioPlayer.java" />
-    </list>
+    <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;" />
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,8 +57,8 @@
       <file leaf-file-name="FroyoAudioPlayer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/FroyoAudioPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2716763">
-              <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.7398844">
+              <caret line="56" column="22" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -956,8 +954,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/FroyoAudioPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2716763">
-          <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.7398844">
+          <caret line="56" column="22" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
           <folding />
         </state>
       </provider>
