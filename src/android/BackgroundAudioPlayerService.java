@@ -265,8 +265,7 @@ public class BackgroundAudioPlayerService extends Service
 //        int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
 //        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("radio", "drawable", getApplicationContext().getPackageName()))
-                //.setLargeIcon(largeIcon)
+        builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName()))
                 .setContentTitle("Vaanoli - Currently Playing")
                 .setContentText(radioName)
                 .setContentIntent(pi);
