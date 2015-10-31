@@ -91,7 +91,7 @@ public class BackgroundAudioPlayerService extends Service
 
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Handling intent");
 
-        String action = intent.getExtras().getString(BackgroundAudioPlayerPlugin.EXTRA_ACTION);
+        String action = intent.getStringExtra(BackgroundAudioPlayerPlugin.EXTRA_ACTION);
         try {
             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Processing action: " + action);
             if (action.equals(BackgroundAudioPlayerPlugin.ACTION_PLAY)) {
