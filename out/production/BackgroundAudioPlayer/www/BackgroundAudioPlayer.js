@@ -15,8 +15,8 @@ var actions = {
 
 var playerExport = {};
 
-playerExport.play = function(successCallback, failureCallback, url, radioId){
-    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.play, [url, radioId]);
+playerExport.play = function(successCallback, failureCallback, url, radioId, radioName){
+    cordova.exec(successCallback, failureCallback, pluginServiceName, actions.play, [url, radioId, radioName]);
 }
 
 playerExport.stop = function(successCallback, failureCallback){

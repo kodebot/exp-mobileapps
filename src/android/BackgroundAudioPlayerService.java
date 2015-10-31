@@ -35,6 +35,7 @@ public class BackgroundAudioPlayerService extends Service
     private static final float DUCKING_VOLUME = 0.1f;
     private static boolean isTransientAudioFocusLoss = false;
     private static boolean isDucked = false;
+    private static String currentRadioName;
 
     public static boolean isPlaying = false;
     public static float currentVolume = 0.5f;
@@ -95,8 +96,9 @@ public class BackgroundAudioPlayerService extends Service
         try {
             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Processing action: " + action);
             if (action.equals(BackgroundAudioPlayerPlugin.ACTION_PLAY)) {
-                currentlyPlayingUrl = intent.getExtras().getString(BackgroundAudioPlayerPlugin.EXTRA_AUDIO_URL);
+                currentlyPlayingUrl = intent.getStringExtra(BackgroundAudioPlayerPlugin.EXTRA_AUDIO_URL);
                 currentRadio = intent.getIntExtra(BackgroundAudioPlayerPlugin.EXTRA_RADIO_ID, 0);
+                currentRadioName = intent.getStringExtra(BackgroundAudioPlayerPlugin.EXTRA_RADIO_NAME);
                 actionPlay();
                 setupAsForeground();
             } else if (action.equals(BackgroundAudioPlayerPlugin.ACTION_STOP)) {
@@ -259,7 +261,7 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     private void setupAsForeground() {
-        String radioName = "Tap to open";
+        String contentText = "Tap to open";
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
         int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
@@ -267,8 +269,8 @@ public class BackgroundAudioPlayerService extends Service
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(android.R.drawable.ic_media_play)
                 .setLargeIcon(largeIcon)
-                .setContentTitle("Vaanoli - Currently Playing")
-                .setContentText(radioName)
+                .setContentTitle("Vaanoli playing " + currentRadioName)
+                .setContentText(contentText)
                 .setContentIntent(pi);
 
         startForeground(NOTIFICATION_ID, builder.build());
