@@ -6,8 +6,8 @@
     <description>The background audio player to play audio outside the lifecycle of the application.</description>
     <license>Apache 2.0</license>
     <keywords>cordova,background,audio,player</keywords>
-    <js-module src="www/BackgroundAudioPlayer.js" name="BackgroundAudioPlayerPlugin">
-        <clobbers target="BackgroundAudioPlayerPlugin"/>
+    <js-module src="www/BackgroundAudioPlayer.js" name="BackgroundAudioPlayer">
+        <clobbers target="BackgroundAudioPlayer"/>
     </js-module>
 
     <platform name="android">
