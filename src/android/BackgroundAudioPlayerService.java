@@ -265,7 +265,7 @@ public class BackgroundAudioPlayerService extends Service
 //        int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
 //        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("ic_media_play", "drawable", getApplicationContext().getPackageName()))
+        builder.setSmallIcon(android.R.drawable.ic_media_play)
                 .setContentTitle("Vaanoli - Currently Playing")
                 .setContentText(radioName)
                 .setContentIntent(pi);
