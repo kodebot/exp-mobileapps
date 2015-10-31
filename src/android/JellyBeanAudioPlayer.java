@@ -103,7 +103,7 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
                     switch (playbackState) {
                         case ExoPlayer.STATE_BUFFERING:
                             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player state buffering");
-                            stateChangeListener.onBuffering(0);
+                            stateChangeListener.onBuffering(0); // todo: force restart if buffering take more than 5 sec
                             break;
                         case ExoPlayer.STATE_ENDED:
                             Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player state ended");
