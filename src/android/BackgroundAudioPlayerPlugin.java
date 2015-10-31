@@ -89,7 +89,4 @@ public class BackgroundAudioPlayerPlugin extends CordovaPlugin{
         }
         return true;
     }
-
-
-
 }
