@@ -31,14 +31,14 @@ public abstract class AudioPlayer {
     }
 
     public static AudioPlayer getInstance(Context context, StateChangeListener stateChangeListener) {
-        return new FroyoAudioPlayer(context, stateChangeListener); // for testing
-//        final int sdkVersion = Build.VERSION.SDK_INT;
-//        if (sdkVersion >= Build.VERSION_CODES.FROYO && sdkVersion < Build.VERSION_CODES.JELLY_BEAN) {
-//            return new FroyoAudioPlayer(context, stateChangeListener);
-//        } else if (sdkVersion >= Build.VERSION_CODES.JELLY_BEAN) { // jelly bean and above
-//            return new JellyBeanAudioPlayer(context, stateChangeListener);
-//        } else {
-//            throw new UnsupportedOperationException("Audio playback is not supported in the selected platform");
-//        }
+       // return new FroyoAudioPlayer(context, stateChangeListener); // for testing
+        final int sdkVersion = Build.VERSION.SDK_INT;
+        if (sdkVersion >= Build.VERSION_CODES.FROYO && sdkVersion < Build.VERSION_CODES.JELLY_BEAN) {
+            return new FroyoAudioPlayer(context, stateChangeListener);
+        } else if (sdkVersion >= Build.VERSION_CODES.JELLY_BEAN) { // jelly bean and above
+            return new JellyBeanAudioPlayer(context, stateChangeListener);
+        } else {
+            throw new UnsupportedOperationException("Audio playback is not supported in the selected platform");
+        }
     }
 }
