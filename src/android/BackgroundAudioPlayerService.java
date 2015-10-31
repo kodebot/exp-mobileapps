@@ -262,11 +262,11 @@ public class BackgroundAudioPlayerService extends Service
         String radioName = "Tap to open";
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.MainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
-        int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
-        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
+//        int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
+//        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(getApplicationContext().getResources().getIdentifier("radio", "drawable", getApplicationContext().getPackageName()))
-                .setLargeIcon(largeIcon)
+                //.setLargeIcon(largeIcon)
                 .setContentTitle("Vaanoli - Currently Playing")
                 .setContentText(radioName)
                 .setContentIntent(pi);
