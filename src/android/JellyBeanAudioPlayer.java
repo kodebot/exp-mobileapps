@@ -2,12 +2,14 @@ package src.android;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.extractor.ExtractorSampleSource;
+import com.google.android.exoplayer.extractor.mp3.Mp3Extractor;
 import com.google.android.exoplayer.upstream.Allocator;
 import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultAllocator;
@@ -64,11 +66,12 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player going to play " + url);
         Allocator allocator = new DefaultAllocator(SEGMENT_SIZE);
         DataSource dataSource = new DefaultUriDataSource(context, USER_AGENT);
+        Mp3Extractor mp3Extractor = new Mp3Extractor();
         ExtractorSampleSource sampleSource = new ExtractorSampleSource(
                 Uri.parse(url),
                 dataSource,
                 allocator,
-                SEGMENT_COUNT * SEGMENT_SIZE);
+                SEGMENT_COUNT * SEGMENT_SIZE, mp3Extractor);
         audioTrackRenderer = new MediaCodecAudioTrackRenderer(sampleSource, null, false, null, null, null, AudioManager.STREAM_MUSIC);
         exoPlayer.prepare(audioTrackRenderer);
         exoPlayer.setPlayWhenReady(true);
