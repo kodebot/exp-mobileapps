@@ -149,8 +149,8 @@ public class BackgroundAudioPlayerService extends Service
             @Override
             public void run() {
                 actionStop();
+                closeTime = null;
                 stopForeground(true);
-                teardownPlayer();
                 fireActionCallback();
             }
         }, durationInMillis);
@@ -299,7 +299,6 @@ public class BackgroundAudioPlayerService extends Service
             case AudioManager.AUDIOFOCUS_LOSS:
                 Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus lost");
                 actionStop();
-                teardownPlayer();
                 stopForeground(true);
                 break;
 
