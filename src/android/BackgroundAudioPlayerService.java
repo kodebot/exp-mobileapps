@@ -31,10 +31,11 @@ public class BackgroundAudioPlayerService extends Service
     private static String currentlyPlayingUrl;
     private static Timer stopTimer;
     private static AudioPlayer audioPlayer;
-    private static final float DUCKING_VOLUME = 0.1f;
     private static boolean isTransientAudioFocusLoss = false;
     private static boolean isDucked = false;
     private static String currentRadioName;
+
+    private static final float DUCKING_VOLUME = 0.1f;
 
     public static boolean isPlaying = false;
     public static float currentVolume = 0.5f;
@@ -42,6 +43,7 @@ public class BackgroundAudioPlayerService extends Service
     public static Date closeTime = null;
 
     public final int NOTIFICATION_ID = 12745;
+
 
     public BackgroundAudioPlayerService() {
         super();
@@ -54,6 +56,11 @@ public class BackgroundAudioPlayerService extends Service
         stopForeground(true);
         actionStop();
         teardownPlayer();
+
+        // reset states
+        isTransientAudioFocusLoss = false;
+        isDucked = false;
+        isPlaying = false;
     }
 
     @Override
@@ -304,8 +311,10 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus transient lost");
+                if(isPlaying){
+                    isTransientAudioFocusLoss = true;
+                }
                 actionStop();
-                isTransientAudioFocusLoss = true;
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:

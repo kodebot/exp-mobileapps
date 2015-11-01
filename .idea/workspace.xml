@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="status reporting changes&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,8 +110,8 @@
       <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55474454">
-              <caret line="151" column="33" selection-start-line="151" selection-start-column="33" selection-end-line="151" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.84671533">
+              <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -215,6 +216,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -299,7 +301,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -501,7 +502,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1618" height="868" extended-state="7" />
+    <frame x="-9" y="-9" width="1618" height="868" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -951,8 +952,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55474454">
-          <caret line="151" column="33" selection-start-line="151" selection-start-column="33" selection-end-line="151" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.84671533">
+          <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
           <folding />
         </state>
       </provider>
