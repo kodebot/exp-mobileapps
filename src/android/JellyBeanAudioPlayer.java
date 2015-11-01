@@ -44,7 +44,7 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
     @Override
     public void initPlayer() {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Initialising player");
-        exoPlayer = ExoPlayer.Factory.newInstance(RENDERER_COUNT, BUFFERING_TIME_IN_MS, REBUFFERING_TIME_IN_MS);
+        exoPlayer = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 0, 0);
         addStateChangeEventListeners();
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player initialised successfully");
     }
