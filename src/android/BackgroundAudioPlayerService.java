@@ -149,6 +149,7 @@ public class BackgroundAudioPlayerService extends Service
             @Override
             public void run() {
                 actionStop();
+                closeTime = null;
                 stopForeground(true);
                 fireActionCallback();
             }
