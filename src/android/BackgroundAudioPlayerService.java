@@ -319,7 +319,9 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                 Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus loss transient can duck");
-                streamDuck();
+                if(isPlaying) {
+                    streamDuck();
+                }
                 break;
         }
     }
