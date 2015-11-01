@@ -150,7 +150,6 @@ public class BackgroundAudioPlayerService extends Service
             public void run() {
                 actionStop();
                 stopForeground(true);
-                teardownPlayer();
                 fireActionCallback();
             }
         }, durationInMillis);
@@ -299,7 +298,6 @@ public class BackgroundAudioPlayerService extends Service
             case AudioManager.AUDIOFOCUS_LOSS:
                 Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus lost");
                 actionStop();
-                teardownPlayer();
                 stopForeground(true);
                 break;
 
