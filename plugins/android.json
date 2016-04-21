@@ -6,7 +6,11 @@
     "config_munge": {
         "files": {}
     },
-    "installed_plugins": {},
+    "installed_plugins": {
+        "com.qubits.BackgroundAudioPlayerPlugin": {
+            "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
+        }
+    },
     "dependent_plugins": {
         "com.rjfun.cordova.extension": {
             "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
@@ -15,9 +19,6 @@
             "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
         },
         "com.google.cordova.admob": {
-            "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
-        },
-        "com.qubits.BackgroundAudioPlayerPlugin": {
             "PACKAGE_NAME": "io.cordova.myappb1944125e7a64b74bc8a8e8f5fe78102"
         },
         "cordova-plugin-statusbar": {

@@ -63,6 +63,8 @@
             "type": "git",
             "url": "https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git",
             "subdir": "."
-        }
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

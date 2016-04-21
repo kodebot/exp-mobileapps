@@ -1,0 +1,11 @@
+{
+  "android": {
+    "release": {
+      "keystore": "C:\\Mani\\Qubits\\PetProjects\\VaanoliSource\\others\\vvaanoli.key",
+      "storePassword": "digitallife01",
+      "alias": "qubitssolutionsltd",
+      "password": "digitallife01",
+      "keystoreType": ""
+    }
+  }
+}
