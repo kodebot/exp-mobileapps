@@ -3,8 +3,8 @@ package src.android;
 import android.app.Activity;
 import android.content.Intent;
 import org.apache.cordova.*;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
+import libs.org.apache.cordova.CallbackContext;
+import libs.org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
