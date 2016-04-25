@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="com.qubits.BackgroundAudioPlayerPlugin" version="0.1.1">
+        id="com.qubits.BackgroundAudioPlayerPlugin" version="0.1.2">
     <name>Background Audio Player</name>
     <description>The background audio player to play audio outside the lifecycle of the application.</description>
     <license>Apache 2.0</license>
@@ -16,6 +16,11 @@
             <receiver android:name="src.android.AudioNoiseManager">
                 <intent-filter>
                     <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                </intent-filter>
+            </receiver>
+            <receiver android:name="src.android.RemoteControlReceiver">
+                <intent-filter>
+                    <action android:name="android.intent.action.MEDIA_BUTTON"/>
                 </intent-filter>
             </receiver>
         </config-file>

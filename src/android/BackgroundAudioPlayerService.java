@@ -2,6 +2,7 @@ package src.android;
 
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,7 +25,6 @@ public class BackgroundAudioPlayerService extends Service
         AudioPlayer.StateChangeListener {
 
     // todo : detect wifi connection and stop playing if preference is set to play only on wifi -- add preference
-    // todo : audio becomes noisy
     // todo : hardware button integration
     private static WifiManager.WifiLock wifiLock;
     private static PowerManager.WakeLock wakeLock;
@@ -120,7 +120,7 @@ public class BackgroundAudioPlayerService extends Service
                 actionCancelScheduledClose();
             }
         } catch (Exception ex) {
-            // todo: change the radio status
+            // TODO: change the radio status
             Log.e(BackgroundAudioPlayerPlugin.LOG_TAG, "Error when handling the intent...", ex);
         }
     }
@@ -181,6 +181,7 @@ public class BackgroundAudioPlayerService extends Service
         acquireWakeLock();
         acquireWifiLock();
         setupAudioFocus();
+        setupMediaButtonListener();
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player setup successfully");
 
     }
@@ -192,6 +193,7 @@ public class BackgroundAudioPlayerService extends Service
         audioPlayer = null;
         releaseWakeLock();
         releaseWifiLock();
+        releaseMediaButtonListener();
     }
 
     private void setupAudioFocus() {
@@ -206,6 +208,18 @@ public class BackgroundAudioPlayerService extends Service
         }
     }
 
+
+    private void setupMediaButtonListener() {
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.registerMediaButtonEventReceiver(new ComponentName("src.android", "RemoteControlReceiver"));
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Registered Media button event listener.");
+    }
+
+    private void releaseMediaButtonListener() {
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.unregisterMediaButtonEventReceiver(new ComponentName("src.android", "RemoteControlReceiver"));
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Unregistered Media button event listener.");
+    }
 
     private void streamDuck() {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Ducking audio...");
@@ -266,8 +280,11 @@ public class BackgroundAudioPlayerService extends Service
 
     private void setupAsForeground() {
         String contentText = "Tap to open";
-        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.mainActivity.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                new Intent(getApplicationContext(), BackgroundAudioPlayerPlugin.mainActivity.getClass()),
+                PendingIntent.FLAG_UPDATE_CURRENT);
         int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
@@ -296,10 +313,10 @@ public class BackgroundAudioPlayerService extends Service
                 }
 
                 if (isDucked) {
-                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovering from duckabke transient audio focus loss");
+                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovering from duck'able transient audio focus loss");
                     actionSetVolume();
                     isDucked = false;
-                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovered from duckable transient audio focus loss");
+                    Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Recovered from duck'able transient audio focus loss");
                 }
                 break;
 

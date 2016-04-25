@@ -3,10 +3,7 @@ package src.android;
 import android.content.Context;
 import android.os.Build;
 
-import java.util.Vector;
-
-public abstract class AudioPlayer {
-    private static AudioPlayer instance;
+abstract class AudioPlayer {
 
     public abstract void initPlayer();
 
@@ -18,7 +15,7 @@ public abstract class AudioPlayer {
 
     public abstract void setVolume(float volume);
 
-    public interface StateChangeListener {
+    interface StateChangeListener {
         void onPlaying();
 
         void onStopped();
@@ -30,7 +27,7 @@ public abstract class AudioPlayer {
         void onError(Exception ex);
     }
 
-    public static AudioPlayer getInstance(Context context, StateChangeListener stateChangeListener) {
+    static AudioPlayer getInstance(Context context, StateChangeListener stateChangeListener) {
        // return new FroyoAudioPlayer(context, stateChangeListener); // for testing
         final int sdkVersion = Build.VERSION.SDK_INT;
         if (sdkVersion >= Build.VERSION_CODES.FROYO && sdkVersion < Build.VERSION_CODES.JELLY_BEAN) {

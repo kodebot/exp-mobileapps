@@ -2,7 +2,6 @@ package src.android;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 import com.google.android.exoplayer.ExoPlaybackException;
@@ -24,14 +23,12 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
     private static final int SEGMENT_COUNT = 32;
     private static final int RENDERER_COUNT = 2;
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
-    private static final int BUFFERING_TIME_IN_MS = 1000;
-    private static final int REBUFFERING_TIME_IN_MS = 2000;
 
-    StateChangeListener stateChangeListener;
-    Context context;
-    ExoPlayer exoPlayer;
-    ExoPlayer.Listener exoPlayerListener;
-    MediaCodecAudioTrackRenderer audioTrackRenderer;
+    private StateChangeListener stateChangeListener;
+    private Context context;
+    private ExoPlayer exoPlayer;
+    private ExoPlayer.Listener exoPlayerListener;
+    private MediaCodecAudioTrackRenderer audioTrackRenderer;
 
     public JellyBeanAudioPlayer(Context context, StateChangeListener stateChangeListener) {
         if (context == null)
@@ -46,6 +43,7 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Initialising player");
         exoPlayer = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 0, 0);
         addStateChangeEventListeners();
+
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player initialised successfully");
     }
 

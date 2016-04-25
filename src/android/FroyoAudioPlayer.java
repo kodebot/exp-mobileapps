@@ -18,12 +18,10 @@ public class FroyoAudioPlayer extends AudioPlayer
         OnCompletionListener {
 
     private MediaPlayer mediaPlayer;
-    private Context context;
     private StateChangeListener stateChangeListener;
 
     public FroyoAudioPlayer(Context context, StateChangeListener stateChangeListener) {
         if (context == null) throw new IllegalArgumentException("Context must be non null value");
-        this.context = context;
         this.stateChangeListener = stateChangeListener;
     }
 
