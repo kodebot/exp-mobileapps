@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="library" name="com.google.android.exoplayer" level="project" />
+    <orderEntry type="library" name="CordovaLib" level="project" />
   </component>
 </module>

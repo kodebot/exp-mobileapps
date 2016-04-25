@@ -5,15 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="Added skeleton for media button listener">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/android/RemoteControlReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/CordovaLib.xml" afterPath="$PROJECT_DIR$/.idea/libraries/CordovaLib.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioNoiseManager.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioNoiseManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer$StateChangeListener.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer$StateChangeListener.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/FroyoAudioPlayer.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/FroyoAudioPlayer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer$1.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/BackgroundAudioPlayer.iml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/BackgroundAudioPlayer.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/workspace.xml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/plugin.xml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/plugin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin.xml" afterPath="$PROJECT_DIR$/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/AudioNoiseManager.java" afterPath="$PROJECT_DIR$/src/android/AudioNoiseManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/AudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/AudioPlayer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/FroyoAudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/FroyoAudioPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/JellyBeanAudioPlayer.java" afterPath="$PROJECT_DIR$/src/android/JellyBeanAudioPlayer.java" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,8 +111,8 @@
       <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
-              <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="210" selection-end-column="0" />
+            <state relative-caret-position="160">
+              <caret line="213" column="124" selection-start-line="213" selection-start-column="124" selection-end-line="213" selection-end-column="124" />
               <folding />
             </state>
           </provider>
@@ -117,8 +121,8 @@
       <file leaf-file-name="BackgroundAudioPlayerPlugin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-40">
-              <caret line="28" column="63" selection-start-line="28" selection-start-column="63" selection-end-line="28" selection-end-column="63" />
+            <state relative-caret-position="475">
+              <caret line="32" column="49" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -665,7 +669,14 @@
       <option name="project" value="LOCAL" />
       <updated>1461358575234</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added skeleton for media button listener">
+      <created>1461615255282</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1461615255282</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1066,14 +1077,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerPlugin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-40">
-          <caret line="28" column="63" selection-start-line="28" selection-start-column="63" selection-end-line="28" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/android/AudioNoiseManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1098,10 +1101,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerPlugin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="32" column="49" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="210" selection-end-column="0" />
+        <state relative-caret-position="160">
+          <caret line="213" column="124" selection-start-line="213" selection-start-column="124" selection-end-line="213" selection-end-column="124" />
           <folding />
         </state>
       </provider>

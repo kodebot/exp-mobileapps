@@ -211,13 +211,13 @@ public class BackgroundAudioPlayerService extends Service
 
     private void setupMediaButtonListener() {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.registerMediaButtonEventReceiver(new ComponentName("src.android", "RemoteControlReceiver"));
+        audioManager.registerMediaButtonEventReceiver(new ComponentName("src.android", RemoteControlReceiver.class.getName()));
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Registered Media button event listener.");
     }
 
     private void releaseMediaButtonListener() {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.unregisterMediaButtonEventReceiver(new ComponentName("src.android", "RemoteControlReceiver"));
+        audioManager.unregisterMediaButtonEventReceiver(new ComponentName("src.android", RemoteControlReceiver.class.getName()));
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Unregistered Media button event listener.");
     }
 
