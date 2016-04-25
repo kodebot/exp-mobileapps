@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="Added skeleton for media button listener">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioNoiseManager.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioNoiseManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer$StateChangeListener.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer$StateChangeListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/AudioPlayer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/FroyoAudioPlayer.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/FroyoAudioPlayer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer$1.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/JellyBeanAudioPlayer.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/BackgroundAudioPlayer.iml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/BackgroundAudioPlayer.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/workspace.xml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/plugin.xml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/plugin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin.xml" afterPath="$PROJECT_DIR$/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,8 +40,8 @@
       <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="3" column="66" selection-start-line="3" selection-start-column="66" selection-end-line="3" selection-end-column="66" />
+            <state relative-caret-position="666">
+              <caret line="42" column="59" selection-start-line="42" selection-start-column="59" selection-end-line="42" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -676,7 +665,14 @@
       <option name="project" value="LOCAL" />
       <updated>1461615255282</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added skeleton for media button listener">
+      <created>1461616938237</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1461616938237</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1119,8 +1115,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="66" selection-start-line="3" selection-start-column="66" selection-end-line="3" selection-end-column="66" />
+        <state relative-caret-position="666">
+          <caret line="42" column="59" selection-start-line="42" selection-start-column="59" selection-end-line="42" selection-end-column="59" />
           <folding />
         </state>
       </provider>
