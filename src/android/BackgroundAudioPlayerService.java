@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.media.VolumeProviderCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
@@ -226,6 +227,16 @@ public class BackgroundAudioPlayerService extends Service
                 .build();
 
         mediaSession.setPlaybackState(state);
+
+
+        VolumeProviderCompat volumeProvider = new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, 10, (int) currentVolume * 10) {
+            @Override
+            public void onAdjustVolume(int direction) {
+                Log.i(BackgroundAudioPlayerPlugin.LOG_TAG, "Volume " + direction);
+            }
+        };
+
+        mediaSession.setPlaybackToRemote(volumeProvider);
         mediaSession.setActive(true);
     }
 
