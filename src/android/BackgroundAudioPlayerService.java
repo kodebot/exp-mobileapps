@@ -12,8 +12,10 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import org.apache.cordova.PluginResult;
 
@@ -214,6 +216,12 @@ public class BackgroundAudioPlayerService extends Service
 
         mediaSession.setCallback(new MediaSessionCallback());
 
+        PlaybackStateCompat state = new PlaybackStateCompat.Builder()
+                .setActions(PlaybackStateCompat.ACTION_PLAY)
+                .setState(PlaybackStateCompat.STATE_STOPPED, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, SystemClock.elapsedRealtime())
+                .build();
+
+        mediaSession.setPlaybackState(state);
         mediaSession.setActive(true);
     }
 
