@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="848deae6-e607-410e-a635-b8bda399f4ed" name="Default" comment="Added media session support just for testing">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService$1.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService$2.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService.class" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/src/android/BackgroundAudioPlayerService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/workspace.xml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/plugin.xml" afterPath="$PROJECT_DIR$/out/production/BackgroundAudioPlayer/plugin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" afterPath="$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java" />
     </list>
     <ignored path="BackgroundAudioPlayer.iws" />
@@ -90,8 +95,8 @@
       <file leaf-file-name="BackgroundAudioPlayerService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="221" column="25" selection-start-line="221" selection-start-column="25" selection-end-line="221" selection-end-column="25" />
+            <state relative-caret-position="226">
+              <caret line="224" column="9" selection-start-line="224" selection-start-column="9" selection-end-line="224" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -701,12 +706,19 @@
       <option name="project" value="LOCAL" />
       <updated>1461704544769</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added media session support just for testing">
+      <created>1461704874188</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1461704874188</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1296" height="696" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1145,8 +1157,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/android/BackgroundAudioPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="221" column="25" selection-start-line="221" selection-start-column="25" selection-end-line="221" selection-end-column="25" />
+        <state relative-caret-position="226">
+          <caret line="224" column="9" selection-start-line="224" selection-start-column="9" selection-end-line="224" selection-end-column="9" />
           <folding />
         </state>
       </provider>
