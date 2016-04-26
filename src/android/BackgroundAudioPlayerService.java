@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 import org.apache.cordova.PluginResult;
 
@@ -28,6 +29,7 @@ public class BackgroundAudioPlayerService extends Service
     // todo : hardware button integration
     private static WifiManager.WifiLock wifiLock;
     private static PowerManager.WakeLock wakeLock;
+    private static MediaSessionCompat mediaSession;
     private static String currentlyPlayingUrl;
     private static Timer stopTimer;
     private static AudioPlayer audioPlayer;
@@ -126,7 +128,7 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     /*******************************************************************************************************************
-     *************************************Intent action methods ********************************************************
+     * ************************************Intent action methods ********************************************************
      ******************************************************************************************************************/
     private void actionPlay() {
         if (currentlyPlayingUrl != null) {
@@ -173,7 +175,7 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     /*******************************************************************************************************************
-     ****************************************Internal private methods***************************************************
+     * ***************************************Internal private methods***************************************************
      ******************************************************************************************************************/
     private void setupPlayer() {
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Setting up the player...");
@@ -181,7 +183,7 @@ public class BackgroundAudioPlayerService extends Service
         acquireWakeLock();
         acquireWifiLock();
         setupAudioFocus();
-        setupMediaButtonListener();
+        setupMediaSession();
         Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Player setup successfully");
 
     }
@@ -191,9 +193,28 @@ public class BackgroundAudioPlayerService extends Service
         if (audioPlayer == null) return;
         audioPlayer.releasePlayer();
         audioPlayer = null;
+        releaseAudioFocus();
+        mediaSession.setActive(false);
         releaseWakeLock();
         releaseWifiLock();
-        releaseMediaButtonListener();
+
+    }
+
+    private void setupMediaSession() {
+        ComponentName remoteControlReceiver = new ComponentName(
+                getPackageName(),
+                src.android.RemoteControlReceiver.class.getName());
+        mediaSession = new MediaSessionCompat(
+                this,
+                BackgroundAudioPlayerPlugin.LOG_TAG,
+                remoteControlReceiver, null);
+        mediaSession.setFlags(
+                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
+                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
+        mediaSession.setCallback(new MediaSessionCallback());
+
+        mediaSession.setActive(true);
     }
 
     private void setupAudioFocus() {
@@ -208,17 +229,10 @@ public class BackgroundAudioPlayerService extends Service
         }
     }
 
-
-    private void setupMediaButtonListener() {
+    private void releaseAudioFocus() {
+        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Abandoning audio focus...");
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.registerMediaButtonEventReceiver(new ComponentName(getPackageName(), RemoteControlReceiver.class.getName()));
-        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Registered Media button event listener.");
-    }
-
-    private void releaseMediaButtonListener() {
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.unregisterMediaButtonEventReceiver(new ComponentName(getPackageName(), RemoteControlReceiver.class.getName()));
-        Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Unregistered Media button event listener.");
+        audioManager.abandonAudioFocus(this);
     }
 
     private void streamDuck() {
@@ -328,7 +342,7 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus transient lost");
-                if(isPlaying){
+                if (isPlaying) {
                     isTransientAudioFocusLoss = true;
                 }
                 actionStop();
@@ -336,7 +350,7 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                 Log.v(BackgroundAudioPlayerPlugin.LOG_TAG, "Audio focus loss transient can duck");
-                if(isPlaying) {
+                if (isPlaying) {
                     streamDuck();
                 }
                 break;
