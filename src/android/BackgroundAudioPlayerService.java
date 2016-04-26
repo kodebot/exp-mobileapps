@@ -233,6 +233,7 @@ public class BackgroundAudioPlayerService extends Service
             @Override
             public void onAdjustVolume(int direction) {
                 Log.i(BackgroundAudioPlayerPlugin.LOG_TAG, "Volume " + direction);
+                super.onAdjustVolume(direction);
             }
         };
 
