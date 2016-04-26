@@ -205,7 +205,7 @@ public class BackgroundAudioPlayerService extends Service
                 getPackageName(),
                 src.android.RemoteControlReceiver.class.getName());
         mediaSession = new MediaSessionCompat(
-                this,
+                getApplicationContext(),
                 BackgroundAudioPlayerPlugin.LOG_TAG,
                 remoteControlReceiver, null);
         mediaSession.setFlags(
