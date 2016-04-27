@@ -1,5 +1,6 @@
 package src.android;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
@@ -32,7 +33,7 @@ public class BackgroundAudioPlayerService extends Service
     // todo : hardware button integration
     private static WifiManager.WifiLock wifiLock;
     private static PowerManager.WakeLock wakeLock;
-    private static MediaSessionCompat mediaSession;
+    public static MediaSessionCompat mediaSession;
     private static String currentlyPlayingUrl;
     private static Timer stopTimer;
     private static AudioPlayer audioPlayer;
@@ -221,23 +222,11 @@ public class BackgroundAudioPlayerService extends Service
                 .setActions(
                         PlaybackStateCompat.ACTION_PLAY |
                                 PlaybackStateCompat.ACTION_PAUSE |
-                                PlaybackStateCompat.ACTION_SKIP_TO_NEXT |
-                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
-                .setState(PlaybackStateCompat.STATE_PLAYING, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, SystemClock.elapsedRealtime())
+                                PlaybackStateCompat.ACTION_STOP)
+                .setState(PlaybackStateCompat.STATE_STOPPED, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, SystemClock.elapsedRealtime())
                 .build();
 
         mediaSession.setPlaybackState(state);
-
-
-        VolumeProviderCompat volumeProvider = new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, 10, (int) currentVolume * 10) {
-            @Override
-            public void onAdjustVolume(int direction) {
-                Log.i(BackgroundAudioPlayerPlugin.LOG_TAG, "Volume " + direction);
-                super.onAdjustVolume(direction);
-            }
-        };
-
-        mediaSession.setPlaybackToRemote(volumeProvider);
         mediaSession.setActive(true);
     }
 
