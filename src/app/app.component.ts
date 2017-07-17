@@ -12,7 +12,7 @@ import { ReminderListPage } from "../pages/reminder-list/reminder-list";
 export class YearlyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = ReminderListPage;
 
   pages: Array<{ title: string, component: any }>;
 

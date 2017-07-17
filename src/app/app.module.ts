@@ -9,13 +9,16 @@ import { YearlyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
 import { ReminderListPage } from "../pages/reminder-list/reminder-list";
 
-import {ReminderData} from "../providers/reminder-data";
+import { ReminderData } from "../providers/reminder-data";
+
+import { ReminderPipe } from "../pipes/index";
 
 @NgModule({
   declarations: [
     YearlyApp,
     HomePage,
-    ReminderListPage
+    ReminderListPage,
+    ReminderPipe
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,7 @@ import {ReminderData} from "../providers/reminder-data";
     StatusBar,
     SplashScreen,
     ReminderData,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -13,7 +13,7 @@
       <ion-icon [name]="item.icon.ionicIcon" item-left></ion-icon>
       <h2>{{item.description}}</h2>
       <p>
-        Due: {{item.nextDueOn | date:'dd/MM/yyyy'}} | <ion-badge item-end color="danger">{{item.scheduleType}}</ion-badge>
+        Due: {{item.nextDueOn | date:'dd/MM/yyyy'}} | <ion-badge item-end color="danger">{{item.reminderType|reminder}}</ion-badge>
       </p>
     </button>
   </ion-list>
