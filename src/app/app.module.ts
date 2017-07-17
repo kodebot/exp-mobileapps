@@ -2,32 +2,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { YearlyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+import { ScheduleListPage } from '../pages/schedule-list/schedule-list';
+
+import {ScheduleData} from "../providers/schedule-data";
+
 @NgModule({
   declarations: [
-    MyApp,
+    YearlyApp,
     HomePage,
-    ListPage
+    ScheduleListPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(YearlyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    YearlyApp,
     HomePage,
-    ListPage
+    ScheduleListPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    ScheduleData,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
