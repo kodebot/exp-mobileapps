@@ -3,20 +3,20 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/of";
 
-import { Schedule, ScheduleType } from "../models/index";
+import { Reminder, ReminderType } from "../models/index";
 
 @Injectable()
-export class ScheduleData {
+export class ReminderData {
 
 
-    getAll(): Observable<Schedule[]> {
+    getAll(): Observable<Reminder[]> {
 
-        let schedules: Schedule[] = [
+        let reminders: Reminder[] = [
             {
                 id: 1,
                 description: "Boiler Service",
-                icon:"flask",
-                scheduleType: ScheduleType.Yearly,
+                icon: { ionicIcon: "flask" },
+                reminderType: ReminderType.Yearly,
                 nextDueOn: new Date(2018, 8, 8),
                 notes: "Call the plumber",
                 expectedCost: { value: 123.23, currency: "GBP", symbol: "£" }
@@ -24,8 +24,8 @@ export class ScheduleData {
             {
                 id: 2,
                 description: "MOT",
-                icon:"car",
-                scheduleType: ScheduleType.Yearly,
+                icon: { ionicIcon: "car" },
+                reminderType: ReminderType.Yearly,
                 nextDueOn: new Date(2018, 4, 8),
                 notes: "Book appointment 4 weeks before",
                 contact: {
@@ -41,7 +41,7 @@ export class ScheduleData {
             }
         ]
 
-        return Observable.of(schedules);
+        return Observable.of(reminders);
     }
 
 }

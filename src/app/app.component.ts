@@ -1,28 +1,31 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Component, ViewChild } from "@angular/core";
+import { Nav, Platform } from "ionic-angular";
+import { StatusBar } from "@ionic-native/status-bar";
+import { SplashScreen } from "@ionic-native/splash-screen";
 
-import { HomePage } from '../pages/home/home';
-import { ScheduleListPage } from '../pages/schedule-list/schedule-list';
+import { HomePage } from "../pages/home/home";
+import { ReminderListPage } from "../pages/reminder-list/reminder-list";
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: "app.html"
 })
 export class YearlyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ScheduleListPage }
+      { title: "Home", component: HomePage },
+      { title: "List", component: ReminderListPage }
     ];
 
   }
@@ -38,7 +41,7 @@ export class YearlyApp {
 
   openPage(page) {
     // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
+    // we wouldn"t want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
 }

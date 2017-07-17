@@ -1,12 +1,13 @@
 import { Money } from "./money";
-import { ScheduleType } from "./schedule-type";
+import { ReminderType } from "./reminder-type";
 import { Contact } from "./contact";
+import { Icon } from "./icon";
 
-export class Schedule {
+export class Reminder {
     id: number;
-    icon:string;
+    icon: Icon;
     description: string;
-    scheduleType: ScheduleType;
+    reminderType: ReminderType;
     nextDueOn: Date;
     contact?: Contact;
     expectedCost?: Money;

@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of items | async" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-left></ion-icon>
+      <ion-icon [name]="item.icon.ionicIcon" item-left></ion-icon>
       <h2>{{item.description}}</h2>
       <p>
         Due: {{item.nextDueOn | date:'dd/MM/yyyy'}} | <ion-badge item-end color="danger">{{item.scheduleType}}</ion-badge>

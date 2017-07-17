@@ -1,21 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { BrowserModule } from "@angular/platform-browser";
+import { ErrorHandler, NgModule } from "@angular/core";
+import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from "@ionic-native/status-bar";
+import { SplashScreen } from "@ionic-native/splash-screen";
 
-import { YearlyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ScheduleListPage } from '../pages/schedule-list/schedule-list';
+import { YearlyApp } from "./app.component";
+import { HomePage } from "../pages/home/home";
+import { ReminderListPage } from "../pages/reminder-list/reminder-list";
 
-import {ScheduleData} from "../providers/schedule-data";
+import {ReminderData} from "../providers/reminder-data";
 
 @NgModule({
   declarations: [
     YearlyApp,
     HomePage,
-    ScheduleListPage
+    ReminderListPage
   ],
   imports: [
     BrowserModule,
@@ -25,12 +25,12 @@ import {ScheduleData} from "../providers/schedule-data";
   entryComponents: [
     YearlyApp,
     HomePage,
-    ScheduleListPage
+    ReminderListPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    ScheduleData,
+    ReminderData,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
