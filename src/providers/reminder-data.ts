@@ -25,7 +25,7 @@ export class ReminderData {
                 id: 2,
                 description: "MOT",
                 icon: { ionicIcon: "car" },
-                reminderType: ReminderType.Yearly,
+                reminderType: ReminderType.HalfYearly,
                 nextDueOn: new Date(2018, 4, 8),
                 notes: "Book appointment 4 weeks before",
                 contact: {
