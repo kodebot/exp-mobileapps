@@ -1,4 +1,4 @@
-export enum ScheduleType {
+export enum ReminderType {
     Yearly = 0,
     HalfYearly,
     Quarterly,
