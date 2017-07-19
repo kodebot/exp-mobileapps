@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 
+import { NavController, NavParams } from "ionic-angular";
+
 import { Reminder, ReminderType } from "../../models/index";
 
 @Component({
@@ -10,14 +12,10 @@ export class ReminderDetailPage {
 
     reminder: Reminder;
 
-    constructor() {
-        this.reminder = {
-            id: 1,
-            name: "MOT",
-            nextDueOn: new Date(2010, 10, 10),
-            reminderType: ReminderType.Daily,
-            icon: { ionicIcon: 'car' }
-        };
+    constructor(
+        private _navController: NavController,
+        private _navParams: NavParams) {
+        this.reminder = this._navParams.get("item");
     }
 
 }

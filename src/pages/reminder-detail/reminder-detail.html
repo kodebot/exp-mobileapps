@@ -8,5 +8,27 @@
 </ion-header>
 
 <ion-content>
-    This is content
+  <ion-card>
+    <ion-card-header>
+      {{reminder.name}}
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <h4> Reminder Type</h4>
+          <p>{{reminder.reminderType | reminder}}</p>
+        </ion-item>
+         <ion-item>
+          <h4>Due On</h4>
+          <p>{{reminder.nextDueOn | date:'dd/MM/yyyy'}}</p>
+        </ion-item>
+
+         <ion-item>
+          <h4>Notes</h4>
+          <p>{{reminder.notes}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
