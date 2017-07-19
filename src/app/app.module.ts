@@ -8,6 +8,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { YearlyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
 import { ReminderListPage } from "../pages/reminder-list/reminder-list";
+import { ReminderDetailPage } from "../pages/reminder-detail/reminder-detail";
 
 import { ReminderData } from "../providers/reminder-data";
 
@@ -18,6 +19,7 @@ import { ReminderPipe } from "../pipes/index";
     YearlyApp,
     HomePage,
     ReminderListPage,
+    ReminderDetailPage,
     ReminderPipe
   ],
   imports: [
@@ -28,7 +30,8 @@ import { ReminderPipe } from "../pipes/index";
   entryComponents: [
     YearlyApp,
     HomePage,
-    ReminderListPage
+    ReminderListPage,
+    ReminderDetailPage
   ],
   providers: [
     StatusBar,

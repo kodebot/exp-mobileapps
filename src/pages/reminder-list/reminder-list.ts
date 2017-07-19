@@ -1,10 +1,12 @@
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 
-import {Observable} from "rxjs/Observable";
+import { Observable } from "rxjs/Observable";
 
-import {Reminder} from "../../models/index";
-import {ReminderData} from "../../providers/reminder-data";
+import { ReminderDetailPage } from "../reminder-detail/reminder-detail";
+
+import { Reminder } from "../../models/index";
+import { ReminderData } from "../../providers/reminder-data";
 
 
 @Component({
@@ -17,8 +19,8 @@ export class ReminderListPage {
   items: Observable<Reminder[]>;
 
   constructor(
-    private scheduleData:ReminderData,
-    public navCtrl: NavController, 
+    private scheduleData: ReminderData,
+    public navCtrl: NavController,
     public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get("item");
@@ -28,7 +30,7 @@ export class ReminderListPage {
 
   itemTapped(event, item) {
     // That"s right, we"re pushing to ourselves!
-    this.navCtrl.push(ReminderListPage, {
+    this.navCtrl.push(ReminderDetailPage, {
       item: item
     });
   }

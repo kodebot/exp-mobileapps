@@ -14,7 +14,7 @@ export class ReminderData {
         let reminders: Reminder[] = [
             {
                 id: 1,
-                description: "Boiler Service",
+                name: "Boiler Service",
                 icon: { ionicIcon: "flask" },
                 reminderType: ReminderType.Yearly,
                 nextDueOn: new Date(2018, 8, 8),
@@ -23,7 +23,7 @@ export class ReminderData {
             },
             {
                 id: 2,
-                description: "MOT",
+                name: "MOT",
                 icon: { ionicIcon: "car" },
                 reminderType: ReminderType.HalfYearly,
                 nextDueOn: new Date(2018, 4, 8),
