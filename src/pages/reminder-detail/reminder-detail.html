@@ -10,24 +10,90 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      {{reminder.name}}
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon [name]="reminder.icon.ionicIcon" color="primary"> </ion-icon>
+        </ion-col>
+        <ion-col>
+          {{reminder.name}}
+        </ion-col>
+      </ion-row>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
+
         <ion-item>
           <h4> Reminder Type</h4>
           <p>{{reminder.reminderType | reminder}}</p>
         </ion-item>
-         <ion-item>
+
+        <ion-item>
           <h4>Due On</h4>
           <p>{{reminder.nextDueOn | date:'dd/MM/yyyy'}}</p>
         </ion-item>
 
-         <ion-item>
+        <ion-item>
           <h4>Notes</h4>
           <p>{{reminder.notes}}</p>
         </ion-item>
+
       </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="reminder.expectedCost">
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon name="cash" color="primary"></ion-icon>
+        </ion-col>
+        <ion-col>
+          Expected Cost
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      {{reminder.expectedCost.symbol}}{{reminder.expectedCost.value}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon name="call" color="primary"></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          Telephones
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Business</p>
+      <p>{{reminder.contact.businessPhoneNumbers.join(", ")}}</p>
+      <p>Personal</p>
+      <p>{{reminder.contact.personalPhoneNumbers.join(", ")}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon name="mail" color="secondary"></ion-icon>
+        </ion-col>
+
+        <ion-col>
+          Emails
+        </ion-col>
+      </ion-row>
+
+    </ion-card-header>
+    <ion-card-content>
+      <p>Business</p>
+      <p>{{reminder.contact.businessEmails.join(", ")}}</p>
+      <p>Personal</p>
+      <p>{{reminder.contact.personalEmails.join(", ")}}</p>
     </ion-card-content>
   </ion-card>
 
