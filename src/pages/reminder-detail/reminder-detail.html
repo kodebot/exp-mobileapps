@@ -37,27 +37,16 @@
           <p>{{reminder.notes}}</p>
         </ion-item>
 
+        <ion-item>
+          <h4>Expected Cost</h4>
+          <p> {{reminder.expectedCost?.symbol}}{{reminder.expectedCost?.value}}</p>
+        </ion-item>
+
       </ion-list>
     </ion-card-content>
   </ion-card>
-
-  <ion-card *ngIf="reminder.expectedCost">
-    <ion-card-header>
-      <ion-row>
-        <ion-col col-1>
-          <ion-icon name="cash" color="primary"></ion-icon>
-        </ion-col>
-        <ion-col>
-          Expected Cost
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
-    <ion-card-content>
-      {{reminder.expectedCost.symbol}}{{reminder.expectedCost.value}}
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
+ 
+  <ion-card *ngIf="reminder.contact?.businessPhoneNumbers || reminder.contact?.personalPhoneNumbers">
     <ion-card-header>
       <ion-row>
         <ion-col col-1>
@@ -69,18 +58,24 @@
       </ion-row>
     </ion-card-header>
     <ion-card-content>
-      <p>Business</p>
-      <p>{{reminder.contact.businessPhoneNumbers.join(", ")}}</p>
-      <p>Personal</p>
-      <p>{{reminder.contact.personalPhoneNumbers.join(", ")}}</p>
+      <ion-list>
+        <ion-item *ngIf="reminder.contact?.businessPhoneNumbers">
+          <h4>Business</h4>
+          <p>{{reminder.contact?.businessPhoneNumbers?.join(", ")}}</p>
+        </ion-item>
+        <ion-item *ngIf="reminder.contact?.personalPhoneNumbers">
+          <h4>Personal</h4>
+          <p>{{reminder.contact?.personalPhoneNumbers?.join(", ")}}</p>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="reminder.contact?.businessEmails || reminder.contact?.personalEmails">
     <ion-card-header>
       <ion-row>
         <ion-col col-1>
-          <ion-icon name="mail" color="secondary"></ion-icon>
+          <ion-icon name="mail" color="primary"></ion-icon>
         </ion-col>
 
         <ion-col>
@@ -89,11 +84,18 @@
       </ion-row>
 
     </ion-card-header>
-    <ion-card-content>
-      <p>Business</p>
-      <p>{{reminder.contact.businessEmails.join(", ")}}</p>
-      <p>Personal</p>
-      <p>{{reminder.contact.personalEmails.join(", ")}}</p>
+
+    <ion-card-content >
+      <ion-list>
+        <ion-item *ngIf="reminder.contact?.businessEmails">
+          <h4>Business</h4>
+          <p>{{reminder.contact?.businessEmails?.join(", ")}}</p>
+        </ion-item>
+        <ion-item *ngIf="reminder.contact?.personalEmails">
+          <h4>Personal</h4>
+          <p>{{reminder.contact?.personalEmails?.join(", ")}}</p>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 
