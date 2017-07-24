@@ -14,7 +14,7 @@ export class ReminderData {
         let reminders: Reminder[] = [
             {
                 id: 1,
-                description: "Boiler Service",
+                name: "Boiler Service",
                 icon: { ionicIcon: "flask" },
                 reminderType: ReminderType.Yearly,
                 nextDueOn: new Date(2018, 8, 8),
@@ -23,9 +23,9 @@ export class ReminderData {
             },
             {
                 id: 2,
-                description: "MOT",
+                name: "MOT",
                 icon: { ionicIcon: "car" },
-                reminderType: ReminderType.HalfYearly,
+                reminderType: ReminderType.Fortnightly,
                 nextDueOn: new Date(2018, 4, 8),
                 notes: "Book appointment 4 weeks before",
                 contact: {
@@ -35,7 +35,18 @@ export class ReminderData {
                         country: "UK",
                         postcode: "ls27 9rw"
                     },
-                    businessPhoneNumbers: ["12342342421"]
+                    personalAddress:{
+                        address1:"2",
+                        address2:"Victoria Grange Drive",
+                        address3: "Morley",
+                        address4: "address line 4",
+                        city:"Leeds",
+                        postcode:"LS27 9RW"
+                    },
+                    businessPhoneNumbers: ["12342342421","32432432432"],
+                    personalPhoneNumbers: ["123432432432","32432432432"],
+                    personalEmails:["mail@mail.com"],
+                    businessEmails: ["anothermail@mail.com"],
                 },
                 expectedCost: { value: 132.00, currency: "GBP", symbol: "£" }
             }

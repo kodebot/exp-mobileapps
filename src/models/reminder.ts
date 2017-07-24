@@ -6,7 +6,7 @@ import { Icon } from "./icon";
 export class Reminder {
     id: number;
     icon: Icon;
-    description: string;
+    name: string;
     reminderType: ReminderType;
     nextDueOn: Date;
     contact?: Contact;

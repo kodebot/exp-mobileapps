@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{reminder.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon [name]="reminder.icon.ionicIcon" color="primary"> </ion-icon>
+        </ion-col>
+        <ion-col>
+          {{reminder.name}}
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+
+        <ion-item>
+          <h4> Reminder Type</h4>
+          <p>{{reminder.reminderType | reminder}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h4>Due On</h4>
+          <p>{{reminder.nextDueOn | date:'dd/MM/yyyy'}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h4>Notes</h4>
+          <p>{{reminder.notes}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h4>Expected Cost</h4>
+          <p> {{reminder.expectedCost?.symbol}}{{reminder.expectedCost?.value}}</p>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+ 
+  <ion-card *ngIf="reminder.contact?.businessPhoneNumbers || reminder.contact?.personalPhoneNumbers">
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon name="call" color="primary"></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          Telephones
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngIf="reminder.contact?.businessPhoneNumbers">
+          <h4>Business</h4>
+          <p>{{reminder.contact?.businessPhoneNumbers?.join(", ")}}</p>
+        </ion-item>
+        <ion-item *ngIf="reminder.contact?.personalPhoneNumbers">
+          <h4>Personal</h4>
+          <p>{{reminder.contact?.personalPhoneNumbers?.join(", ")}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="reminder.contact?.businessEmails || reminder.contact?.personalEmails">
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-1>
+          <ion-icon name="mail" color="primary"></ion-icon>
+        </ion-col>
+
+        <ion-col>
+          Emails
+        </ion-col>
+      </ion-row>
+
+    </ion-card-header>
+
+    <ion-card-content >
+      <ion-list>
+        <ion-item *ngIf="reminder.contact?.businessEmails">
+          <h4>Business</h4>
+          <p>{{reminder.contact?.businessEmails?.join(", ")}}</p>
+        </ion-item>
+        <ion-item *ngIf="reminder.contact?.personalEmails">
+          <h4>Personal</h4>
+          <p>{{reminder.contact?.personalEmails?.join(", ")}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
