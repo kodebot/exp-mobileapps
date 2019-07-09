@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.qubits.BackgroundAudioPlayerPlugin" version="0.1.5">
+    <name>Background Audio Player</name>
+    <description>The background audio player to play audio outside the lifecycle of the application.</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,background,audio,player</keywords>
+    <js-module src="www/BackgroundAudioPlayer.js" name="BackgroundAudioPlayer">
+        <clobbers target="BackgroundAudioPlayer"/>
+    </js-module>
+
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:name="src.android.BackgroundAudioPlayerService"/>
+            <receiver android:name="src.android.AudioNoiseManager">
+                <intent-filter>
+                    <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                </intent-filter>
+            </receiver>
+            <receiver android:name="src.android.RemoteControlReceiver">
+                <intent-filter>
+                    <action android:name="android.intent.action.MEDIA_BUTTON"/>
+                </intent-filter>
+            </receiver>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
+        </config-file>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BackgroundAudioPlayer">
+                <param name="android-package" value="src.android.BackgroundAudioPlayerPlugin"/>
+                <param name="onload" value="false"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/BackgroundAudioPlayerService.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/BackgroundAudioPlayerPlugin.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/AudioNoiseManager.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/AudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/FroyoAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/JellyBeanAudioPlayer.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/RemoteControlReceiver.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="src/android/MediaSessionCallback.java" target-dir="src/com/qubits/cordova/plugin"/>
+        <source-file src="libs/android-support-v4.jar" target-dir="libs"/>
+        <source-file src="libs/com.google.android.exoplayer.jar" target-dir="libs" />
+    </platform>
+</plugin>

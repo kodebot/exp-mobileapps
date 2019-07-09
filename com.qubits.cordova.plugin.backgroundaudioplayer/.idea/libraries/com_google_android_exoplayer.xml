@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.google.android.exoplayer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/com.google.android.exoplayer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
