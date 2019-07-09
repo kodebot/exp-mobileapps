@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Reminders</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of items | async" (click)="itemTapped($event, item)">
+      <ion-icon [name]="item.icon.ionicIcon" item-left></ion-icon>
+      <h2>{{item.name}}</h2>
+      <p>
+        Due on {{item.nextDueOn | date:'dd/MM/yyyy'}} 
+      </p>
+        <ion-badge color="danger">{{item.reminderType|reminder}}</ion-badge>
+     </button>
+  </ion-list>
+</ion-content>

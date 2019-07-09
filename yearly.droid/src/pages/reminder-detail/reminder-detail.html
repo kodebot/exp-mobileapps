@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{reminder.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <div class="avator-icon">
+              <ion-icon class="icon" [name]="reminder.icon.ionicIcon" color="primary"> </ion-icon>
+            </div>
+          </ion-col>
+          <ion-col col-12 text-center>
+            <h2>{{reminder.name}}</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list text-center>
+
+        <ion-item>
+          <h4> Reminder Type</h4>
+          <p>{{reminder.reminderType | reminder}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h4>Due On</h4>
+          <p>{{reminder.nextDueOn | date:'dd/MM/yyyy'}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h4>Notes</h4>
+          <p>{{reminder.notes}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h4>Expected Cost</h4>
+          <p> {{reminder.expectedCost?.symbol}}{{reminder.expectedCost?.value}}</p>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="reminder.contact?.businessPhoneNumbers || reminder.contact?.personalPhoneNumbers">
+    <ion-card-header>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <div class="avator-icon-small">
+              <ion-icon class="icon" name="call" color="primary"> </ion-icon>
+            </div>
+          </ion-col>
+          <ion-col col-12 text-center>
+            <h2>Telephones</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-item-group>
+        <ion-item-divider color="light" *ngIf="reminder.contact?.businessPhoneNumbers">Business</ion-item-divider>
+        <ion-item *ngFor="let phone of reminder.contact?.businessPhoneNumbers">{{phone}}</ion-item>
+        <ion-item-divider color="light" *ngIf="reminder.contact?.personalPhoneNumbers">Personal</ion-item-divider>
+        <ion-item *ngFor="let phone of reminder.contact?.personalPhoneNumbers">{{phone}}</ion-item>
+      </ion-item-group>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="reminder.contact?.businessEmails || reminder.contact?.personalEmails">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <div class="avator-icon-small">
+              <ion-icon class="icon" name="mail" color="primary"> </ion-icon>
+            </div>
+          </ion-col>
+          <ion-col col-12 text-center>
+            <h2>Emails</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item-group>
+        <ion-item-divider color="light" *ngIf="reminder.contact?.businessEmails">Business</ion-item-divider>
+        <ion-item *ngFor="let email of reminder.contact?.businessEmails">{{email}}</ion-item>
+        <ion-item-divider color="light" *ngIf="reminder.contact?.personalPhoneNumbers">Personal</ion-item-divider>
+        <ion-item *ngFor="let email of reminder.contact?.personalEmails">{{email}}</ion-item>
+      </ion-item-group>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
