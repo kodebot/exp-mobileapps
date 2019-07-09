@@ -1,0 +1,43 @@
+<ion-view view-title="VAANOLI">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon" ng-class="{'ion-ios-timer-outline':vm.timerSettings.duration, 'ion-ios-timer':!vm.timerSettings.duration}" ng-click="vm.showTimerPopup()"></button><button class="button button-icon icon" ng-class="{'ion-heart-outline':vm.showOnlyFav, 'ion-heart':!vm.showOnlyFav}" ng-click="vm.toggleNavFav()"></button>
+    </ion-nav-buttons>
+    <div class="has-header margin-top-5 card">
+        <div class="item item-assertive item-divider">
+            <ion-spinner class="spinner-light" ng-show="vm.currentStatus"> </ion-spinner>
+            {{vm.currentRadio.name?vm.currentRadio.name:'No radio selected'}}
+        </div>
+        <div>
+            <div class="button-bar margin-top-5">
+                <button class="button button-assertive button-outline button-large button-player" data-ng-click="vm.gotoPrev()">
+                    <i class="icon ion-ios-skipbackward"></i>
+                </button>
+                <button class="button button-assertive button-outline button-large button-player" data-ng-click="vm.stopToggle()">
+                    <i class="icon" data-ng-class="{'ion-play':vm.isStopped || !!!vm.currentRadio, 'ion-stop':!vm.isStopped && vm.currentRadio}"></i>
+                </button>
+                <button class="button button-assertive button-outline button-large button-player" data-ng-click="vm.gotoNext()">
+                    <i class="icon ion-ios-skipforward"></i>
+                </button>
+            </div>
+            <!--<div class="row">-->
+            <div class="range range-assertive">
+                <i class="icon ion-volume-low"></i>
+                <input type="range" name="volume" data-ng-model="vm.volume">
+                <i class="icon ion-volume-high"></i>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+    <ion-content class="has-banner">
+        <ion-refresher pulling-text="Pull to update" data-on-refresh="vm.updateRadio()">
+        </ion-refresher>
+        <ion-list class="list padding">
+            <ion-item href="#" class="item-button-right item-avatar radio-item" data-ng-repeat="radio in vm.radios|filter:(vm.showOnlyFav ||'') && {fav:true}" data-ng-click="vm.play(radio)" data-ng-class="{'active':radio.id === vm.currentRadio.id}">
+                <i class="item item-avatar item-avatar-dynamic-image" ng-style="{'background-color':radio.color}">{{radio.initial}}</i>
+                <h2>{{radio.name}}</h2>
+                <p>{{radio.subtext}}</p>
+                <button class="button button-assertive button-icon icon" data-ng-click="vm.toggleFav(radio);$event.stopPropagation();" data-ng-class="{'ion-heart':radio.fav, 'ion-heart-outline':!radio.fav}"></button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

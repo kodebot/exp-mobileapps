@@ -1,0 +1,82 @@
+.button-player {
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -o-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
+.has-banner {
+    top: 200px !important; /*this may cause problem in iphone*/
+}
+
+.item.active {
+    color: #ef473a;
+    font-weight: 700;
+    background-color: whitesmoke;
+}
+
+.item-avatar i:first-child, .item-avatar .item-img {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    border-radius: 4px; }
+
+.margin-top-5 {
+    margin-top: 5px !important;
+}
+
+.margin-left-10{
+    margin-left:10px !important;
+}
+
+/*Popup's classes
+.popup-head
+.popup-title 
+.popup-body
+.popup-buttons 
+*/
+
+.ion-ios-skipforward {
+    font-size: 48px !important;
+}
+
+.ion-ios-skipbackward {
+    font-size: 36px !important;
+}
+
+.popup-head {
+    background: #ef473a !important;
+    font-weight: 700 !important;
+}
+
+.popup-title {
+    color: #fff !important;
+}
+
+.popup-body {
+    padding: 0 !important;
+}
+
+.spinner svg {
+  width: 15px;
+  height: 15px;
+}
+.item-avatar-dynamic-image{
+    color:white;
+    font-size:x-large !important; 
+    text-align:center !important; 
+    padding-top:15px !important;
+}

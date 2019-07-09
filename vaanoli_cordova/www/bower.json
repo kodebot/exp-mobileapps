@@ -1,0 +1,22 @@
+{
+  "name": "Vaanoli",
+  "version": "1.0.0",
+  "authors": [
+    "Manikandan Venkatraman <vmanikandan001@hotmail.com>"
+  ],
+  "description": "Vaanoli - simple and super fast tamil radio.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "animate.css": "~3.4.0",
+    "ionic": "~1.1.0",
+    "ionic-material-design-lite": "~0.5.5"
+  }
+}

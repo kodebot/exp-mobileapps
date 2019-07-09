@@ -1,0 +1,70 @@
+{
+    "org.apache.cordova.media": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.media@0.2.16"
+        }
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.file@1.3.3"
+        }
+    },
+    "com.google.cordova.admob": {
+        "source": {
+            "type": "registry",
+            "id": "com.google.cordova.admob"
+        }
+    },
+    "com.rjfun.cordova.extension": {
+        "source": {
+            "type": "registry",
+            "id": "com.rjfun.cordova.extension"
+        }
+    },
+    "com.google.playservices": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/floatinghotpot/google-play-services",
+            "subdir": ".",
+            "ref": "r19"
+        }
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-whitelist.git",
+            "subdir": "."
+        }
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar@0.1.10"
+        }
+    },
+    "com.qubits.BackgroundAudioPlayer": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git",
+            "subdir": "."
+        }
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-statusbar",
+            "subdir": "."
+        }
+    },
+    "com.qubits.BackgroundAudioPlayerPlugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vmanikandan001/com.qubits.cordova.plugin.backgroundaudioplayer.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}
