@@ -1,0 +1,30 @@
+
+@mixin avator-icon-base($size){
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.12);
+    position:relative;
+    width:$size;
+    height:$size;
+    border-radius:$size/2;
+    font-size:$size*.6; 
+    margin:0 auto;
+    padding:5px;
+    .icon{
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translate(-50%, -50%);
+    }
+}
+
+
+.avator-icon{
+    @include avator-icon-base(80px);
+}
+
+.avator-icon-small{
+    @include avator-icon-base(50px);
+}
+
+.form-label{
+    font-weight: 500;
+}
